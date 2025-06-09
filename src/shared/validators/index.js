@@ -7,3 +7,4 @@ export * from './validateCompany.jsx';
 export * from  './validateDpi.jsx';
 export * from './validateIncome.jsx'
 export * from './validatePhone.jsx'
+export * from './validateName.jsx'
