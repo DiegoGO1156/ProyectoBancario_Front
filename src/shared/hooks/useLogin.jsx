@@ -19,8 +19,12 @@ export const useLogin = () => {
 
         console.log(response)
 
-        if(response.error){
-            return toast.error(response.error?.response?.data || 'Ocurrio un error al iniciar sesion, intenta de nuevo')
+        if (response.error) {
+            return toast.error(
+            response.e?.response?.data?.msg || 
+            response.e?.response?.data?.error || 
+            'Ocurrió un error al iniciar sesión'
+        );
         }
 
         const { userDetails } = response.data

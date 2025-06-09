@@ -9,11 +9,11 @@ export const useRegister = () => {
 
     const navigate = useNavigate()
 
-    const register = async (email, password, username) => {
+    const register = async (formData) => {
 
         setIsLoading(true)
 
-        const response = await registerRequest({ email, password, username })
+        const response = await registerRequest( formData )
 
         setIsLoading(false)
 
@@ -27,7 +27,7 @@ export const useRegister = () => {
 
         toast.success('Usuario registrado exitosamente');
 
-        navigate('/')
+        navigate('/login')
     }
 
     return { 
