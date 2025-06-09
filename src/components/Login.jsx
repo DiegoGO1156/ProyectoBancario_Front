@@ -93,7 +93,7 @@ export const Login = ({ switchAuthHandler }) => {
                 </div>
             </div>
 
-            <div className="flex-1 w-full max-w-md bg-[#162456] dark:bg-black shadow-input rounded-md p-6 md:p-8">
+            <div className="shadow-input mx-auto w-full max-w-md rounded-none bg-white p-4 md:rounded-2xl md:p-8 dark:bg-black">
                 <h2 className="text-xl font-bold text-neutral-800 dark:text-neutral-200">
                     Welcome to Aceternity
                 </h2>
@@ -160,15 +160,9 @@ export const Login = ({ switchAuthHandler }) => {
                                     <BottomGradient />
                                 </button>
                             </div>
-                        <p className="mt-4 text-center text-sm text-[#4B5B6A]">
-                            ¿No tienes cuenta?{' '}
-                            <span
-                                onClick={switchAuthHandler}
-                                className="text-[#1C4E88] font-semibold cursor-pointer hover:underline"
-                            >
-                                Regístrate aquí
-                            </span>
-                        </p>
+                        <p className="mt-4 text-sm text-center text-[#1C4E88] cursor-pointer hover:underline" onClick={switchAuthHandler}>
+                    Already have an account? Sign in
+            </p>
                 </form>
             </div>
 
