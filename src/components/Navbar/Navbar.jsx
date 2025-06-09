@@ -71,7 +71,7 @@ const Navbar = () => {
             </Link>
             
             <Link 
-              to="/Contacto"
+              to="/contact"
               className="relative px-4 py-2 text-blue-100 hover:text-white transition-colors duration-300 group"
             >
               Contáctenos
