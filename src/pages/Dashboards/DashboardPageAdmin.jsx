@@ -25,7 +25,7 @@ export const DashboardPageAdmin = () => {
           <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
               { number: '125K+', label: 'Clientes Activos' },
-              { number: '$2.4B', label: 'Activos Bajo Gestión' },
+              { number: 'Q2.4B', label: 'Activos Bajo Gestión' },
               { number: '98.7%', label: 'Satisfacción Clientes' },
             ].map((item, index) => (
               <div key={index} className="bg-white rounded-xl shadow-lg p-6 text-center border-t-4 border-blue-500 hover:shadow-2xl transition-shadow">
@@ -154,7 +154,7 @@ export const DashboardPageAdmin = () => {
         <footer className="bg-blue-900 text-white py-6 px-6">
           <div className="max-w-7xl mx-auto text-center text-sm md:text-base">
             <p>© {new Date().getFullYear()} Banco Valmeria | Panel de Administración | contacto@valmeria.com</p>
-            <p className="mt-2 text-blue-300 text-xs">Entidad supervisada por SCRUM MAYA y developersis</p>
+            <p className="mt-2 text-blue-300 text-xs">Entidad supervisada por SCRUM y developers</p>
           </div>
         </footer>
       </div>

@@ -62,7 +62,7 @@ const HomePage = () => {
               onLoad={() => handleImageLoaded(0)}
               onError={() => handleImageError(0)}
             />
-            <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+            <div className="absolute inset-0  bg-opacity-40 flex items-center justify-center">
               <div className="text-center px-6 max-w-4xl mx-auto">
                 <h2 className="text-white text-4xl md:text-6xl font-bold mb-6 animate-fade-in">
                   Banca Digital Avanzada
@@ -85,7 +85,7 @@ const HomePage = () => {
               className="w-full h-full object-cover"
               loading="eager"
             />
-            <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+            <div className="absolute inset-0  bg-opacity-40 flex items-center justify-center">
               <div className="text-center px-6 max-w-4xl mx-auto">
                 <h2 className="text-white text-4xl md:text-6xl font-bold mb-6 animate-fade-in">
                   Préstamos Personalizados
@@ -108,7 +108,7 @@ const HomePage = () => {
               className="w-full h-full object-cover"
               loading="eager"
             />
-            <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+            <div className="absolute inset-0  bg-opacity-40 flex items-center justify-center">
               <div className="text-center px-6 max-w-4xl mx-auto">
                 <h2 className="text-white text-4xl md:text-6xl font-bold mb-6 animate-fade-in">
                   Inversiones Inteligentes
@@ -131,7 +131,7 @@ const HomePage = () => {
               className="w-full h-full object-cover"
               loading="eager"
             />
-            <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+            <div className="absolute inset-0  bg-opacity-40 flex items-center justify-center">
               <div className="text-center px-6 max-w-4xl mx-auto">
                 <h2 className="text-white text-4xl md:text-6xl font-bold mb-6 animate-fade-in">
                   Atención Personalizada
@@ -221,11 +221,11 @@ const HomePage = () => {
             >
               {/* Tarjeta Señora de la cuenta  */}
               <div className="flex-shrink-0 w-1/4 px-2">
-                <a href="/productos/serbora-cuenta" className="group block bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 h-full flex flex-col">
+                <a href= "" className="group block bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 h-full flex flex-col">
                   <div className="h-48 bg-gradient-to-r from-purple-100 to-blue-100 flex items-center justify-center overflow-hidden">
                     <img 
                       src="https://img.lovepik.com/photo/60179/8751.jpg_wh860.jpg" 
-                      alt="Serbora Cuenta"
+                      alt="Señora Cuenta"
                       className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                   </div>
@@ -240,7 +240,7 @@ const HomePage = () => {
 
               {/* Tarjeta Dinero al Chilazo */}
               <div className="flex-shrink-0 w-1/4 px-2">
-                <a href="/productos/dinero-al-chilazo" className="group block bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 h-full flex flex-col">
+                <a href="" className="group block bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 h-full flex flex-col">
                   <div className="h-48 bg-gradient-to-r from-green-100 to-yellow-100 flex items-center justify-center overflow-hidden">
                     <img 
                       src="https://us.images.westend61.de/0001342837j/hombre-sacando-dinero-en-un-cajero-automatico-de-la-ciudad-LJF01428.jpg" 
@@ -259,7 +259,7 @@ const HomePage = () => {
 
               {/* Tarjeta Crédito Amigo Trabajador */}
               <div className="flex-shrink-0 w-1/4 px-2">
-                <a href="/productos/credito-amigo-trabajador" className="group block bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 h-full flex flex-col">
+                <a href="" className="group block bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 h-full flex flex-col">
                   <div className="h-48 bg-gradient-to-r from-blue-100 to-indigo-100 flex items-center justify-center overflow-hidden">
                     <img 
                       src="https://media.istockphoto.com/id/1551147598/es/foto/alegre-hombre-cauc%C3%A1sico-cliente-bancario-cliente-mostrando-tarjeta-de-cr%C3%A9dito-para-banca.jpg?s=612x612&w=0&k=20&c=m-cLAHLjtB4yRNEPvTVtdp2BZlEhMedK200ps_jFf0Y=" 
@@ -278,7 +278,7 @@ const HomePage = () => {
 
               {/* Tarjeta Remesas Familiares */}
               <div className="flex-shrink-0 w-1/4 px-2">
-                <a href="/productos/remesas-familiares" className="group block bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 h-full flex flex-col">
+                <a href="" className="group block bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 h-full flex flex-col">
                   <div className="h-48 bg-gradient-to-r from-orange-100 to-red-100 flex items-center justify-center overflow-hidden">
                     <img 
                       src="https://esdesarrollo.com/wp-content/uploads/2022/10/Remesas.jpg" 
@@ -636,7 +636,7 @@ const HomePage = () => {
           </div>
           <div className="mt-4 text-center md:text-left">
             <p className="text-blue-600 text-xs">
-              Banco Valmeria es una entidad financiera regulada por la Superintendencia de Bancos. Tus depósitos están asegurados hasta por $100,000. Sisdolares
+              Banco Valmeria es una entidad financiera regulada por la Superintendencia de Bancos. Tus depósitos están asegurados hasta por Q.100 quetzales
             </p>
           </div>
         </div>

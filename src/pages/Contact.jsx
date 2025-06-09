@@ -85,7 +85,7 @@ export const AboutValmeriaPage = () => {
                   </p>
                   <div className="bg-blue-100 border-l-4 border-blue-600 p-4 my-6">
                     <p className="font-medium text-blue-900">"En Valmeria no solo manejamos dinero, construimos confianza."</p>
-                    <p className="text-blue-700">- Scrum Maya, Fundador</p>
+                    <p className="text-blue-700">- Scrum, Fundador</p>
                   </div>
                 </div>
               </div>
@@ -105,7 +105,7 @@ export const AboutValmeriaPage = () => {
                           <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                         </svg>
                       </div>
-                      <span className="text-gray-700"> Ganar Matematica en el 1er Bimestre</span>
+                      <span className="text-gray-700">Expansión geográfica: Apertura de nuevas sucursales nacionales/internacionales.</span>
                     </li>
                     <li className="flex items-start">
                       <div className="bg-blue-100 p-1 rounded-full mr-3 mt-1">
@@ -113,7 +113,7 @@ export const AboutValmeriaPage = () => {
                           <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                         </svg>
                       </div>
-                      <span className="text-gray-700"> Ganar taller, tecnología y Practica Supervisada</span>
+                      <span className="text-gray-700"> Reconocimiento como una de las "Mejores Empresas para Trabajar".</span>
                     </li>
                     <li className="flex items-start">
                       <div className="bg-blue-100 p-1 rounded-full mr-3 mt-1">
@@ -121,7 +121,7 @@ export const AboutValmeriaPage = () => {
                           <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                         </svg>
                       </div>
-                      <span className="text-gray-700"> No dejar de aprender y mejorar</span>
+                      <span className="text-gray-700">Lanzamiento exitoso de una nueva app móvil con más de 1 millón de descargas.</span>
                     </li>
                   </ul>
                 </div>
@@ -141,7 +141,7 @@ export const AboutValmeriaPage = () => {
                       </svg>
                     </div>
                     <div>
-                      <p className="text-gray-700"><span className="font-bold text-blue-900">85 sucursales</span> en 12 estados</p>
+                      <p className="text-gray-700"><span className="font-bold text-blue-900">85 sucursales</span> en 12 departamentos</p>
                       <p className="text-gray-700"><span className="font-bold text-blue-900">320 cajeros</span> automáticos propios</p>
                     </div>
                   </div>
@@ -165,7 +165,7 @@ export const AboutValmeriaPage = () => {
                       </div>
                       <div>
                         <h4 className="font-bold text-blue-900 mb-1">Atención al Cliente</h4>
-                        <p className="text-gray-700">800-VALMERIA (8254-6374)</p>
+                        <p className="text-gray-700"> VALMERIA (8254-6374)</p>
                         <p className="text-gray-700">Lunes a Viernes: 7:00 AM - 10:00 PM</p>
                         <p className="text-gray-700">Sábados: 8:00 AM - 4:00 PM</p>
                       </div>
@@ -194,7 +194,7 @@ export const AboutValmeriaPage = () => {
                       <div>
                         <h4 className="font-bold text-blue-900 mb-1">Oficina Principal</h4>
                         <p className="text-gray-700">Torre Valmeria, Av. Fundacion Kinal 1500</p>
-                        <p className="text-gray-700">Ciudad Valmeria, CP 45080</p>
+                        <p className="text-gray-700">Ciudad Capital, CP 45080</p>
                       </div>
                     </div>
                   </div>
@@ -210,7 +210,7 @@ export const AboutValmeriaPage = () => {
                     </div>
                     <div>
                       <h4 className="font-bold text-blue-900">Diego Otuc</h4>
-                      <p className="text-gray-600 text-sm">Scrum Maya y Presidente Ejecutivo</p>
+                      <p className="text-gray-600 text-sm">Full Stack y Presidente Ejecutivo</p>
                       <p className="text-blue-600 text-sm">dgarcia@valmeria.com</p>
                     </div>
                   </div>
@@ -312,7 +312,7 @@ export const AboutValmeriaPage = () => {
                 </div>
               </div>
               <div className="text-center md:text-right">
-                <p className="text-blue-300">Supervisado por la Comisión de Scrum Maya</p>
+                <p className="text-blue-300">Supervisado por la Comisión de Scrum</p>
                 <p className="text-sm text-blue-400 mt-1">© {new Date().getFullYear()} Banco Valmeria. Todos los derechos reservados.</p>
               </div>
             </div>

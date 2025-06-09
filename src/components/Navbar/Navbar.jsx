@@ -25,7 +25,7 @@ const Navbar = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo con animación */}
           <Link 
-            to="/HomePage" 
+            to="/home" 
             className="flex items-center space-x-2 transform hover:scale-105 transition-transform duration-300"
           >
             <img 
@@ -39,7 +39,7 @@ const Navbar = () => {
           {/* Menú Desktop */}
           <div className="hidden md:flex items-center space-x-6">
             <Link 
-              to="/HomePage"
+              to="/home"
               className="relative px-4 py-2 text-blue-100 hover:text-white transition-colors duration-300 group"
             >
               Inicio
@@ -75,6 +75,13 @@ const Navbar = () => {
               className="relative px-4 py-2 text-blue-100 hover:text-white transition-colors duration-300 group"
             >
               Contáctenos
+              <span className="absolute bottom-0 left-0 h-0.5 bg-yellow-400 transition-all duration-300 w-0 group-hover:w-full"></span>
+            </Link>
+            <Link 
+              to="/auth"
+              className="relative px-4 py-2 text-blue-100 hover:text-white transition-colors duration-300 group"
+            >
+              Login
               <span className="absolute bottom-0 left-0 h-0.5 bg-yellow-400 transition-all duration-300 w-0 group-hover:w-full"></span>
             </Link>
           </div>
