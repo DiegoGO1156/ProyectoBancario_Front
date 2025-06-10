@@ -7,7 +7,7 @@ import { Register } from './components/Register';
 
 const routes = [
     {path: '/auth', element: <Auth />},
-    {path: '/home', element: <HomePage />},
+    {path: '/', element: <HomePage />},
     {path: '/admin', element: <DashboardPageAdmin />},
     {path: '/profile' , element: <MyAccountPage />},
     {path: '/contact', element: <AboutValmeriaPage />},

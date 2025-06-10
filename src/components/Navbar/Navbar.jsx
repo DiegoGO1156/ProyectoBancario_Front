@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useUserDetails } from '../../shared/hooks/useUserDetails';
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  //logOut
+  const{isLogged , logout} = useUserDetails
 
   // Efecto para el scroll
   useEffect(() => {
@@ -35,11 +39,39 @@ const Navbar = () => {
             />
             <span className="text-white font-bold text-xl hidden sm:block">Banco Financiero</span>
           </Link>
-
-          {/* Menú Desktop */}
-          <div className="hidden md:flex items-center space-x-6">
+          
+    {/* Navbar contatenar*/}
+          {!isLogged ? (
+                   <div>
+           <Link 
+              to="/"
+              className="relative px-4 py-2 text-blue-100 hover:text-white transition-colors duration-300 group"
+            >
+              Inicio
+              <span className="absolute bottom-0 left-0 h-0.5 bg-yellow-400 transition-all duration-300 w-0 group-hover:w-full"></span>
+            </Link>
+                   <Link 
+                     to="/auth"
+                     className="relative px-4 py-2 text-blue-100 hover:text-white transition-colors duration-300 group"
+                   >
+                     Login
+                     <span className="absolute bottom-0 left-0 h-0.5 bg-yellow-400 transition-all duration-300 w-0 group-hover:w-full"></span>
+                   </Link>
+                   <Link 
+              to="/contact"
+              className="relative px-4 py-2 text-blue-100 hover:text-white transition-colors duration-300 group"
+            >
+              Contáctenos
+              <span className="absolute bottom-0 left-0 h-0.5 bg-yellow-400 transition-all duration-300 w-0 group-hover:w-full"></span>
+            </Link>
+                   
+                   
+                 </div>
+                   
+                ):(
+          <div>
             <Link 
-              to="/home"
+              to="/"
               className="relative px-4 py-2 text-blue-100 hover:text-white transition-colors duration-300 group"
             >
               Inicio
@@ -69,42 +101,9 @@ const Navbar = () => {
               Promociones
               <span className="absolute bottom-0 left-0 h-0.5 bg-yellow-400 transition-all duration-300 w-0 group-hover:w-full"></span>
             </Link>
-            
-            <Link 
-              to="/contact"
-              className="relative px-4 py-2 text-blue-100 hover:text-white transition-colors duration-300 group"
-            >
-              Contáctenos
-              <span className="absolute bottom-0 left-0 h-0.5 bg-yellow-400 transition-all duration-300 w-0 group-hover:w-full"></span>
-            </Link>
-            <Link 
-              to="/auth"
-              className="relative px-4 py-2 text-blue-100 hover:text-white transition-colors duration-300 group"
-            >
-              Login
-              <span className="absolute bottom-0 left-0 h-0.5 bg-yellow-400 transition-all duration-300 w-0 group-hover:w-full"></span>
-            </Link>
           </div>
-
-          {/* Botón Mobile */}
-          <div className="md:hidden flex items-center">
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-blue-200 hover:text-white hover:bg-blue-700 focus:outline-none transition duration-300"
-              aria-expanded="false"
-            >
-              <span className="sr-only">Abrir menú</span>
-              {!mobileMenuOpen ? (
-                <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              ) : (
-                <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              )}
-            </button>
-          </div>
+                )}
+          
         </div>
       </div>
 
@@ -112,7 +111,7 @@ const Navbar = () => {
       <div className={`md:hidden transition-all duration-500 ease-in-out overflow-hidden ${mobileMenuOpen ? 'max-h-96' : 'max-h-0'}`}>
         <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
           <Link
-            to="/HomePage"
+            to="/"
             className="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-blue-700 transition duration-300"
             onClick={() => setMobileMenuOpen(false)}
           >

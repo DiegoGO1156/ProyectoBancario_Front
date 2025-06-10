@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar/Navbar';
@@ -43,6 +44,11 @@ const HomePage = () => {
     console.error(`Error loading image for slide ${index}`);
   };
 
+  const navigate = useNavigate();
+  const handleNavigateToAuthPage = () => {
+    navigate('/auth');
+  }
+
   return (
     <section className="py-12 bg-gray-50">
       <Navbar />
@@ -68,10 +74,10 @@ const HomePage = () => {
                   Banca Digital Avanzada
                 </h2>
                 <p className="text-white text-xl md:text-2xl mb-8 animate-fade-in animate-delay-100">
-                  Accede a tu cuenta desde cualquier lugar
+                  Conoce mas
                 </p>
-                <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 animate-fade-in animate-delay-200">
-                  Conoce más
+                <button onClick={handleNavigateToAuthPage} className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 animate-fade-in animate-delay-200">
+                <strong>Inicia Sesión</strong>
                 </button>
               </div>
             </div>
