@@ -1,12 +1,12 @@
 import { useNavigate } from 'react-router-dom';
-import Navbar from '../../components/Navbar/Navbar';
+import { SidebarAdmin } from '../../components/Navbar/SidebarAdmin';
 
 export const DashboardPageAdmin = () => {
   const navigate = useNavigate();
   return (
     <>
-      <div className='my-12'>
-        <Navbar />
+      <div className='my-'>
+        <SidebarAdmin/>
       </div>
       <div className="min-h-screen bg-blue-50 flex flex-col">
 

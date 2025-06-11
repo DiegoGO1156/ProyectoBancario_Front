@@ -12,6 +12,7 @@ const routes = [
     {path: '/profile' , element: <MyAccountPage />},
     {path: '/contact', element: <AboutValmeriaPage />},
     {path: '/register', element: <Register />},
+    
 ]
 
 export default routes
