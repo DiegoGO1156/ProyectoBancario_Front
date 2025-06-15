@@ -4,6 +4,9 @@ import {DashboardPageAdmin} from '../src/pages/Dashboards/DashboardPageAdmin';
 import {MyAccountPage} from '../src/pages/ProfilePage';
 import {AboutValmeriaPage} from '../src/pages/Contact';
 import { Register } from './components/Register';
+import { PendingUsersPage } from './pages/LIstUserPendingPage';
+import { ActiveUsersPage } from './pages/ActiveUserPage';
+import { UserHistoryPage } from './pages/UserHistoryPage';
 
 const routes = [
     {path: '/auth', element: <Auth />},
@@ -12,7 +15,9 @@ const routes = [
     {path: '/profile' , element: <MyAccountPage />},
     {path: '/contact', element: <AboutValmeriaPage />},
     {path: '/register', element: <Register />},
-    
+    {path: '/userPending', element: <PendingUsersPage />},
+    {path: '/userActive', element: <ActiveUsersPage />},
+    {path: '/historyUser', element: <UserHistoryPage/>}
 ]
 
 export default routes

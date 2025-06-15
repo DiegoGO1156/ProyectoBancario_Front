@@ -28,9 +28,9 @@ export const SidebarAdmin = () => {
         </svg>
       ),
       submenu: [
-        { title: 'Registro', path: '/clientes/registro' },
-        { title: 'Consulta', path: '/clientes/consulta' },
-        { title: 'Segmentos', path: '/clientes/segmentos' }
+        { title: 'Usuarios Pendientes', path: '/userPending' },
+        { title: 'Usuarios Activos', path: '/userActive' },
+        { title: 'Historial Usuarios Activos', path: '/historyUser' }
       ]
     },
     {
