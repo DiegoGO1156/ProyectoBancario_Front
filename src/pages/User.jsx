@@ -1,6 +1,5 @@
 import { useState } from "react"
 import { Login } from "../components/Login";
-import { Register } from "../components/Register";
 import { UserD } from '../components/UserD'
 
 export const User = () => {

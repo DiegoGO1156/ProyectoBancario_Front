@@ -50,3 +50,28 @@ export const register = async(data) => {
     }
 }
 
+export const getUserProfile = async () => {
+    try {
+        const response = await apiClient.get('User/profile')
+        return response.data.listData
+    } catch (e) {
+        if (e.response?.status === 401) {
+            logout()
+        }
+        return {
+            error: true,
+            message: e.response?.data?.msg || "No se pudo obtener el perfil"
+        }
+    }
+}
+
+export const changePassword = async (data) => {
+    try {
+        return await apiClient.patch('/User/updatePassword', data)
+    } catch (e) {
+        return {
+            error: true,
+            e
+        }
+    }
+}
