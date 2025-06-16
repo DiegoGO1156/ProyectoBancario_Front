@@ -4,7 +4,7 @@ import {
     validatePassword
 } from "../../shared/validators"
 import { useChangePassword } from "../../shared/hooks";
-import { Input} from "../Input"
+import { MotionInput } from "../ui/input"
 
 const inputs = [
     {
@@ -72,7 +72,7 @@ export const PasswordSettings = () => {
     return (
         <form className="settings-form">
             {inputs.map((input) => (
-                <Input
+                <MotionInput
                     key={input.field}
                     field={input.field}
                     label={input.label}

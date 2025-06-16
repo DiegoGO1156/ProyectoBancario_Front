@@ -52,7 +52,7 @@ export const register = async(data) => {
 
 export const getUserProfile = async () => {
     try {
-        const response = await apiClient.get('User/profile')
+        const response = await apiClient.get('User/personalData')
         return response.data.listData
     } catch (e) {
         if (e.response?.status === 401) {

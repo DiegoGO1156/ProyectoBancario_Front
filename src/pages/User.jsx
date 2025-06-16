@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { Login } from "../components/Login";
+import { Profile } from "../components/settings/Profile"
 import { UserD } from '../components/UserD'
 
 export const User = () => {
@@ -15,7 +16,7 @@ export const User = () => {
             {isUser ? (
                 <UserD switchAuthHandler={handleUserPageToggle} />
             ) : (
-                <Register switchAuthHandler={handleUserPageToggle} />
+                <Profile switchAuthHandler={handleUserPageToggle} />
             )}
         </div>
     )
