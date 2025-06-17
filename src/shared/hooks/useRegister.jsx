@@ -5,28 +5,34 @@ import toast from "react-hot-toast";
 
 export const useRegister = () => {
 
-    const [isLoading, setIsLoading] = useState(false);
-    const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(false)
 
-    const register = async (formData) => {
-        setIsLoading(true);
+    const navigate = useNavigate()
 
-        const response = await registerRequest(formData);
+    const register = async (name, username, dpi, phone, companyName, income, email, address, password) => {
 
-        setIsLoading(false);
+        setIsLoading(true)
 
-        if (response.error) {
-            const message = response.message || "Ocurrió un error al registrar";
-            return toast.error(message);
+        const response = await registerRequest({ name, username, dpi, phone, companyName, income, email, address, password })
+
+        console.log(response)
+        setIsLoading(false)
+
+        if(response.error){
+            return toast.error(response.error?.response?.data || 'Ocurrio un error al registrar, intenta de nuevo')
         }
 
-        toast.success('Usuario registrado. Pendiente de activación.');
+        const { userDetails } = response.data
 
-        navigate('/login');
+        localStorage.setItem('user', JSON.stringify(userDetails));
+
+        toast.success('Usuario registrado exitosamente');
+
+        navigate('/')
     }
 
-    return {
+    return { 
         register,
         isLoading
-    };
-};
+    }
+}

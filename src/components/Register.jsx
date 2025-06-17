@@ -41,15 +41,15 @@ export function Register({ switchAuthHandler }) {
 
     const [formState, setFormState] = useState({
         name: { value: '', isValid: false, showError: false },
-        email: { value: '', isValid: false, showError: false },
         username: { value: '', isValid: false, showError: false },
         dpi: { value: '', isValid: false, showError: false },
-        address: { value: '', isValid: false, showError: false },
         phone: { value: '', isValid: false, showError: false },
-        password: { value: '', isValid: false, showError: false },
-        passwordConfir: { value: '', isValid: false, showError: false },
         companyName: { value: '', isValid: false, showError: false },
         income: { value: '', isValid: false, showError: false },
+        email: { value: '', isValid: false, showError: false },
+        address: { value: '', isValid: false, showError: false },
+        password: { value: '', isValid: false, showError: false },
+        passwordConfir: { value: '', isValid: false, showError: false },
     });
 
     const handleInputValueChange = (value, field) => {
@@ -63,15 +63,15 @@ export function Register({ switchAuthHandler }) {
         let isValid = false;
         switch (field) {
             case 'name': isValid = validateName(value); break;
-            case 'email': isValid = validateEmail(value); break;
             case 'username': isValid = validateUsername(value); break;
             case 'dpi': isValid = validateDpi(value); break;
-            case 'address': isValid = validateAddress(value); break;
             case 'phone': isValid = validatePhone(value); break;
-            case 'password': isValid = validatePassword(value); break;
-            case 'passwordConfir': isValid = validateConfirPassword(formState.password.value, value); break;
             case 'companyName': isValid = validateCompany(value); break;
             case 'income': isValid = validateIncome(value); break;
+            case 'email': isValid = validateEmail(value); break;
+            case 'address': isValid = validateAddress(value); break;
+            case 'password': isValid = validatePassword(value); break;
+            case 'passwordConfir': isValid = validateConfirPassword(formState.password.value, value); break;
             default: break;
         }
         setFormState(prev => ({
@@ -81,35 +81,33 @@ export function Register({ switchAuthHandler }) {
     };
 
     const handleRegister = (e) => {
-    e.preventDefault();
-    console.log("Formulario enviado"); 
-  
-  const formData = {
-    name: formState.name.value,
-    email: formState.email.value,
-    password: formState.password.value,
-    username: formState.username.value,
-    dpi: formState.dpi.value,
-    address: formState.address.value,
-    phone: formState.phone.value,
-    companyName: formState.companyName.value,
-    income: formState.income.value
-  };
-
-  register(formData);
-};
+      e.preventDefault();
+    
+    
+      register(
+        formState.name.value,
+        formState.username.value,
+        formState.dpi.value,
+        formState.phone.value,
+        formState.companyName.value,
+        formState.income.value,
+        formState.email.value,
+        formState.address.value,
+        formState.password.value,
+      );
+    };
 
     const isSubmitButtonDisable =
         isLoading ||
         !formState.name.isValid ||
-        !formState.email.isValid ||
-        !formState.password.isValid ||
         !formState.username.isValid ||
         !formState.dpi.isValid ||
-        !formState.address.isValid ||
         !formState.phone.isValid ||
         !formState.companyName.isValid ||
         !formState.income.isValid ||
+        !formState.email.isValid ||
+        !formState.address.isValid ||
+        !formState.password.isValid ||
         !formState.passwordConfir.isValid;
 
         const images = [
@@ -181,7 +179,7 @@ export function Register({ switchAuthHandler }) {
         yet
       </p>
 
-      <form className="my-8" onSubmit={handleRegister}>
+      <form className="my-8" >
         <div className="mb-4 flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-2">
           <LabelInputContainer>
             <Label htmlFor="firstname">First name</Label>
@@ -318,9 +316,10 @@ export function Register({ switchAuthHandler }) {
           />
         </LabelInputContainer>
 
-        <button onClick={handleRegister} disabled={isSubmitButtonDisable}
+        <button
+            onClick={handleRegister} 
             className="group/btn relative block h-10 w-full rounded-md bg-gradient-to-br from-black to-neutral-600 font-medium text-white shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900 dark:shadow-[0px_1px_0px_0px_#27272a_inset,0px_-1px_0px_0px_#27272a_inset]"
-            type="submit">
+            >
                 Sign up &rarr;
             <BottomGradient />
         </button>

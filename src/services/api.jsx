@@ -39,18 +39,22 @@ export const login = async (data) => {
     }
 };
 
-export const register = async(data) => {
+export const register = async (data) => {
     try {
-        return await apiClient.post('/Auth/register', data)
-        return { data: response.data };
+        const response = await apiClient.post('/Auth/register', data);
+        return {
+            error: false,
+            data: response.data,
+            message: response.data.msg || "Registro exitoso"
+        };
     } catch (e) {
-        return{
+        return {
             error: true,
-            message: e.response?.data?.msg || e.message || "Error desconocido",
+            message: e.response?.data?.error || e.message || "Error desconocido",
             e
-        }
+        };
     }
-}
+};
 
 export const getUserProfile = async () => {
     try {
