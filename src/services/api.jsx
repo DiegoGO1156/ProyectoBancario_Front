@@ -48,5 +48,17 @@ export const register = async(data) => {
             e
         }
     }
-}
+};
+
+export const getBrands = async () => {
+    try {
+        const response = await apiClient.get('/Brands/allBrands');
+        return response.data;
+    } catch (e) {
+        return{
+            error: true,
+            e: e.response?.data?.error || e.message
+        };
+    }
+};
 

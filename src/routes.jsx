@@ -7,6 +7,7 @@ import { Register } from './components/Register';
 import { PendingUsersPage } from './pages/LIstUserPendingPage';
 import { ActiveUsersPage } from './pages/ActiveUserPage';
 import { UserHistoryPage } from './pages/UserHistoryPage';
+import BrandsPage from './pages/BrandsPage/BrandPage';
 
 const routes = [
     {path: '/auth', element: <Auth />},
@@ -17,7 +18,8 @@ const routes = [
     {path: '/register', element: <Register />},
     {path: '/userPending', element: <PendingUsersPage />},
     {path: '/userActive', element: <ActiveUsersPage />},
-    {path: '/historyUser', element: <UserHistoryPage/>}
+    {path: '/historyUser', element: <UserHistoryPage/>},
+    {path: '/brands', element: <BrandsPage/>}
 ]
 
 export default routes
