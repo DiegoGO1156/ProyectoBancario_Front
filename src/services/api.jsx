@@ -42,9 +42,11 @@ export const login = async (data) => {
 export const register = async(data) => {
     try {
         return await apiClient.post('/Auth/register', data)
+        return { data: response.data };
     } catch (e) {
         return{
             error: true,
+            message: e.response?.data?.msg || e.message || "Error desconocido",
             e
         }
     }

@@ -3,17 +3,13 @@ import { useUserProfile } from '../../shared/hooks';
 import { useNavigate } from 'react-router-dom';
 import { logout } from '../../shared/hooks';
 import { Sidebar, SidebarBody, SidebarLink } from "../ui/sidebar";
+import { BackgroundGradient } from "../ui/background-gradient";
 import { PasswordSettings } from "./PasswordSettings";
 import {
   IconArrowLeft,
   IconBrandTabler,
   IconSettings,
   IconUserBolt,
-  IconArrowWaveRightUp,
-  IconClipboardCopy,
-  IconFileBroken,
-  IconSignature,
-  IconTableColumn,
 } from "@tabler/icons-react";
 import { motion } from "motion/react";
 import { cn } from "../ui/lib/utils";
@@ -109,9 +105,31 @@ export const LogoIcon = () => {
 const Dashboard = ({ usuario }) => {
   return (
     <div>
-      <h2>Perfil de {usuario.name}</h2>
-      <p>Email: {usuario.email}</p>
-      <p>Estado de cuenta: {usuario.statusAccount}</p>
+      <div>
+      <BackgroundGradient className="rounded-[22px] max-w-sm p-4 sm:p-10 bg-white dark:bg-zinc-900">
+        <img
+          src={`/jordans.webp`}
+          alt="jordans"
+          height="400"
+          width="400"
+          className="object-contain"
+        />
+        <p className="text-base sm:text-xl text-black mt-4 mb-2 dark:text-neutral-200">
+          <h2>Perfil de {usuario.name}</h2>
+        </p>
+ 
+        <p className="text-sm text-neutral-600 dark:text-neutral-400">
+          <p>Email: {usuario.email}</p>
+          <p>Estado de cuenta: {usuario.statusAccount}</p>
+        </p>
+        <button className="rounded-full pl-4 pr-1 py-1 text-white flex items-center space-x-1 bg-black mt-4 text-xs font-bold dark:bg-zinc-800">
+          <span>Buy now </span>
+          <span className="bg-zinc-700 rounded-full text-[0.6rem] px-2 py-0 text-white">
+            $100
+          </span>
+        </button>
+      </BackgroundGradient>
+    </div>
       <PasswordSettings />
     </div>
   );

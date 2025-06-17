@@ -5,11 +5,6 @@ import { Label } from "./ui/label";
 import { MotionInput  } from "./ui/input";
 import { cn } from "./ui/lib/utils";
 import { ThreeDMarquee } from "./ui/3d-marquee";
-import { Spotlight } from "../components/ui/spotlight-new"
-import {
-  IconBrandGithub,
-  IconBrandGoogle,
-} from "@tabler/icons-react";
 import {
     validateName,
     validateUsername,
@@ -86,19 +81,23 @@ export function Register({ switchAuthHandler }) {
     };
 
     const handleRegister = (e) => {
-        e.preventDefault();
-        register(
-            formState.name.value,//
-            formState.email.value,//
-            formState.password.value,//
-            formState.username.value,//
-            formState.dpi.value,//
-            formState.address.value,
-            formState.phone.value,//
-            formState.companyName.value,
-            formState.income.value
-        );
-    };
+    e.preventDefault();
+    console.log("Formulario enviado"); 
+  
+  const formData = {
+    name: formState.name.value,
+    email: formState.email.value,
+    password: formState.password.value,
+    username: formState.username.value,
+    dpi: formState.dpi.value,
+    address: formState.address.value,
+    phone: formState.phone.value,
+    companyName: formState.companyName.value,
+    income: formState.income.value
+  };
+
+  register(formData);
+};
 
     const isSubmitButtonDisable =
         isLoading ||
@@ -182,7 +181,7 @@ export function Register({ switchAuthHandler }) {
         yet
       </p>
 
-      <form className="my-8" onSubmit={handleSubmit}>
+      <form className="my-8" onSubmit={handleRegister}>
         <div className="mb-4 flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-2">
           <LabelInputContainer>
             <Label htmlFor="firstname">First name</Label>
