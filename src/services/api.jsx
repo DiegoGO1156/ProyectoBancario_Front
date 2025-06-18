@@ -62,3 +62,27 @@ export const getBrands = async () => {
     }
 };
 
+export const createBrand = async (brandData) => {
+    try {
+        const response = await apiClient.post('/Brands/createBrand', brandData);
+        return response.data;
+    } catch (e) {
+        return {
+            error: true,
+            message: e.response?.data?.error || e.message,
+        };
+    }
+}
+
+export const updateBrand = async (id, brandData) => {
+    try {
+       const response = await apiClient.put(`/Brands/updateBrand/${id}`, brandData);
+       return response.data;
+    } catch (e) {
+        return {
+            error: true,
+            message: e.response?.data?.error || e.message,
+        };
+    } 
+}
+

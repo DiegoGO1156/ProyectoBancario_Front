@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-import { getBrands } from '../../services';
+import { getBrands, createBrand, updateBrand } from '../../services';
 
 export const useBrands = () => {
     const [brands, setBrands] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    //Listar
     const fetchBrands = async () => {
         try {
             setLoading(true);
@@ -25,6 +26,41 @@ export const useBrands = () => {
         }
     };
 
+    //Agregar
+    const addBrand = async (brandData) => {
+    setLoading(true);
+    try {
+      const newBrand = await createBrand(brandData); 
+      setBrands(prevBrands => [newBrand, ...prevBrands]);
+      return { success: true, data: newBrand };
+    } catch (err) {
+      setError(err.message);
+      return { success: false, error: err.message };
+    } finally {
+      setLoading(false);
+    }
+  };
+
+    //editar
+    const updateBrand = async (id, brandData) => {
+   setLoading(true);
+   try {
+     const updatedBrand = await brandService.updateBrand(id, brandData);
+     setBrands(prev => prev.map(brand => 
+      brand._id === id ? updatedBrand.brand : brand
+    ));
+      return updatedBrand;
+   } catch (err) {
+    setError(err.message);
+    throw err;
+   } finally {
+    setLoading(false);
+  }
+};
+    
+
+  
+
     useEffect(() => {
         fetchBrands();
     }, []);
@@ -33,6 +69,8 @@ export const useBrands = () => {
         brands,
         loading,
         error,
-        refresh: fetchBrands
+        refresh: fetchBrands,
+        addBrand,
+        updateBrand
     };
 };

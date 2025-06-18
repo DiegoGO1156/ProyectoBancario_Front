@@ -1,9 +1,13 @@
 import { useState } from "react";
 import { useBrands } from "../../shared/hooks/useBrand";
+import { AddBrandModal } from "./addBrands";
+import { EditBrandModal } from "./updateBrand";
 
 const BrandsGrid = () => {
     const { brands, loading, error, refresh } = useBrands();
     const [searchTerm, setSearchTerm] = useState('');
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    
   
     const filteredBrands = brands.filter(brand => 
       brand.nameBrand?.toLowerCase().includes(searchTerm.toLowerCase())
@@ -54,6 +58,16 @@ const BrandsGrid = () => {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
+               <button 
+                 onClick={() => setIsModalOpen(true)}
+                className="px-6 py-2 bg-blue-600 text-white rounded-md mb-20 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
+              >
+                 + Agregar Marca
+              </button>
+               <AddBrandModal 
+                      isOpen={isModalOpen} 
+                      onClose={() => setIsModalOpen(false)} 
+                    />
           </div>
         </div>
   
@@ -104,7 +118,7 @@ const BrandsGrid = () => {
                     <button
                       type="button"
                       className="text-gray-400 hover:text-blue-500 transition-colors duration-200"
-                      onClick={() => console.log('Editar', brand._id)}
+                      onClick={() => onEditBrand(brand)}
                     >
                       <span className="text-sm font-medium">Editar</span>
                     </button>
