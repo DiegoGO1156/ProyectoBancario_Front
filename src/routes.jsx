@@ -8,11 +8,12 @@ import { PendingUsersPage } from './pages/LIstUserPendingPage';
 import { ActiveUsersPage } from './pages/ActiveUserPage';
 import { UserHistoryPage } from './pages/UserHistoryPage';
 import BrandsPage from './pages/BrandsPage/BrandPage';
+import { PrivateAdminDashboard } from './components/PrivatePages';
 
 const routes = [
     {path: '/auth', element: <Auth />},
     {path: '/', element: <HomePage />},
-    {path: '/admin', element: <DashboardPageAdmin />},
+    {path: '/admin', element: <PrivateAdminDashboard />},
     {path: '/profile' , element: <MyAccountPage />},
     {path: '/contact', element: <AboutValmeriaPage />},
     {path: '/register', element: <Register />},
