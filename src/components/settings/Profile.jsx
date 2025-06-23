@@ -27,8 +27,8 @@ export const Profile = () => {
   const handleLogout = () => logout();
 
   const links = [
-    { label: "Dashboard", href: "#", icon: <IconBrandTabler />, onClick: () => {} },
-    { label: "Profile", href: "#", icon: <IconUserBolt />, onClick: () => {} },
+    { label: "Dashboard", href: "#", icon: <IconBrandTabler />, onClick: () => { } },
+    { label: "Profile", href: "#", icon: <IconUserBolt />, onClick: () => { } },
     { label: "Settings", href: "#", icon: <IconSettings />, onClick: handleNavigateToSettingPage },
     { label: "Logout", href: "#", icon: <IconArrowLeft />, onClick: handleLogout },
   ];
@@ -53,7 +53,7 @@ export const Profile = () => {
           <div>
             <SidebarLink
               link={{
-                label: "Manu Arora",
+                label: "Perfil",
                 href: "#",
                 icon: (
                   <img
@@ -105,19 +105,16 @@ export const LogoIcon = () => {
 
 const Dashboard = ({ usuario }) => {
   return (
-    <div className="flex justify-end items-center min-h-screen px-8 bg-gray-100 dark:bg-zinc-800">
-      <div className="w-full max-w-[700px]">
-        <BackgroundGradient className="rounded-[22px] p-8 sm:p-12 bg-white dark:bg-zinc-900 shadow-2xl">
-          <div className='mr-'>
+    <div className="flex-1 flex justify-center items-center min-h-screen px-8 bg-white">
+      <div className="w-full max-w-[400px]">
+        <BackgroundGradient className="rounded-[22px] p-8 sm:p-12 bg-white shadow-2xl">
+          <Perfil/>
 
-          <Perfil />
-          </div>
-
-          <h2 className="text-3xl font-bold text-black dark:text-white mb-6">
+          <h2 className="text-3xl font-bold text-black mb-6">
             Perfil de {usuario.name}
           </h2>
 
-          <div className="text-base text-neutral-700 dark:text-neutral-300 space-y-2">
+          <div className="text-base text-black space-y-2">
             <p>Email: {usuario.email}</p>
             <p>Username: {usuario.username}</p>
             <p>DPI: {usuario.dpi}</p>
@@ -126,14 +123,59 @@ const Dashboard = ({ usuario }) => {
             <p>Estado de cuenta: {usuario.statusAccount}</p>
           </div>
         </BackgroundGradient>
-
-        <div className="mt-12">
-          <PasswordSettings />
-        </div>
       </div>
     </div>
   );
 };
+
+const footer = ({}) => {
+  return(
+    <div className='max-w-[900px]'>
+          <footer className="bg-gray-900 pt-12 pb-6 px-10 tracking-wide">
+            <div className="max-w-screen-xl mx-auto">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                {/* Logo */}
+                <div className="lg:flex lg:items-center">
+                  <a href="#">
+                    <img src="https://readymadeui.com/readymadeui-light.svg" alt="logo" className="w-48" />
+                  </a>
+                </div>
+
+                {/* Redes sociales */}
+                <div className="lg:flex lg:items-center">
+                  <ul className="flex space-x-6">
+                    {/* Icons omitidos por brevedad, mantenlos si quieres */}
+                  </ul>
+                </div>
+
+                {/* Enlaces útiles */}
+                <div>
+                  <h4 className="mb-6 text-white">Useful links</h4>
+                  <ul className="space-y-4 pl-2 text-sm text-gray-400 hover:text-white">
+                    <li><a href="#">Featured</a></li>
+                    <li><a href="#">New Arrivals</a></li>
+                  </ul>
+                </div>
+
+                {/* Información */}
+                <div>
+                  <h4 className="mb-6 text-white">Information</h4>
+                  <ul className="space-y-4 pl-2 text-sm text-gray-400 hover:text-white">
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Terms & Conditions</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                  </ul>
+                </div>
+              </div>
+
+              <p className="text-gray-400 text-sm mt-10 text-center">
+                © ReadymadeUI. All rights reserved.
+              </p>
+            </div>
+          </footer>
+        </div>
+  );
+}
 
 
 export default Profile;
