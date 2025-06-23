@@ -3,20 +3,6 @@ import { useState } from 'react';
 
 const ProductCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const totalCards = 4;
-  
-  const nextSlide = () => {
-    setCurrentIndex((prevIndex) => 
-      prevIndex === totalCards - 1 ? 0 : prevIndex + 1
-    );
-  };
-
-  const prevSlide = () => {
-    setCurrentIndex((prevIndex) => 
-      prevIndex === 0 ? totalCards - 1 : prevIndex - 1
-    );
-  };
-
   const products = [
     {
       id: 1,
@@ -29,7 +15,7 @@ const ProductCarousel = () => {
       id: 2,
       title: "Dinero al Chilazo",
       description: "Hay gastos que no pueden esperar",
-      image: "https://us.images.westend61.de/0001342837j/hombre-sacando-dinero-en-un-cajero-automatico-de-la-ciudad-LJF01428.jpg",
+      image: "https://i.blogs.es/888791/cajero2/1366_2000.jpg",
       gradient: "from-green-100 to-yellow-100"
     },
     {
@@ -47,6 +33,23 @@ const ProductCarousel = () => {
       gradient: "from-orange-100 to-red-100"
     }
   ];
+
+  const totalCards = products.length;
+  
+  const nextSlide = () => {
+    setCurrentIndex((prevIndex) => 
+      prevIndex === totalCards - 1 ? 0 : prevIndex + 1
+    );
+  };
+
+  const prevSlide = () => {
+    setCurrentIndex((prevIndex) => 
+      prevIndex === 0 ? totalCards - 1 : prevIndex - 1
+    );
+  };
+
+ //infi
+  const duplicatedProducts = [...products, ...products, ...products];
 
   return (
     <div className="relative">
@@ -70,7 +73,7 @@ const ProductCarousel = () => {
         </svg>
       </button>
 
-      {/* Contenedor del carrusel */}
+      {/* carrusel */}
       <div className="overflow-hidden">
         <div 
           className="flex transition-transform duration-300 ease-out"
@@ -79,8 +82,8 @@ const ProductCarousel = () => {
             width: `${totalCards * 25}%`
           }}
         >
-          {products.map((product) => (
-            <div key={product.id} className="flex-shrink-0 w-1/4 px-2">
+          {duplicatedProducts.map((product, index) => (
+            <div key={`${product.id}-${index}`} className="flex-shrink-0 w-1/4 px-2">
               <a href="" className="group block bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 h-full flex flex-col">
                 <div className={`h-48 bg-gradient-to-r ${product.gradient} flex items-center justify-center overflow-hidden`}>
                   <img 
@@ -103,7 +106,7 @@ const ProductCarousel = () => {
 
       {/* Indicadores de paginación */}
       <div className="flex justify-center mt-6 space-x-2">
-        {[...Array(totalCards)].map((_, index) => (
+        {products.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentIndex(index)}

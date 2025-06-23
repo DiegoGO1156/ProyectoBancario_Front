@@ -75,7 +75,7 @@ const HeroCarousel = () => {
               onError={() => handleImageError(index)}
               loading="eager"
             />
-            <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+            <div className="absolute inset-0  bg-opacity-40 flex items-center justify-center">
               <div className="text-center px-6 max-w-4xl mx-auto">
                 <h2 className="text-white text-4xl md:text-6xl font-bold mb-6 animate-fade-in">
                   {slide.title}
