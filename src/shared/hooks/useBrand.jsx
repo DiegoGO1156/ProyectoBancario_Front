@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getBrands, createBrand, updateBrand } from '../../services';
+import { getBrands, createBrand, updateBrand  } from '../../services';
 
 export const useBrands = () => {
     const [brands, setBrands] = useState([]);
@@ -42,21 +42,27 @@ export const useBrands = () => {
   };
 
     //editar
-    const updateBrand = async (id, brandData) => {
-   setLoading(true);
-   try {
-     const updatedBrand = await brandService.updateBrand(id, brandData);
-     setBrands(prev => prev.map(brand => 
-      brand._id === id ? updatedBrand.brand : brand
-    ));
-      return updatedBrand;
-   } catch (err) {
-    setError(err.message);
-    throw err;
-   } finally {
-    setLoading(false);
-  }
-};
+  const updateBrandHandler = async (id, brandData) => {
+    try {
+      setLoading(true);
+      setError(null);
+      
+      const response = await updateBrand(id, brandData);
+      
+      // Maneja la respuesta de tu servicio
+      if (response.error) {
+        throw new Error(response.message);
+      }
+      
+     
+      return response; // Devuelve los datos actualizados
+    } catch (err) {
+      setError(err.message || 'Error al actualizar la marca');
+      throw err; // Re-lanza el error para manejo adicional
+    } finally {
+      setLoading(false);
+    }
+  };
     
 
   
@@ -71,6 +77,10 @@ export const useBrands = () => {
         error,
         refresh: fetchBrands,
         addBrand,
-        updateBrand
+        updateBrand: updateBrandHandler,
+        resetState: () => {
+      setError(null);
+      
+    }
     };
 };

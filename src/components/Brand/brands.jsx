@@ -3,10 +3,16 @@ import { useBrands } from "../../shared/hooks/useBrand";
 import { AddBrandModal } from "./addBrands";
 import { EditBrandModal } from "./updateBrand";
 
-const BrandsGrid = () => {
+const BrandsGrid = ({ onEditBrand }) => {
     const { brands, loading, error, refresh } = useBrands();
     const [searchTerm, setSearchTerm] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
+
+      const handleEditClick = (brand) => {
+    if (typeof onEditBrand === 'function') {
+      onEditBrand(brand);  // Llama a la función pasada como prop
+    }
+  };
     
   
     const filteredBrands = brands.filter(brand => 
@@ -107,28 +113,17 @@ const BrandsGrid = () => {
                     <h3 className="text-lg font-medium text-gray-900 truncate">
                       {brand.nameBrand}
                     </h3>
-                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                      brand.status ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-                    }`}>
-                      {brand.status ? 'Activo' : 'Inactivo'}
-                    </span>
                   </div>
                   
-                  <div className="mt-4 flex justify-end space-x-2">
-                    <button
-                      type="button"
-                      className="text-gray-400 hover:text-blue-500 transition-colors duration-200"
-                      onClick={() => onEditBrand(brand)}
-                    >
-                      <span className="text-sm font-medium">Editar</span>
-                    </button>
-                    <button
-                      type="button"
-                      className="text-gray-400 hover:text-gray-600 transition-colors duration-200"
-                    >
-                      <span className="text-sm font-medium">...</span>
-                    </button>
-                  </div>
+                   <div className="mt-4 flex justify-end space-x-2">
+            <button
+              type="button"
+              className="text-gray-400 hover:text-blue-500 transition-colors duration-200"
+              onClick={() => handleEditClick(brand)}  // Usa la función definida
+            >
+              <span className="text-sm font-medium">Editar</span>
+            </button>
+          </div>
                 </div>
               </div>
             ))}

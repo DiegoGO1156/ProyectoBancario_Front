@@ -4,17 +4,33 @@ import { useBrands } from '../../shared/hooks/useBrand';
 export const EditBrandModal = ({ 
   isOpen, 
   onClose, 
-  brandToEdit 
+  brandToEdit,
+  onUpdateSuccess // Callback para éxito
 }) => {
-  const { updateBrand, loading } = useBrands(); // Usamos el hook directamente
+  const { 
+    updateBrand, 
+    loading, 
+    error, 
+    success,
+    resetState 
+  } = useBrands();
+  
   const [formData, setFormData] = useState({
     nameBrand: '',
     image: '',
     status: true
   });
+  
   const [errors, setErrors] = useState({});
 
-  // Rellenar formulario con datos de la marca a editar
+  // Resetear estado al abrir/cerrar
+  useEffect(() => {
+    if (isOpen) {
+      resetState();
+    }
+  }, [isOpen, resetState]);
+
+  // Rellenar formulario con datos
   useEffect(() => {
     if (brandToEdit) {
       setFormData({
@@ -46,10 +62,16 @@ export const EditBrandModal = ({
     if (!validateForm() || !brandToEdit?._id) return;
 
     try {
-      await updateBrand(brandToEdit._id, formData); // Usamos el hook directamente
-      onClose();
+      const updatedBrand = await updateBrand(brandToEdit._id, formData);
+      
+      if (onUpdateSuccess) {
+        onUpdateSuccess(updatedBrand); // Notificar éxito al padre
+      }
+      
+      onClose(); // Cerrar modal después de éxito
     } catch (error) {
-      console.error("Error al actualizar:", error);
+      // El error ya está manejado en el hook
+      console.error("Error completo:", error);
     }
   };
 
@@ -60,7 +82,22 @@ export const EditBrandModal = ({
       <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
         <h2 className="text-xl font-bold mb-4">Editar Marca</h2>
         
+        {/* Mostrar error si existe */}
+        {error && (
+          <div className="mb-4 p-2 bg-red-100 text-red-700 rounded">
+            {error}
+          </div>
+        )}
+        
+        {/* Mostrar éxito si corresponde */}
+        {success && (
+          <div className="mb-4 p-2 bg-green-100 text-green-700 rounded">
+            ¡Marca actualizada con éxito!
+          </div>
+        )}
+        
         <form onSubmit={handleSubmit}>
+          {/* Campos del formulario (igual que antes) */}
           <div className="mb-4">
             <label className="block text-gray-700 mb-1">Nombre *</label>
             <input
