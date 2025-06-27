@@ -86,3 +86,27 @@ export const updateBrand = async (id, brandData) => {
     } 
 }
 
+export const searchBrandById = async (id) => {
+  try {
+    const response = await apiClient.get(`/Brands/findBrand/${id}`);
+    return response.data;
+  } catch (e) {
+    return {
+      error: true,
+      message: e.response?.data?.error || e.message,
+    };
+  }
+}; 
+
+export const deleteBrand = async (id) => {
+  try {
+    const response = await apiClient.delete(`/Brands/deleteBrand/${id}`);
+    return response.data;
+  } catch (e) {
+    return {
+      error: true,
+      message: e.response?.data?.error || e.message,
+    };
+  }
+};
+
