@@ -44,7 +44,7 @@ export const useLogin = () => {
 
         toast.success('Sesion iniciada correctamente')
 
-        navigate('/')
+        navigate('/admin')
     }
 
     return {
