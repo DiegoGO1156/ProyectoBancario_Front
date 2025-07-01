@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { logout } from '../../shared/hooks';
 import { Sidebar, SidebarBody, SidebarLink } from "../ui/sidebar";
 import { BackgroundGradient } from "../ui/background-gradient";
-import { Perfil } from "../Perfil"
 import { PasswordSettings } from "./PasswordSettings";
 import {
   IconArrowLeft,

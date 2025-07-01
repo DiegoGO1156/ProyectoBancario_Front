@@ -1,5 +1,5 @@
 export const validateAddress = (address) => {
-    const regex = /^\S{6,12}$/;
+    const regex = /^\S{6,25}$/;
     return regex.test(address);
 }
 
