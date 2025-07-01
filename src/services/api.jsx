@@ -95,3 +95,70 @@ export const changePassword = async (data) => {
         }
     }
 }
+
+export const addTransfer = async (data) => {
+  try {
+    const response = await apiClient.post("/transfers/make-transfer", data);
+    return response.data;
+  } catch (e) {
+    return {
+      error: true,
+      message: e.response?.data?.message || "No se pudo hacer la transferencia",
+      e,
+    };
+  }
+};
+
+
+export const getTransferByUser = async (id) => {
+  try {
+    const response = await apiClient.get(`/transfers/get-user/${id}`);
+    return response.data;
+  } catch (e) {
+    return {
+      error: true,
+      message: e.response?.data?.message || "No se pudieron obtener las transferencias del usuario",
+      e,
+    };
+  }
+};
+
+
+export const getAllTransfers = async () => {
+  try {
+    const response = await apiClient.get("/transfers/get/");
+    return response.data;
+  } catch (e) {
+    return {
+      error: true,
+      message: e.response?.data?.message || "No se pudieron obtener las transferencias",
+      e,
+    };
+  }
+};
+
+export const listUserTransfered = async () => {
+  try {
+    const response = await apiClient.get("/transfers/get-user-transfered/");
+    return response.data;
+  } catch (e) {
+    return {
+      error: true,
+      message: e.response?.data?.message || "No se pudo obtener la lista de usuarios transferidos",
+      e,
+    };
+  }
+};
+
+export const makeAUserFavorite = async (number, data) => {
+  try {
+    const response = await apiClient.put(`/transfers/favorite/${number}`, data);
+    return response.data;
+  } catch (e) {
+    return {
+      error: true,
+      message: e.response?.data?.message || "No se pudo agregar a favoritos",
+      e,
+    };
+  }
+};
