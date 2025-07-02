@@ -70,6 +70,19 @@ export const register = async (data) => {
     }
 };
 
+export const updateUser = async (data) => {
+  try {
+    const response = await apiClient.put('/User/updateData', data); // <-- PUT
+    return response.data;
+  } catch (e) {
+    return {
+      error: true,
+      message: e.response?.data?.error || e.message || "Error al editar el perfil",
+      e
+    };
+  }
+};
+
 export const getUserProfile = async () => {
     try {
         const response = await apiClient.get('User/personalData')

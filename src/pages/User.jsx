@@ -1,7 +1,6 @@
 import { useState } from "react"
 import { Login } from "../components/Login";
 import { Profile } from "../components/settings/Profile"
-import { UserD } from '../components/UserD'
 
 export const User = () => {
 

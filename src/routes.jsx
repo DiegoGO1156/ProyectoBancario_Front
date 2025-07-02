@@ -13,6 +13,7 @@ import { PendingUsersPage } from './pages/LIstUserPendingPage';
 import { ActiveUsersPage } from './pages/ActiveUserPage';
 import { UserHistoryPage } from './pages/UserHistoryPage';
 import BrandsPage from './pages/BrandsPage/BrandPage';
+import { UpdateProfile } from './components/settings/UpdateProfile';
 import { PrivateAdminDashboard } from './components/PrivatePages';
 
 const routes = [
@@ -30,7 +31,8 @@ const routes = [
     {path: '/userPending', element: <PendingUsersPage />},
     {path: '/userActive', element: <ActiveUsersPage />},
     {path: '/historyUser', element: <UserHistoryPage/>},
-    {path: '/brands', element: <BrandsPage/>}
+    {path: '/brands', element: <BrandsPage/>},
+    {path: '/updateProfile', element: <UpdateProfile />},
 ]
 
 export default routes
