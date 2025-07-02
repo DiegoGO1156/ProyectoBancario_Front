@@ -108,8 +108,8 @@ export const SidebarAdmin = () => {
         </svg>
       ),
       submenu: [
-        { title: "Lista", path: "/TransferForm" },
-        { title: "Aprobación", path: "/prestamos/aprobacion" },
+        { title: "Lista", path: "/TransferList" },
+        { title: "Transferencia", path: "/TransferForm" },
         { title: "Cartera", path: "/Transfers" },
       ],
     },

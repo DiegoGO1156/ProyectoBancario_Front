@@ -2,6 +2,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { getAllTransfers } from "../../services";
+import { SidebarAdmin } from '../Navbar/SidebarAdmin';
 import { CardBody, CardContainer, CardItem } from "../ui/3d-card";
 
 export const TransferList = () => {
@@ -16,7 +17,8 @@ export const TransferList = () => {
   }, []);
 
   return (
-    <div>
+    <div className="flex h-screen">
+      <SidebarAdmin />
       <h2>Mis transferencias</h2>
       <ul>
         {transfers.map((t) => (

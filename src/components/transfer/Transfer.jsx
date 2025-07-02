@@ -1,6 +1,7 @@
 import React from "react";
 import { useUserProfile } from "../../shared/hooks";
 import { CardBody, CardContainer, CardItem } from "../ui/3d-card"
+import { TextGenerateEffect } from "../ui/text-generate-effect";
 import { SidebarAdmin } from '../Navbar/SidebarAdmin';
 import  Footer  from "../Homepage/Footer";
 
@@ -15,12 +16,25 @@ export const Transfer = () => {
 }
 
 const Dashboard = ({ usuario, switchTransferHandler }) => {
+    const words = `Oxygen gets you high. In a catastrophic emergency, we're taking giant, 
+panicked breaths. Suddenly you become euphoric, docile. You accept your fate. It's all 
+    right here. Emergency water landing, six hundred miles an hour. Blank faces, calm as Hindu cows
+    `;
     return (
         <div className="flex h-screen">
             <SidebarAdmin />
             <div className="flex-1 overflow-auto bg-gray-100 p-6">
+                <div className="text-black font-bold text-center">
+                    <h1 className="text-4xl font-bold text-black mb-6">Transferencias</h1>
+                    <div className="">
+                        <TextGenerateEffect
+                        words={words}
+                        className="text-black text-sm text-center"
+                        />
+                    </div>
+                </div>
                 <CardContainer className="inter-var">
-                    <CardBody className="relative bg-[#104e64] group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] border-white/[0.2] w-full sm:w-[48rem] h-auto rounded-xl p-6 border">
+                    <CardBody className="relative bg-[#0d2b9c] group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] border-white/[0.2] w-full sm:w-[48rem] h-auto rounded-xl p-6 border">
 
                         <CardItem
                             translateZ={20}

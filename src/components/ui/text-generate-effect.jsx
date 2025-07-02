@@ -7,7 +7,8 @@ export const TextGenerateEffect = ({
   words,
   className,
   filter = true,
-  duration = 0.5
+  duration = 0.5,
+  textColor = "text-black",
 }) => {
   const [scope, animate] = useAnimate();
   let wordsArray = words.split(" ");
@@ -23,20 +24,22 @@ export const TextGenerateEffect = ({
 
   const renderWords = () => {
     return (
-      <motion.div ref={scope}>
-        {wordsArray.map((word, idx) => {
-          return (
-            <motion.span
-              key={word + idx}
-              className="dark:text-white text-black opacity-0"
-              style={{
-                filter: filter ? "blur(10px)" : "none",
-              }}>
-              {word}{" "}
-            </motion.span>
-          );
-        })}
-      </motion.div>
+      <motion.p
+        ref={scope}
+        className="flex flex-wrap justify-center max-w-xl mx-auto text-center"
+      >
+        {wordsArray.map((word, idx) => (
+          <motion.span
+            key={word + idx}
+            className="text-black opacity-0"
+            style={{
+              filter: filter ? "blur(10px)" : "none",
+            }}
+          >
+            {word}&nbsp;
+          </motion.span>
+        ))}
+      </motion.p>
     );
   };
 
