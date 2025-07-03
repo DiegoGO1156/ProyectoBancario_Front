@@ -110,3 +110,64 @@ export const deleteBrand = async (id) => {
   }
 };
 
+//SERVICEs
+export const getServices = async () => {
+    try {
+        const response = await apiClient.get('/Services/allServices');
+        return response.data;
+    } catch (e) {
+        return {
+            error: true,
+            e: e.response?.data?.error || e.message
+        };
+    }
+};
+
+export const createService = async (serviceData) => {
+    try {
+        const response = await apiClient.post('/Services/createService', serviceData);
+        return response.data;
+    } catch (e) {
+        return {
+            error: true,
+            message: e.response?.data?.error || e.message,
+        };
+    }
+};
+
+export const updateService = async (id, serviceData) => {
+    try {
+       const response = await apiClient.put(`/Services/updateService/${id}`, serviceData);
+       return response.data;
+    } catch (e) {
+        return {
+            error: true,
+            message: e.response?.data?.error || e.message,
+        };
+    } 
+};
+
+export const searchServiceById = async (id) => {
+    try {
+        const response = await apiClient.get(`/Services/findService/${id}`);
+        return response.data;
+    } catch (e) {
+        return {
+            error: true,
+            message: e.response?.data?.error || e.message,
+        };
+    }
+};
+
+export const deleteService = async (id) => {
+    try {
+        const response = await apiClient.delete(`/Services/deleteService/${id}`);
+        return response.data;
+    } catch (e) {
+        return {
+            error: true,
+            message: e.response?.data?.error || e.message,
+        };
+    }
+};
+

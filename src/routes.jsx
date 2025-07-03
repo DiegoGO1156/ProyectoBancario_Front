@@ -9,6 +9,7 @@ import { ActiveUsersPage } from './pages/ActiveUserPage';
 import { UserHistoryPage } from './pages/UserHistoryPage';
 import BrandsPage from './pages/BrandsPage/BrandPage';
 import { PrivateAdminDashboard } from './components/PrivatePages';
+import ServicesPage from './pages/ServicesPage/ServicesPage';
 
 const routes = [
     {path: '/auth', element: <Auth />},
@@ -20,7 +21,8 @@ const routes = [
     {path: '/userPending', element: <PendingUsersPage />},
     {path: '/userActive', element: <ActiveUsersPage />},
     {path: '/historyUser', element: <UserHistoryPage/>},
-    {path: '/brands', element: <BrandsPage/>}
+    {path: '/brands', element: <BrandsPage/>},
+    {path: '/services', element: <ServicesPage/>},
 ]
 
 export default routes

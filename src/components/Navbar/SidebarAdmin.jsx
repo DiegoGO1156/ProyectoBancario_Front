@@ -60,13 +60,13 @@ export const SidebarAdmin = () => {
       ]
     },
     {
-      title: 'Tarjetas',
+      title: 'Servicios',
       icon: (
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-        </svg>
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round"  strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z"/>
+      </svg>
       ),
-      path: '/tarjetas'
+      path: '/services'
     },
     {
       title: 'Marcas',
@@ -75,10 +75,8 @@ export const SidebarAdmin = () => {
           <path strokeLinecap="round" strokeLinejoin="round"  strokeWidth={2} d="M7 7h.01M7 3h5a1.99 1.99 0 011.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.99 1.99 0 013 12V7a4 4 0 014-4z" />
         </svg>
       ),
-      submenu: [
-        { title: 'Todas las Marcas', path: '/brands' }
-      ]
-    }
+      path: '/brands'
+    },
     
   ];
 
