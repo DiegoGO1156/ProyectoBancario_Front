@@ -137,7 +137,7 @@ export const EditServiceModal = ({
           </div>
 
           <div className="mb-4">
-            <label className="block text-gray-700 mb-1">Marca *</label>
+            <label className="block text-gray-700 mb-1">Seleccione la nueva marca o la misma</label>
             {loadingBrands ? (
               <div className="animate-pulse h-10 bg-gray-200 rounded"></div>
             ) : (

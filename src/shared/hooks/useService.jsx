@@ -5,6 +5,7 @@ export const useServices = () => {
     const [services, setServices] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [success, setSuccess] = useState(false);
 
     // Listar servicios
     const fetchServices = async () => {
@@ -45,6 +46,7 @@ export const useServices = () => {
       }
 
       return { success: true, data: response.service };
+      
 
     } catch (err) {
       const errorMsg = err.response?.data?.message || 
@@ -59,30 +61,34 @@ export const useServices = () => {
 
    //editar 
    const update = async (id, serviceData) => {
-    setLoading(true);
-    setError(null);
-    setSuccess(false);
+  setLoading(true);
+  setError(null);
+  setSuccess(false);
+  
+  try {
+    const response = await updateService(id, serviceData);
     
-    try {
-      const response = await updateService(id, serviceData);
-      
-      if (response.error) {
-        throw new Error(response.message);
-      }
-
-      setSuccess(true);
-      return response;
-
-    } catch (err) {
-      const errorMsg = err.response?.data?.error?.message || 
-                     err.message || 
-                     'Error al actualizar servicio';
-      setError(errorMsg);
-      throw err; // Re-lanzamos para manejo adicional
-    } finally {
-      setLoading(false);
+    if (response.error) {
+      throw new Error(response.message);
     }
-  };
+
+    // Actualiza el estado local con el servicio modificado
+    setServices(prev => prev.map(service => 
+      service._id === id ? {
+        ...response.service,
+        brandName: response.service.brand?.nameBrand || 'Sin marca'
+      } : service
+    ));
+
+    setSuccess(true);
+    return response;
+
+  } catch (err) {
+    // ... (mantén el mismo código de error)
+  } finally {
+    setLoading(false);
+  }
+};
 
     const resetState = () => {
     setError(null);
@@ -98,6 +104,7 @@ export const useServices = () => {
         services,
         loading,
         error,
+        success,
         addService, 
         updateService: update,
         refresh: fetchServices,

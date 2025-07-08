@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useServices } from '../../shared/hooks/useService'; // Asegúrate de que la ruta sea correcta
 import { AddServiceModal } from './addService'; // Asegúrate de que la ruta sea correcta
 
-const ServiceGrid = ({onEditService, onEdit, service}) => {
+const ServiceGrid = ({onEditService}) => {
   const { services, loading, error, refresh } = useServices();
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredServices, setFilteredServices] = useState([]);
@@ -135,7 +135,7 @@ const ServiceGrid = ({onEditService, onEdit, service}) => {
         {/* Botón de edición */}
         <div className="mt-4 flex justify-end space-x-2">
           <button 
-            onClick={() => onEdit(service)}
+            onClick={() => onEditService(service)}
             className="text-blue-600 hover:text-blue-800 text-sm font-medium"
           >
             Editar
