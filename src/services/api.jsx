@@ -50,6 +50,7 @@ export const register = async(data) => {
     }
 };
 
+ //brand
 export const getBrands = async () => {
     try {
         const response = await apiClient.get('/Brands/allBrands');
@@ -169,5 +170,54 @@ export const deleteService = async (id) => {
             message: e.response?.data?.error || e.message,
         };
     }
+};
+
+ // user
+ export const listUsersPending = async () => {
+  try {
+    const response = await apiClient.get('/User/pending');
+    return response.data;
+  } catch (e) {
+    return {
+      error: true,
+      message: e.response?.data?.error || e.message,
+    };
+  }
+};
+
+export const activeUser = async (id) => {
+  try {
+    const response = await apiClient.post(`/User/${id}/activate`);
+    return response.data;
+  } catch (e) {
+    return {
+      error: true,
+      message: e.response?.data?.error || e.message,
+    };
+  }
+};
+
+export const deleteRegisterUser = async (id) => {
+  try {
+    const response = await apiClient.delete(`/User/${id}/delete`);
+    return response.data;
+  } catch (e) {
+    return {
+      error: true,
+      message: e.response?.data?.error || e.message,
+    };
+  }
+};
+
+export const editUserBalance = async (id, balanceData) => {
+  try {
+    const response = await apiClient.put(`/User/${id}/edit-balance`, balanceData);
+    return response.data;
+  } catch (e) {
+    return {
+      error: true,
+      message: e.response?.data?.error || e.message,
+    };
+  }
 };
 
