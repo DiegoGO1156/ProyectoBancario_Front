@@ -111,7 +111,6 @@ export const SidebarAdmin = () => {
         { title: "Lista", path: "/TransferList" },
         { title: "Transferencia", path: "/TransferForm" },
         { title: "Cartera", path: "/Transfers" },
-        { title: "Usuarios favoritos", path: "/Addfavorite" },
       ],
     },
     {

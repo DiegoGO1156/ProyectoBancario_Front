@@ -11,10 +11,11 @@ export const useUpdateUser = () => {
     setError("");
     setSuccess(false);
 
-    const res = await apiUpdateUser(userData);
+    const res = await apiUpdateUser(userData); // <-- usa apiUpdateUser para la llamada real
 
     if (res?.error) {
       setError(res.message || "Error al actualizar el usuario");
+      setSuccess(false);
     } else {
       setSuccess(true);
     }
@@ -22,12 +23,7 @@ export const useUpdateUser = () => {
     setLoading(false);
   };
 
-  return {
-    updateUser,
-    loading,
-    error,
-    success,
-  };
+  return { updateUser, loading, error, success };
 };
 
 export default useUpdateUser;

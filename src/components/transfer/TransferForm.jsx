@@ -1,30 +1,16 @@
-import { useState, useEffect } from 'react';
-import { getFavoriteUsers, addTransfer } from '../../services';
+import { useState } from 'react';
 import { Label } from "../ui/label";
 import { MotionInput } from "../ui/input";
 import { cn } from "../ui/lib/utils";
 import { SidebarAdmin } from '../Navbar/SidebarAdmin';
-import Footer from "../Homepage/Footer";
+import { addTransfer } from '../../services';
+import  Footer  from "../Homepage/Footer";
 
 export const TransferForm = ({ switchTransferHandler }) => {
-  const [favorites, setFavorites] = useState([]);
   const [accountNumber, setAccountNumber] = useState("");
   const [amount, setAmount] = useState("");
   const [motive, setMotive] = useState("");
   const [message, setMessage] = useState("");
-
-  useEffect(() => {
-  const fetchFavorites = async () => {
-    try {
-      const data = await getFavoriteUsers();
-      setFavorites(data);
-    } catch (err) {
-      console.error("Error al obtener favoritos:", err);
-    }
-  };
-
-  fetchFavorites();
-}, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -49,17 +35,13 @@ export const TransferForm = ({ switchTransferHandler }) => {
       } else {
         setMessage("Error al transferir.");
       }
-    } catch (e) {
-        console.error("ERROR EN TRANSFERENCIA:", e); 
-        return res.status(500).json({
-          message: "Transfer creation failed",
-          error: e.message
-    });
-}
+    } catch (error) {
+      setMessage(error?.response?.data?.message || "Error desconocido");
+    }
   };
 
   return (
-    <div className="">
+    <div className=''>
       <SidebarAdmin />
       <div className='text-black font-bold text-center'>
         <h1 className='text-4xl font-bold text-black mb-10'>Formulario de transferencias</h1>
@@ -69,35 +51,21 @@ export const TransferForm = ({ switchTransferHandler }) => {
           Nueva Transferencia
         </h2>
         <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-300">
-          Selecciona un usuario favorito para realizar la transferencia.
+          Ingresa los datos para hacer la transferencia.
         </p>
 
         <form onSubmit={handleSubmit} className="my-8 space-y-4">
           <LabelInputContainer>
-            <Label htmlFor="account">Usuario Favorito</Label>
-
-            {Array.isArray(favorites) && favorites.length > 0 ? (
-              <select
-                value={accountNumber}
-                onChange={(e) => setAccountNumber(e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded-md bg-black text-white"
-                required
-              >
-                <option value="">Selecciona un destinatario favorito</option>
-                {favorites.map((fav) => (
-                  <option 
-                    key={fav.number} 
-                    value={fav.number}
-                    className="bg-black text-white" // 👈 esto asegura el color en cada opción
-                  >
-                    {fav.alias} ({fav.number})
-                  </option>
-                ))}
-              </select>
-            ) : (
-              <p className="text-sm text-red-500">No tienes usuarios favoritos disponibles.</p>
-            )}
+            <Label htmlFor="account">Cuenta destino</Label>
+            <MotionInput
+              id="account"
+              placeholder="Ej: 1234567890"
+              value={accountNumber}
+              onChange={(e) => setAccountNumber(e.target.value)}
+              type="text"
+            />
           </LabelInputContainer>
+
           <LabelInputContainer>
             <Label htmlFor="amount">Monto</Label>
             <MotionInput
@@ -109,6 +77,7 @@ export const TransferForm = ({ switchTransferHandler }) => {
               step="0.01"
             />
           </LabelInputContainer>
+
           <LabelInputContainer>
             <Label htmlFor="motive">Motivo</Label>
             <MotionInput
@@ -119,6 +88,7 @@ export const TransferForm = ({ switchTransferHandler }) => {
               type="text"
             />
           </LabelInputContainer>
+
           <button
             className="group/btn relative block h-10 w-full rounded-md bg-gradient-to-br from-black to-neutral-600 font-medium text-white shadow-md dark:bg-zinc-800"
             type="submit"
@@ -148,21 +118,24 @@ export const TransferForm = ({ switchTransferHandler }) => {
   );
 };
 
-const LabelInputContainer = ({ children, className }) => {
-  return (
-    <div className={cn("flex w-full flex-col space-y-2", className)}>
-      {children}
-    </div>
-  );
+const BottomGradient = () => {
+    return (
+        <>
+            <span
+                className="absolute inset-x-0 -bottom-px block h-px w-full bg-gradient-to-r from-transparent via-cyan-500 to-transparent opacity-0 transition duration-500 group-hover/btn:opacity-100" />
+            <span
+                className="absolute inset-x-10 -bottom-px mx-auto block h-px w-1/2 bg-gradient-to-r from-transparent via-indigo-500 to-transparent opacity-0 blur-sm transition duration-500 group-hover/btn:opacity-100" />
+        </>
+    );
 };
 
-const BottomGradient = () => {
-  return (
-    <>
-      <span
-        className="absolute inset-x-0 -bottom-px block h-px w-full bg-gradient-to-r from-transparent via-cyan-500 to-transparent opacity-0 transition duration-500 group-hover/btn:opacity-100" />
-      <span
-        className="absolute inset-x-10 -bottom-px mx-auto block h-px w-1/2 bg-gradient-to-r from-transparent via-indigo-500 to-transparent opacity-0 blur-sm transition duration-500 group-hover/btn:opacity-100" />
-    </>
-  );
+const LabelInputContainer = ({
+    children,
+    className
+}) => {
+    return (
+        <div className={cn("flex w-full flex-col space-y-2", className)}>
+            {children}
+        </div>
+    );
 };
