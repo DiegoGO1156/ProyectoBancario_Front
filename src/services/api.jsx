@@ -159,16 +159,13 @@ export const addTransfer = async (data) => {
 };
 
 
-export const getTransferByUser = async (id) => {
+export const getTransferByUser = async () => {
   try {
-    const response = await apiClient.get(`/transfers/get-user/${id}`);
+    const response = await apiClient.get("/transfers/get-user-transfered/");
     return response.data;
-  } catch (e) {
-    return {
-      error: true,
-      message: e.response?.data?.message || "No se pudieron obtener las transferencias del usuario",
-      e,
-    };
+  } catch (error) {
+    console.error("Error en getTransferByUser:", error);
+    return {};
   }
 };
 
@@ -208,6 +205,18 @@ export const makeAUserFavorite = async (number, data) => {
       error: true,
       message: e.response?.data?.message || "No se pudo agregar a favoritos",
       e,
+    };
+  }
+};
+
+export const getFavoriteUsers = async () => {
+  try {
+    const res = await apiClient.get('/transfers/favorites');
+    return res.data.favorites;
+  } catch (e) {
+    return {
+      error: true,
+      message: e.response?.data?.message || "No se pudo obtener la lista de favoritos"
     };
   }
 };
