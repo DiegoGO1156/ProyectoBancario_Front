@@ -5,7 +5,7 @@ import UserDetailModal from '../components/Users/UserDetailModal';
 import { usePendingUsers } from '../shared/hooks/usePendingUsers'; 
 
 const PendingUsersPage = () => {
-  const { users, loading, error, refresh, activateUser } = usePendingUsers();
+  const { users, loading, error, activateUser } = usePendingUsers();
   const [selectedUser, setSelectedUser] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -16,6 +16,7 @@ const PendingUsersPage = () => {
 
   const handleActivateUser = async (userId) => {
     return await activateUser(userId);
+    // No necesitamos hacer nada más, el hook ya maneja la actualización
   };
 
   return (
@@ -26,12 +27,7 @@ const PendingUsersPage = () => {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center mb-8">
             <h1 className="text-3xl font-bold text-gray-900">Usuarios Pendientes</h1>
-            <button 
-              onClick={refresh}
-              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-            >
-              Actualizar Lista
-            </button>
+            {/* Eliminamos el botón de actualización manual */}
           </div>
           
           <div className="bg-white shadow rounded-lg p-6">

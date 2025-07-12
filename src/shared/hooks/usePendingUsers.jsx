@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { listUsersPending, activeUser} from '../../services/api'; // Adjust the import path as necessary
+import { listUsersPending, activeUser } from '../../services/api';
 
 export const usePendingUsers = () => {
   const [users, setUsers] = useState([]);
@@ -31,11 +31,17 @@ export const usePendingUsers = () => {
         throw new Error(response.message);
       }
       
-      // Actualiza el estado local eliminando el usuario activado
+      // Opción 1: Actualización optimista + recarga
+      // Primero eliminamos el usuario activado localmente
       setUsers(prevUsers => prevUsers.filter(user => user._id !== userId));
+      
+      // Luego recargamos la lista completa para asegurar consistencia
+      await fetchPendingUsers();
       
       return { success: true, user: response.user };
     } catch (err) {
+      // Si hay error, recargamos para restaurar el estado
+      await fetchPendingUsers();
       setError(err.message);
       return { success: false, error: err.message };
     } finally {
@@ -43,21 +49,14 @@ export const usePendingUsers = () => {
     }
   };
 
-
-
   useEffect(() => {
     fetchPendingUsers();
   }, []);
-
-  const refresh = () => {
-    fetchPendingUsers();
-  };
 
   return {
     users,
     loading,
     error,
-    refresh: fetchPendingUsers,
     activateUser: activateUserAccount
   };
 };
