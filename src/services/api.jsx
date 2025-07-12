@@ -146,32 +146,39 @@ export const updateBrand = async (id, brandData) => {
     } 
 }
 
-<<<<<<< HEAD
 export const searchBrandById = async (id) => {
   try {
     const response = await apiClient.get(`/Brands/findBrand/${id}`);
-=======
-export const addTransfer = async (data) => {
-  try {
-    const response = await apiClient.post("/transfers/make-transfer", data);
->>>>>>> 0f47db0759c1c388177b6b1b8ebc1d24591c695b
-    return response.data;
+    return response.data
   } catch (e) {
     return {
       error: true,
-<<<<<<< HEAD
       message: e.response?.data?.error || e.message,
     };
   }
 }; 
 
+export const addTransfer = async (data) => {
+  try {
+    const response = await apiClient.post("/transfers/make-transfer", data);
+    return response.data;
+  } catch (e) {
+    return {
+      error: true,
+      message: e.response?.data?.error || e.message,
+    };
+  }
+}
+
 export const deleteBrand = async (id) => {
   try {
     const response = await apiClient.delete(`/Brands/deleteBrand/${id}`);
-=======
-      message: e.response?.data?.message || "No se pudo hacer la transferencia",
+    return response
+  }catch(e){ 
+      return{
+        message: e.response?.data?.message || "No se pudo hacer la transferencia",
       e,
-    };
+      }
   }
 };
 
@@ -179,22 +186,16 @@ export const deleteBrand = async (id) => {
 export const getTransferByUser = async (id) => {
   try {
     const response = await apiClient.get(`/transfers/get-user/${id}`);
->>>>>>> 0f47db0759c1c388177b6b1b8ebc1d24591c695b
     return response.data;
   } catch (e) {
     return {
       error: true,
-<<<<<<< HEAD
-      message: e.response?.data?.error || e.message,
-=======
       message: e.response?.data?.message || "No se pudieron obtener las transferencias del usuario",
       e,
->>>>>>> 0f47db0759c1c388177b6b1b8ebc1d24591c695b
     };
   }
 };
 
-<<<<<<< HEAD
 //SERVICEs
 export const getServices = async () => {
     try {
@@ -260,67 +261,76 @@ export const deleteService = async (id) => {
  export const listUsersPending = async () => {
   try {
     const response = await apiClient.get('/User/pending');
-=======
+    return response;
+    } catch (e) {
+    return {
+      error: true,
+      message: e.response?.data?.message || "No se pudieron obtener las transferencias",
+      e,
+    };
+  }
+}
 
 export const getAllTransfers = async () => {
   try {
     const response = await apiClient.get("/transfers/get/");
->>>>>>> 0f47db0759c1c388177b6b1b8ebc1d24591c695b
     return response.data;
   } catch (e) {
     return {
       error: true,
-<<<<<<< HEAD
-      message: e.response?.data?.error || e.message,
-=======
       message: e.response?.data?.message || "No se pudieron obtener las transferencias",
       e,
->>>>>>> 0f47db0759c1c388177b6b1b8ebc1d24591c695b
     };
   }
-};
+}
 
-<<<<<<< HEAD
 export const activeUser = async (id) => {
   try {
     const response = await apiClient.post(`/User/${id}/activate`);
-=======
+    return response
+  }catch(e){
+    return{
+      error: true,
+      message: e.response?.data.error || e.message
+    }
+  }
+};
+
 export const listUserTransfered = async () => {
   try {
     const response = await apiClient.get("/transfers/get-user-transfered/");
->>>>>>> 0f47db0759c1c388177b6b1b8ebc1d24591c695b
     return response.data;
   } catch (e) {
     return {
       error: true,
-<<<<<<< HEAD
       message: e.response?.data?.error || e.message,
-=======
-      message: e.response?.data?.message || "No se pudo obtener la lista de usuarios transferidos",
-      e,
->>>>>>> 0f47db0759c1c388177b6b1b8ebc1d24591c695b
+    };
+  }
+}
+
+export const deleteRegisterUser = async (id) => {
+  try {
+    const response = await apiClient.delete(`/User/${id}/delete`)
+    return response.data;
+  } catch (e) {
+    return {
+      error: true,
+      message: e.response?.data?.error || e.message,
     };
   }
 };
 
-<<<<<<< HEAD
-export const deleteRegisterUser = async (id) => {
-  try {
-    const response = await apiClient.delete(`/User/${id}/delete`);
-=======
 export const makeAUserFavorite = async (number, data) => {
   try {
     const response = await apiClient.put(`/transfers/favorite/${number}`, data);
->>>>>>> 0f47db0759c1c388177b6b1b8ebc1d24591c695b
     return response.data;
   } catch (e) {
     return {
       error: true,
-<<<<<<< HEAD
       message: e.response?.data?.error || e.message,
     };
   }
-};
+}
 
 export const editUserBalance = async (id, balanceData) => {
   try {
@@ -333,11 +343,3 @@ export const editUserBalance = async (id, balanceData) => {
     };
   }
 };
-
-=======
-      message: e.response?.data?.message || "No se pudo agregar a favoritos",
-      e,
-    };
-  }
-};
->>>>>>> 0f47db0759c1c388177b6b1b8ebc1d24591c695b

@@ -114,15 +114,6 @@ export const SidebarAdmin = () => {
       ],
     },
     {
-<<<<<<< HEAD
-      title: 'Servicios',
-      icon: (
-      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round"  strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z"/>
-      </svg>
-      ),
-      path: '/services'
-=======
       title: "Tarjetas",
       icon: (
         <svg
@@ -140,7 +131,6 @@ export const SidebarAdmin = () => {
         </svg>
       ),
       path: "/tarjetas",
->>>>>>> 0f47db0759c1c388177b6b1b8ebc1d24591c695b
     },
     {
       title: "Marcas",
@@ -159,14 +149,8 @@ export const SidebarAdmin = () => {
           />
         </svg>
       ),
-<<<<<<< HEAD
-      path: '/brands'
-    },
-    
-=======
       submenu: [{ title: "Todas las Marcas", path: "/brands" }],
     },
->>>>>>> 0f47db0759c1c388177b6b1b8ebc1d24591c695b
   ];
 
   // Efecto para cerrar submenús al cambiar de ruta
