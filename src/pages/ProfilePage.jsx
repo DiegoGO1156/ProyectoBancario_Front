@@ -1,27 +1,23 @@
 import { useNavigate } from 'react-router-dom';
-import Navbar from '../components/Navbar/Navbar';
+import { useState } from 'react';
+import { useUserProfile } from '../shared/hooks';
+import { SidebarAdmin } from '../components/Navbar/SidebarAdmin';
 
 
-export const MyAccountPage = () => {
+export const MyAccountPage = (props) => {
   const navigate = useNavigate();
-
-  // Datos de ejemplo del usuario (deberías reemplazarlos con los datos reales del contexto/auth)
-  const userData = {
-    name: "María González",
-    position: "Gerente de Sucursal",
-    email: "m.gonzalez@valmeria.com",
-    employeeId: "VM-4582",
-    lastLogin: "15/03/2024 - 09:45 AM",
-    phone: "+1 555 789 0123",
-    branch: "Sucursal Central - Ciudad Valmeria",
-    permissions: ["Administrar cuentas", "Aprobar préstamos", "Generar reportes"]
-  };
+  const { usuario, loading, error } = useUserProfile();
+  const [open, setOpen] = useState(false);
+  
+  if (loading) return <p>Cargando datos del usuario...</p>;
+  if (error) return <p>Error: {error}</p>;
+  if (!usuario) return <p>No se encontró el usuario</p>;
+  
 
   return (
     <>
-      <div className='my-12'>
-        <Navbar/>
-      </div>
+    <div>
+      <SidebarAdmin />
       <div className="min-h-screen bg-blue-50">
         {/* Header */}
         <div className="bg-gradient-to-r from-blue-900 to-blue-800 text-white py-12 px-6">
@@ -42,12 +38,13 @@ export const MyAccountPage = () => {
                 </svg>
               </div>
               <div>
-                <h1 className="text-3xl font-bold">{userData.name}</h1>
-                <p className="text-blue-200">{userData.position}</p>
+                <h1 className="text-3xl font-bold">{usuario.name}</h1>
+                <p className="text-blue-200">{usuario.position}</p>
               </div>
             </div>
           </div>
         </div>
+
 
         {/* Contenido Principal */}
         <div className="max-w-7xl mx-auto py-8 px-6">
@@ -65,23 +62,23 @@ export const MyAccountPage = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-blue-700 mb-1">Nombre Completo</label>
-                    <div className="bg-blue-50 rounded-lg p-3 text-blue-900">{userData.name}</div>
+                    <div className="bg-blue-50 rounded-lg p-3 text-blue-900">{usuario.name}</div>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-blue-700 mb-1">Correo Electrónico</label>
-                    <div className="bg-blue-50 rounded-lg p-3 text-blue-900">{userData.email}</div>
+                    <div className="bg-blue-50 rounded-lg p-3 text-blue-900">{usuario.email}</div>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-blue-700 mb-1">Teléfono</label>
-                    <div className="bg-blue-50 rounded-lg p-3 text-blue-900">{userData.phone}</div>
+                    <div className="bg-blue-50 rounded-lg p-3 text-blue-900">{usuario.phone}</div>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-blue-700 mb-1">ID de Empleado</label>
-                    <div className="bg-blue-50 rounded-lg p-3 text-blue-900">{userData.employeeId}</div>
+                    <div className="bg-blue-50 rounded-lg p-3 text-blue-900">{usuario.accountNumber}</div>
                   </div>
                   <div className="md:col-span-2">
-                    <label className="block text-sm font-medium text-blue-700 mb-1">Sucursal Asignada</label>
-                    <div className="bg-blue-50 rounded-lg p-3 text-blue-900">{userData.branch}</div>
+                    <label className="block text-sm font-medium text-blue-700 mb-1">Company</label>
+                    <div className="bg-blue-50 rounded-lg p-3 text-blue-900">{usuario.companyName}</div>
                   </div>
                 </div>
               </div>
@@ -99,7 +96,7 @@ export const MyAccountPage = () => {
                 </h2>
                 
                 <ul className="space-y-3">
-                  {userData.permissions.map((permission, index) => (
+                  {(usuario.permissions || []).map((permission, index) => (
                     <li key={index} className="flex items-start">
                       <svg className="w-5 h-5 text-green-500 mt-0.5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -130,9 +127,16 @@ export const MyAccountPage = () => {
                 </div>
               </div>
             </div>
+            <button className="w-full flex items-center justify-between p-3 text-left rounded-lg hover:bg-blue-50 text-blue-600 hover:bg-blue-50 transition">
+                  <span>Editar Perfil</span>
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                </svg>
+            </button>
           </div>
         </div>
       </div>
+    </div>
     </>
   );
 };

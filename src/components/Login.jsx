@@ -3,6 +3,7 @@ import { Label } from "./ui/label";
 import { MotionInput } from "./ui/input";
 import { cn } from "./ui/lib/utils";
 import { Banco } from './Banco'
+import { ThreeDMarquee } from "./ui/3d-marquee";
 import { Spotlight } from "../components/ui/spotlight-new"
 import {
     IconBrandGithub,
@@ -74,26 +75,68 @@ export const Login = ({ switchAuthHandler }) => {
         login(formState.email.value, formState.password.value);
     }
 
+    const images = [
+        "https://assets.aceternity.com/cloudinary_bkp/3d-card.png",
+        "https://assets.aceternity.com/animated-modal.png",
+        "https://assets.aceternity.com/animated-testimonials.webp",
+        "https://assets.aceternity.com/cloudinary_bkp/Tooltip_luwy44.png",
+        "https://assets.aceternity.com/github-globe.png",
+        "https://assets.aceternity.com/glare-card.png",
+        "https://assets.aceternity.com/layout-grid.png",
+        "https://assets.aceternity.com/flip-text.png",
+        "https://assets.aceternity.com/hero-highlight.png",
+        "https://assets.aceternity.com/carousel.webp",
+        "https://assets.aceternity.com/placeholders-and-vanish-input.png",
+        "https://assets.aceternity.com/shooting-stars-and-stars-background.png",
+        "https://assets.aceternity.com/signup-form.png",
+        "https://assets.aceternity.com/cloudinary_bkp/stars_sxle3d.png",
+        "https://assets.aceternity.com/spotlight-new.webp",
+        "https://assets.aceternity.com/cloudinary_bkp/Spotlight_ar5jpr.png",
+        "https://assets.aceternity.com/cloudinary_bkp/Parallax_Scroll_pzlatw_anfkh7.png",
+        "https://assets.aceternity.com/tabs.png",
+        "https://assets.aceternity.com/cloudinary_bkp/Tracing_Beam_npujte.png",
+        "https://assets.aceternity.com/cloudinary_bkp/typewriter-effect.png",
+        "https://assets.aceternity.com/glowing-effect.webp",
+        "https://assets.aceternity.com/hover-border-gradient.png",
+        "https://assets.aceternity.com/cloudinary_bkp/Infinite_Moving_Cards_evhzur.png",
+        "https://assets.aceternity.com/cloudinary_bkp/Lamp_hlq3ln.png",
+        "https://assets.aceternity.com/macbook-scroll.png",
+        "https://assets.aceternity.com/cloudinary_bkp/Meteors_fye3ys.png",
+        "https://assets.aceternity.com/cloudinary_bkp/Moving_Border_yn78lv.png",
+        "https://assets.aceternity.com/multi-step-loader.png",
+        "https://assets.aceternity.com/vortex.png",
+        "https://assets.aceternity.com/wobble-card.png",
+        "https://assets.aceternity.com/world-map.webp",
+    ];
+
     const isSubmitButtonDisable = isLoading || !formState.email.isValid || !formState.password.isValid;
 
     return (
         <div className="relative bg-[#162456] min-h-screen flex items-center justify-center overflow-hidden">
-            <div className="absolute inset-0 z-0">
-                <Spotlight />
+
+            <div className="relative mx-auto my-10 flex h-screen w-full max-w-7xl flex-col items-center justify-center overflow-hidden rounded-3xl">
+                <h2 className="relative z-20 mx-auto max-w-4xl text-center text-2xl font-bold text-balance text-white md:text-4xl lg:text-6xl">
+                    This is your life and it&apos;s ending one{" "}
+                    <span className="relative z-20 inline-block rounded-xl bg-blue-500/40 px-4 py-1 text-white underline decoration-sky-500 decoration-[6px] underline-offset-[16px] backdrop-blur-sm">
+                        moment
+                    
+                    </span>{" "}
+                    at a time.
+                </h2>
+                <p className="relative z-20 mx-auto max-w-2xl py-8 text-center text-sm text-neutral-200 md:text-base">
+                    You are not your job, you&apos;re not how much money you have in the
+                    bank. You are not the car you drive. You&apos;re not the contents of
+                    your wallet.
+                </p>
+
+                <div className="absolute inset-0 z-10 h-full w-full bg-black/80 dark:bg-black/40" />
+                <ThreeDMarquee
+                    className="pointer-events-none absolute inset-0 h-full w-full"
+                    images={images}
+                />
             </div>
 
-            <div className="relative z-10 w-full max-w-7xl flex flex-col md:flex-row items-center justify-center p-6 md:p-12 gap-10">
-                <div className="flex-1 text-center md:text-left">
-                    <h1 className="text-4xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400">
-                        Spotlight <br /> which is not overused.
-                    </h1>
-                    <p className="mt-4 text-base text-neutral-300 max-w-md mx-auto md:mx-0">
-                        A subtle yet effective spotlight effect, because the previous version is used a bit too much these days.
-                    </p>
-                </div>
-            </div>
-
-            <div className="shadow-input mx-auto w-full max-w-md rounded-none bg-white p-4 md:rounded-2xl md:p-8 dark:bg-black">
+            <div className="shadow-input mx-auto w-full max-w-md rounded-none bg-white p-4 md:rounded-2xl md:p-8 dark:bg-black ml-9">
                 <h2 className="text-xl font-bold text-neutral-800 dark:text-neutral-200">
                     Welcome to Aceternity
                 </h2>
@@ -103,66 +146,46 @@ export const Login = ({ switchAuthHandler }) => {
                 </p>
 
                 <form onSubmit={handleSubmit} className="my-8">
-        
-                        <LabelInputContainer className="mb-4">
-                            <Label htmlFor="email">Email</Label>
-                            <MotionInput id="email" placeholder="projectmayhem@fc.com"
-                                field="email"
-                                label="Email"
-                                value={formState.email.value}
-                                onChangeHandler={handleInputValueChange}
-                                type="text"
-                                onBlurHandler={handleInputValidationOnBlur}
-                                validationMessage={emailValidationMessage}
-                            />
-                        </LabelInputContainer>
-                        <LabelInputContainer className="mb-4">
-                            <Label htmlFor="password">Password</Label>
-                            <MotionInput id="password" placeholder="••••••••"
-                                field="password"
-                                label="Password"
-                                value={formState.password.value}
-                                onChangeHandler={handleInputValueChange}
-                                type="password"
-                                onBlurHandler={handleInputValidationOnBlur}
-                                showErrorMessage={formState.password.showError}
-                                validationMessage={validatePasswordMessage}
-                            />
-                        </LabelInputContainer>
-                        <button onClick={handleLogin} disabled={isSubmitButtonDisable}
-                            className="group/btn relative block h-10 w-full rounded-md bg-gradient-to-br from-black to-neutral-600 font-medium text-white shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900 dark:shadow-[0px_1px_0px_0px_#27272a_inset,0px_-1px_0px_0px_#27272a_inset]"
-                            type="submit">
-                            Sign on &rarr;
-                            <BottomGradient />
+
+                    <LabelInputContainer className="mb-4">
+                        <Label htmlFor="email">Email</Label>
+                        <MotionInput id="email" placeholder="projectmayhem@fc.com"
+                            field="email"
+                            label="Email"
+                            value={formState.email.value}
+                            onChangeHandler={handleInputValueChange}
+                            type="text"
+                            onBlurHandler={handleInputValidationOnBlur}
+                            validationMessage={emailValidationMessage}
+                        />
+                    </LabelInputContainer>
+                    <LabelInputContainer className="mb-4">
+                        <Label htmlFor="password">Password</Label>
+                        <MotionInput id="password" placeholder="••••••••"
+                            field="password"
+                            label="Password"
+                            value={formState.password.value}
+                            onChangeHandler={handleInputValueChange}
+                            type="password"
+                            onBlurHandler={handleInputValidationOnBlur}
+                            showErrorMessage={formState.password.showError}
+                            validationMessage={validatePasswordMessage}
+                        />
+                    </LabelInputContainer>
+                    <button onClick={handleLogin} disabled={isSubmitButtonDisable}
+                        className="group/btn relative block h-10 w-full rounded-md bg-gradient-to-br from-black to-neutral-600 font-medium text-white shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900 dark:shadow-[0px_1px_0px_0px_#27272a_inset,0px_-1px_0px_0px_#27272a_inset]"
+                        type="submit">
+                        Sign on &rarr;
+                        <BottomGradient />
 
 
-                        </button>
-                            <div
-                                className="my-8 h-[1px] w-full bg-gradient-to-r from-transparent via-neutral-300 to-transparent dark:via-neutral-700" />
+                    </button>
+                    <div
+                        className="my-8 h-[1px] w-full bg-gradient-to-r from-transparent via-neutral-300 to-transparent dark:via-neutral-700" />
 
-                            <div className="flex flex-col space-y-4">
-                                <button
-                                    className="group/btn shadow-input relative flex h-10 w-full items-center justify-start space-x-2 rounded-md bg-gray-50 px-4 font-medium text-black dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_#262626]"
-                                    type="submit">
-                                    <IconBrandGithub className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
-                                    <span className="text-sm text-neutral-700 dark:text-neutral-300">
-                                        GitHub
-                                    </span>
-                                    <BottomGradient />
-                                </button>
-                                <button
-                                    className="group/btn shadow-input relative flex h-10 w-full items-center justify-start space-x-2 rounded-md bg-gray-50 px-4 font-medium text-black dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_#262626]"
-                                    type="submit">
-                                    <IconBrandGoogle className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
-                                    <span className="text-sm text-neutral-700 dark:text-neutral-300">
-                                        Google
-                                    </span>
-                                    <BottomGradient />
-                                </button>
-                            </div>
-                        <p className="mt-4 text-sm text-center text-[#1C4E88] cursor-pointer hover:underline" onClick={switchAuthHandler}>
-                    Already have an account? Sign in
-            </p>
+                    <p className="mt-4 text-sm text-center text-[#1C4E88] cursor-pointer hover:underline" onClick={switchAuthHandler}>
+                        Already have an account? Sign in
+                    </p>
                 </form>
             </div>
 

@@ -8,42 +8,101 @@ const apiClient = axios.create({
 
 apiClient.interceptors.request.use(
     (config) => {
-        const useUserDetails = localStorage.getItem('user')
+        const useUserDetails = localStorage.getItem('user');
 
-        if(useUserDetails){
-            const token = JSON.parse(useUserDetails).token
-            config.headers.Authorization = token
+        if (useUserDetails && useUserDetails !== "undefined") {
+            try {
+                const parsed = JSON.parse(useUserDetails);
+                if (parsed?.token) {
+                    config.headers.Authorization = parsed.token;
+                }
+            } catch (error) {
+                console.error("Token inválido en localStorage:", error);
+            }
         }
 
         return config;
     },
-    (e) => {
-        return Promise.reject(e)
-    }
-)
+    (e) => Promise.reject(e)
+);
 
 export const login = async (data) => {
     try {
-        const response = await apiClient.post('/auth/login', data);
-        if(response.data.userDetails) {
-            localStorage.setItem("user", JSON.stringify(response.data.userDetails));
-            localStorage.setItem("roleUser", response.data.userDetails.role)
+        const response = await apiClient.post('/Auth/login', data);
+
+        const userDetails = response.data?.userDetails;
+
+        if (userDetails && userDetails.token) {
+            localStorage.setItem("user", JSON.stringify(userDetails));
+            localStorage.setItem("roleUser", userDetails.role);
+        } else {
+            throw new Error("Datos de usuario incompletos o token no recibido");
         }
-        return response;
+
+        return {
+            data: response.data,
+            error: false,
+        };
+
     } catch (e) {
         return {
             error: true,
-            message: e.response?.data?.msg || "Error al iniciar sesión",
+            message: e.response?.data?.msg || e.message || "Error al iniciar sesión",
+            e,
+        };
+    }
+};
+
+export const register = async (data) => {
+    try {
+        const response = await apiClient.post('/Auth/register', data);
+        return {
+            error: false,
+            data: response.data,
+            message: response.data.msg || "Registro exitoso"
+        };
+    } catch (e) {
+        return {
+            error: true,
+            message: e.response?.data?.error || e.message || "Error desconocido",
             e
         };
     }
 };
 
-export const register = async(data) => {
+export const updateUser = async (data) => {
+  try {
+    const response = await apiClient.put('/User/updateData', data); // <-- PUT
+    return response.data;
+  } catch (e) {
+    return {
+      error: true,
+      message: e.response?.data?.error || e.message || "Error al editar el perfil",
+      e
+    };
+  }
+};
+
+export const getUserProfile = async () => {
     try {
-        return await apiClient.post('/Auth/register', data)
+        const response = await apiClient.get('User/personalData')
+        return response.data.listData
     } catch (e) {
-        return{
+        if (e.response?.status === 401) {
+            logout()
+        }
+        return {
+            error: true,
+            message: e.response?.data?.msg || "No se pudo obtener el perfil"
+        }
+    }
+}
+
+export const changePassword = async (data) => {
+    try {
+        return await apiClient.patch('/User/updatePassword', data)
+    } catch (e) {
+        return {
             error: true,
             e
         }
@@ -87,13 +146,20 @@ export const updateBrand = async (id, brandData) => {
     } 
 }
 
+<<<<<<< HEAD
 export const searchBrandById = async (id) => {
   try {
     const response = await apiClient.get(`/Brands/findBrand/${id}`);
+=======
+export const addTransfer = async (data) => {
+  try {
+    const response = await apiClient.post("/transfers/make-transfer", data);
+>>>>>>> 0f47db0759c1c388177b6b1b8ebc1d24591c695b
     return response.data;
   } catch (e) {
     return {
       error: true,
+<<<<<<< HEAD
       message: e.response?.data?.error || e.message,
     };
   }
@@ -102,15 +168,33 @@ export const searchBrandById = async (id) => {
 export const deleteBrand = async (id) => {
   try {
     const response = await apiClient.delete(`/Brands/deleteBrand/${id}`);
-    return response.data;
-  } catch (e) {
-    return {
-      error: true,
-      message: e.response?.data?.error || e.message,
+=======
+      message: e.response?.data?.message || "No se pudo hacer la transferencia",
+      e,
     };
   }
 };
 
+
+export const getTransferByUser = async (id) => {
+  try {
+    const response = await apiClient.get(`/transfers/get-user/${id}`);
+>>>>>>> 0f47db0759c1c388177b6b1b8ebc1d24591c695b
+    return response.data;
+  } catch (e) {
+    return {
+      error: true,
+<<<<<<< HEAD
+      message: e.response?.data?.error || e.message,
+=======
+      message: e.response?.data?.message || "No se pudieron obtener las transferencias del usuario",
+      e,
+>>>>>>> 0f47db0759c1c388177b6b1b8ebc1d24591c695b
+    };
+  }
+};
+
+<<<<<<< HEAD
 //SERVICEs
 export const getServices = async () => {
     try {
@@ -176,34 +260,63 @@ export const deleteService = async (id) => {
  export const listUsersPending = async () => {
   try {
     const response = await apiClient.get('/User/pending');
+=======
+
+export const getAllTransfers = async () => {
+  try {
+    const response = await apiClient.get("/transfers/get/");
+>>>>>>> 0f47db0759c1c388177b6b1b8ebc1d24591c695b
     return response.data;
   } catch (e) {
     return {
       error: true,
+<<<<<<< HEAD
       message: e.response?.data?.error || e.message,
+=======
+      message: e.response?.data?.message || "No se pudieron obtener las transferencias",
+      e,
+>>>>>>> 0f47db0759c1c388177b6b1b8ebc1d24591c695b
     };
   }
 };
 
+<<<<<<< HEAD
 export const activeUser = async (id) => {
   try {
     const response = await apiClient.post(`/User/${id}/activate`);
+=======
+export const listUserTransfered = async () => {
+  try {
+    const response = await apiClient.get("/transfers/get-user-transfered/");
+>>>>>>> 0f47db0759c1c388177b6b1b8ebc1d24591c695b
     return response.data;
   } catch (e) {
     return {
       error: true,
+<<<<<<< HEAD
       message: e.response?.data?.error || e.message,
+=======
+      message: e.response?.data?.message || "No se pudo obtener la lista de usuarios transferidos",
+      e,
+>>>>>>> 0f47db0759c1c388177b6b1b8ebc1d24591c695b
     };
   }
 };
 
+<<<<<<< HEAD
 export const deleteRegisterUser = async (id) => {
   try {
     const response = await apiClient.delete(`/User/${id}/delete`);
+=======
+export const makeAUserFavorite = async (number, data) => {
+  try {
+    const response = await apiClient.put(`/transfers/favorite/${number}`, data);
+>>>>>>> 0f47db0759c1c388177b6b1b8ebc1d24591c695b
     return response.data;
   } catch (e) {
     return {
       error: true,
+<<<<<<< HEAD
       message: e.response?.data?.error || e.message,
     };
   }
@@ -221,3 +334,10 @@ export const editUserBalance = async (id, balanceData) => {
   }
 };
 
+=======
+      message: e.response?.data?.message || "No se pudo agregar a favoritos",
+      e,
+    };
+  }
+};
+>>>>>>> 0f47db0759c1c388177b6b1b8ebc1d24591c695b
