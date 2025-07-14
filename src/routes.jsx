@@ -15,6 +15,7 @@ import { UserHistoryPage } from './pages/UserHistoryPage';
 import BrandsPage from './pages/BrandsPage/BrandPage';
 import { UpdateProfile } from './components/settings/UpdateProfile';
 import { PrivateAdminDashboard } from './components/PrivatePages';
+import { Productos } from "./components/product/ProductList"
 
 const routes = [
     {path: '/auth', element: <Auth />},
@@ -33,6 +34,7 @@ const routes = [
     {path: '/historyUser', element: <UserHistoryPage/>},
     {path: '/brands', element: <BrandsPage/>},
     {path: '/updateProfile', element: <UpdateProfile />},
+    {path: '/Productos', element: <Productos />},
 ]
 
 export default routes

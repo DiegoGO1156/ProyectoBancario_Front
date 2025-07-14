@@ -211,3 +211,16 @@ export const makeAUserFavorite = async (number, data) => {
     };
   }
 };
+
+export const getProducts = async (limite = 10, desde = 0) => {
+  try {
+    const response = await apiClient.get(`/Products/allProducts?limite=${limite}&desde=${desde}`);
+    return response.data;  // <-- debe retornar solo data, no response completo
+  } catch (e) {
+    return {
+      error: true,
+      message: e.response?.data?.message || "No se pudieron obtener los productos",
+      e,
+    };
+  }
+};
