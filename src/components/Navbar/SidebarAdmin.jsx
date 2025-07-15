@@ -114,7 +114,7 @@ export const SidebarAdmin = () => {
       ],
     },
     {
-      title: "Tarjetas",
+      title: "Servicios",
       icon: (
         <svg
           className="w-6 h-6"
@@ -130,7 +130,7 @@ export const SidebarAdmin = () => {
           />
         </svg>
       ),
-      path: "/tarjetas",
+      path: "/services",
     },
     {
       title: "Marcas",
@@ -149,7 +149,7 @@ export const SidebarAdmin = () => {
           />
         </svg>
       ),
-      submenu: [{ title: "Todas las Marcas", path: "/brands" }],
+      path: "/brands",
     },
   ];
 

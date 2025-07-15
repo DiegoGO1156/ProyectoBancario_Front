@@ -15,6 +15,7 @@ import BrandsPage from './pages/BrandsPage/BrandPage';
 import { UpdateProfile } from './components/settings/UpdateProfile';
 import { PrivateAdminDashboard } from './components/PrivatePages';
 import ServicesPage from './pages/ServicesPage/ServicesPage';
+import  PendingUsersPage  from './pages/ListUserPendingPage';
 
 const routes = [
     {path: '/auth', element: <Auth />},

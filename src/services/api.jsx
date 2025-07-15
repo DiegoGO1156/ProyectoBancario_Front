@@ -173,12 +173,12 @@ export const addTransfer = async (data) => {
 export const deleteBrand = async (id) => {
   try {
     const response = await apiClient.delete(`/Brands/deleteBrand/${id}`);
-    return response
-  }catch(e){ 
-      return{
-        message: e.response?.data?.message || "No se pudo hacer la transferencia",
-      e,
-      }
+    return response.data;
+  } catch (e) {
+    return {
+      error: true,
+      message: e.response?.data?.error || e.message,
+    };
   }
 };
 
@@ -258,18 +258,17 @@ export const deleteService = async (id) => {
 };
 
  // user
- export const listUsersPending = async () => {
+  export const listUsersPending = async () => {
   try {
     const response = await apiClient.get('/User/pending');
-    return response;
-    } catch (e) {
+    return response.data;
+  } catch (e) {
     return {
       error: true,
-      message: e.response?.data?.message || "No se pudieron obtener las transferencias",
-      e,
+      message: e.response?.data?.error || e.message,
     };
   }
-}
+};
 
 export const getAllTransfers = async () => {
   try {

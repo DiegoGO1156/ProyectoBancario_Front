@@ -5,43 +5,36 @@ export const usePendingUsers = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [refreshFlag, setRefreshFlag] = useState(false);
 
   const fetchPendingUsers = async () => {
     setLoading(true);
-    setError(null);
     try {
       const response = await listUsersPending();
-      if (response.error) {
-        throw new Error(response.message);
-      }
+      if (response.error) throw new Error(response.message);
+      
       setUsers(response.users || []);
+      setError(null);
     } catch (err) {
       setError(err.message);
-      console.error("Error fetching pending users:", err);
+      console.error("Error fetching users:", err);
     } finally {
       setLoading(false);
     }
   };
 
-  const activateUserAccount = async (userId) => {
-    setLoading(true);
+  const activateUser = async (userId) => {
     try {
+      setLoading(true);
       const response = await activeUser(userId);
-      if (response.error) {
-        throw new Error(response.message);
-      }
+      if (response.error) throw new Error(response.message);
       
-      // Opción 1: Actualización optimista + recarga
-      // Primero eliminamos el usuario activado localmente
-      setUsers(prevUsers => prevUsers.filter(user => user._id !== userId));
+      // Actualización optimista + recarga completa
+      setUsers(prev => prev.filter(u => u._id !== userId));
+      setRefreshFlag(prev => !prev); // Dispara nueva carga
       
-      // Luego recargamos la lista completa para asegurar consistencia
-      await fetchPendingUsers();
-      
-      return { success: true, user: response.user };
+      return { success: true };
     } catch (err) {
-      // Si hay error, recargamos para restaurar el estado
-      await fetchPendingUsers();
       setError(err.message);
       return { success: false, error: err.message };
     } finally {
@@ -51,12 +44,7 @@ export const usePendingUsers = () => {
 
   useEffect(() => {
     fetchPendingUsers();
-  }, []);
+  }, [refreshFlag]);
 
-  return {
-    users,
-    loading,
-    error,
-    activateUser: activateUserAccount
-  };
+  return { users, loading, error, activateUser };
 };
