@@ -329,7 +329,6 @@ export const makeAUserFavorite = async (number, data) => {
       message: e.response?.data?.error || e.message,
     };
   }
-<<<<<<< HEAD
 }
 
 export const editUserBalance = async (id, balanceData) => {
@@ -343,7 +342,6 @@ export const editUserBalance = async (id, balanceData) => {
     };
   }
 };
-=======
 };
 
 export const getProducts = async (limite = 10, desde = 0) => {
@@ -374,20 +372,6 @@ export const productBuy = async (productId) => {
   }
 };
 
-export const getServices = async () => {
-  try {
-    const response = await apiClient.get("/Services/allServices");
-    return response.data;
-  } catch (e) {
-    console.error("Error en getServices:", e);
-    return {
-      error: true,
-      message: e.response?.data?.msg || "No se pudieron obtener los servicios",
-      e,
-    };
-  }
-};  
-
 export const payService = async (serviceId, amount = 0) => {
   try {
     const response = await apiClient.post(
@@ -404,4 +388,3 @@ export const payService = async (serviceId, amount = 0) => {
     return { success: false };
   }
 };
->>>>>>> 6f632e7834eab83e46afa85daa654505ec09468e

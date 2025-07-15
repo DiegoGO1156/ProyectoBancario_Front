@@ -14,13 +14,10 @@ import { UserHistoryPage } from './pages/UserHistoryPage';
 import BrandsPage from './pages/BrandsPage/BrandPage';
 import { UpdateProfile } from './components/settings/UpdateProfile';
 import { PrivateAdminDashboard } from './components/PrivatePages';
-<<<<<<< HEAD
 import ServicesPage from './pages/ServicesPage/ServicesPage';
 import  PendingUsersPage  from './pages/ListUserPendingPage';
-=======
 import { ServiceList } from './components/service/serviceList';
 import { Productos } from "./components/product/ProductList"
->>>>>>> 6f632e7834eab83e46afa85daa654505ec09468e
 
 const routes = [
     {path: '/auth', element: <Auth />},
