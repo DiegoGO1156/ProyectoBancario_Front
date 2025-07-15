@@ -215,12 +215,58 @@ export const makeAUserFavorite = async (number, data) => {
 export const getProducts = async (limite = 10, desde = 0) => {
   try {
     const response = await apiClient.get(`/Products/allProducts?limite=${limite}&desde=${desde}`);
-    return response.data;  // <-- debe retornar solo data, no response completo
+    return response.data;
+
   } catch (e) {
     return {
       error: true,
       message: e.response?.data?.message || "No se pudieron obtener los productos",
       e,
     };
+  }
+};
+
+export const productBuy = async (productId) => {
+  try {
+    const response = await apiClient.post(`transfers/buy-product/${productId}`);
+    return response.data; 
+
+  } catch (e) {
+    return {
+      error: true,
+      message: e.response?.data?.message || "No se pudieron obtener los productos",
+      e,
+    };
+  }
+};
+
+export const getServices = async () => {
+  try {
+    const response = await apiClient.get("/Services/allServices");
+    return response.data;
+  } catch (e) {
+    console.error("Error en getServices:", e);
+    return {
+      error: true,
+      message: e.response?.data?.msg || "No se pudieron obtener los servicios",
+      e,
+    };
+  }
+};  
+
+export const payService = async (serviceId, amount = 0) => {
+  try {
+    const response = await apiClient.post(
+      `/transfers/pay-service/${serviceId}`,
+      { amount }
+    );
+
+    const { message, transfer } = response.data;
+    alert(`${message}\nMonto pagado: $${transfer.amount}`);
+
+    return { success: true, newBalance: transfer.amount };
+  } catch (e) {
+    alert(e.response?.data?.message || "Error al pagar el servicio");
+    return { success: false };
   }
 };
