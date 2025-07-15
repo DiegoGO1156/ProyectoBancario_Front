@@ -342,7 +342,6 @@ export const editUserBalance = async (id, balanceData) => {
     };
   }
 };
-};
 
 export const getProducts = async (limite = 10, desde = 0) => {
   try {
