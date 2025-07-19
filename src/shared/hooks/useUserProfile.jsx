@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { getUserProfile } from "../../services/api";
 
 export const useUserProfile = () => {
@@ -6,19 +6,20 @@ export const useUserProfile = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const cargarDatos = async () => {
-      const resultado = await getUserProfile();
-      if (resultado?.error) {
-        setError(resultado.message);
-      } else {
-        setUsuario(resultado);
-      }
-      setLoading(false);
-    };
-
-    cargarDatos();
+  const cargarDatos = useCallback(async () => {
+    setLoading(true);
+    const resultado = await getUserProfile();
+    if (resultado?.error) {
+      setError(resultado.message);
+    } else {
+      setUsuario(resultado);
+    }
+    setLoading(false);
   }, []);
 
-  return { usuario, loading, error };
+  useEffect(() => {
+    cargarDatos();
+  }, [cargarDatos]);
+
+  return { usuario, loading, error, refetch: cargarDatos };
 };

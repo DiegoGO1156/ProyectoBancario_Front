@@ -1,16 +1,29 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Label } from "../ui/label";
 import { MotionInput } from "../ui/input";
 import { cn } from "../ui/lib/utils";
 import { SidebarAdmin } from '../Navbar/SidebarAdmin';
-import { addTransfer } from '../../services';
-import  Footer  from "../Homepage/Footer";
+import { addTransfer, getFavorites } from '../../services';
+import Footer from "../Homepage/Footer";
 
 export const TransferForm = ({ switchTransferHandler }) => {
+  const [favorites, setFavorites] = useState([]);
   const [accountNumber, setAccountNumber] = useState("");
   const [amount, setAmount] = useState("");
   const [motive, setMotive] = useState("");
   const [message, setMessage] = useState("");
+
+  useEffect(() => {
+  const fetchFavorites = async () => {
+    const res = await getFavorites();
+    console.log('Respuesta getFavorites:', res);
+    const favs = Array.isArray(res) ? res
+               : Array.isArray(res?.favorites) ? res.favorites
+               : [];
+    setFavorites(favs);
+  };
+  fetchFavorites();
+}, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -41,12 +54,12 @@ export const TransferForm = ({ switchTransferHandler }) => {
   };
 
   return (
-    <div className=''>
+    <div>
       <SidebarAdmin />
       <div className='text-black font-bold text-center'>
         <h1 className='text-4xl font-bold text-black mb-10'>Formulario de transferencias</h1>
       </div>
-      <div className="shadow-input mx-auto w-full max-w-md bg-white p-4 md:rounded-2xl md:p-8 dark:bg-black ml-210 ">
+      <div className="shadow-input mx-auto w-full max-w-md bg-white p-4 md:rounded-2xl md:p-8 dark:bg-black ml-210">
         <h2 className="text-xl font-bold text-neutral-800 dark:text-neutral-200">
           Nueva Transferencia
         </h2>
@@ -55,17 +68,26 @@ export const TransferForm = ({ switchTransferHandler }) => {
         </p>
 
         <form onSubmit={handleSubmit} className="my-8 space-y-4">
-          <LabelInputContainer>
-            <Label htmlFor="account">Cuenta destino</Label>
-            <MotionInput
-              id="account"
-              placeholder="Ej: 1234567890"
-              value={accountNumber}
-              onChange={(e) => setAccountNumber(e.target.value)}
-              type="text"
-            />
-          </LabelInputContainer>
 
+          <LabelInputContainer>
+            <Label htmlFor="account">Usuario Favorito</Label>
+            {Array.isArray(favorites) && favorites.length > 0 ? (
+              <select
+                value={accountNumber}
+                onChange={(e) => setAccountNumber(e.target.value)}
+                className="w-full p-2 border border-gray-300 rounded-md"
+              >
+                <option value="">Selecciona un destinatario favorito</option>
+                {favorites.map((fav) => (
+                  <option key={fav.number} value={fav.number}>
+                    {fav.alias} ({fav.number})
+                  </option>
+                ))}
+              </select>
+            ) : (
+              <p className="text-sm text-red-500">No tienes usuarios favoritos disponibles.</p>
+            )}
+          </LabelInputContainer>
           <LabelInputContainer>
             <Label htmlFor="amount">Monto</Label>
             <MotionInput
@@ -77,7 +99,6 @@ export const TransferForm = ({ switchTransferHandler }) => {
               step="0.01"
             />
           </LabelInputContainer>
-
           <LabelInputContainer>
             <Label htmlFor="motive">Motivo</Label>
             <MotionInput
@@ -88,7 +109,6 @@ export const TransferForm = ({ switchTransferHandler }) => {
               type="text"
             />
           </LabelInputContainer>
-
           <button
             className="group/btn relative block h-10 w-full rounded-md bg-gradient-to-br from-black to-neutral-600 font-medium text-white shadow-md dark:bg-zinc-800"
             type="submit"
@@ -118,24 +138,15 @@ export const TransferForm = ({ switchTransferHandler }) => {
   );
 };
 
-const BottomGradient = () => {
-    return (
-        <>
-            <span
-                className="absolute inset-x-0 -bottom-px block h-px w-full bg-gradient-to-r from-transparent via-cyan-500 to-transparent opacity-0 transition duration-500 group-hover/btn:opacity-100" />
-            <span
-                className="absolute inset-x-10 -bottom-px mx-auto block h-px w-1/2 bg-gradient-to-r from-transparent via-indigo-500 to-transparent opacity-0 blur-sm transition duration-500 group-hover/btn:opacity-100" />
-        </>
-    );
-};
+const BottomGradient = () => (
+  <>
+    <span className="absolute inset-x-0 -bottom-px block h-px w-full bg-gradient-to-r from-transparent via-cyan-500 to-transparent opacity-0 transition duration-500 group-hover/btn:opacity-100" />
+    <span className="absolute inset-x-10 -bottom-px mx-auto block h-px w-1/2 bg-gradient-to-r from-transparent via-indigo-500 to-transparent opacity-0 blur-sm transition duration-500 group-hover/btn:opacity-100" />
+  </>
+);
 
-const LabelInputContainer = ({
-    children,
-    className
-}) => {
-    return (
-        <div className={cn("flex w-full flex-col space-y-2", className)}>
-            {children}
-        </div>
-    );
-};
+const LabelInputContainer = ({ children, className }) => (
+  <div className={cn("flex w-full flex-col space-y-2", className)}>
+    {children}
+  </div>
+);
