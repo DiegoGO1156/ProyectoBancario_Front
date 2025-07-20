@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { listUsersPending, activeUser } from '../../services/api';
+import { listUsersPending, activeUser, deleteRegisterUser } from '../../services/api';
 
 export const usePendingUsers = () => {
   const [users, setUsers] = useState([]);
@@ -42,9 +42,30 @@ export const usePendingUsers = () => {
     }
   };
 
+  const deleteUser = async (userId) => {
+    try {
+      setLoading(true);
+      const response = await deleteRegisterUser(userId);
+      if (response.error) throw new Error(response.message);
+      
+      // Actualización optimista + recarga completa
+      setUsers(prev => prev.filter(u => u._id !== userId));
+      setRefreshFlag(prev => !prev);
+      
+      return { success: true };
+    } catch (err) {
+      setError(err.message);
+      return { success: false, error: err.message };
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
+
   useEffect(() => {
     fetchPendingUsers();
   }, [refreshFlag]);
 
-  return { users, loading, error, activateUser };
+  return { users, loading, error, activateUser, deleteUser };
 };

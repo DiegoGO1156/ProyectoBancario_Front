@@ -270,6 +270,18 @@ export const deleteService = async (id) => {
   }
 };
 
+export const listUsersActive = async () => {
+  try {
+    const response = await apiClient.get('/User/active');
+    return response.data;
+  } catch (e) {
+    return {
+      error: true,
+      message: e.response?.data?.error || e.message,
+    };
+  }
+};
+
 export const getAllTransfers = async () => {
   try {
     const response = await apiClient.get("/transfers/get/");

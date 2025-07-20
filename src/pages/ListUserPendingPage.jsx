@@ -5,7 +5,7 @@ import UserDetailModal from '../components/Users/UserDetailModal';
 import { usePendingUsers } from '../shared/hooks/usePendingUsers';
 
 const PendingUsersPage = () => {
-  const { users, loading, error, activateUser } = usePendingUsers();
+  const { users, loading, error, activateUser , deleteUser} = usePendingUsers();
   const [selectedUser, setSelectedUser] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -16,6 +16,13 @@ const PendingUsersPage = () => {
 
   const handleActivate = async (userId) => {
     const result = await activateUser(userId);
+    if (result.success) {
+      setIsModalOpen(false);
+    }
+  };
+
+   const handleDelete = async (userId) => {
+    const result = await deleteUser(userId);
     if (result.success) {
       setIsModalOpen(false);
     }
@@ -49,6 +56,7 @@ const PendingUsersPage = () => {
             onClose={() => setIsModalOpen(false)}
             user={selectedUser}
             onActivate={handleActivate}
+            onDelete={handleDelete}
           />
         </div>
       </main>

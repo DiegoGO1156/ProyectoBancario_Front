@@ -9,7 +9,7 @@ import { Transfer } from "../src/components/transfer/Transfer"
 import { AddFavoriteUser } from './components/transfer/addFavoriteUser';
 import { TransferForm } from './components/transfer/TransferForm';
 import { TransferList } from './components/transfer/TransferList'
-import { ActiveUsersPage } from './pages/ActiveUserPage';
+import  ActiveUsersPage from './pages/ActiveUserPage';
 import { UserHistoryPage } from './pages/UserHistoryPage';
 import BrandsPage from './pages/BrandsPage/BrandPage';
 import { UpdateProfile } from './components/settings/UpdateProfile';

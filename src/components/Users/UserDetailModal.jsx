@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 
-const UserDetailModal = ({ isOpen, onClose, user, onActivate }) => {
+const UserDetailModal = ({ isOpen, onClose, user, onActivate, onDelete }) => {
   const [activating, setActivating] = useState(false);
+  const [deleting, setDeleting] = useState(false);
   const [activationError, setActivationError] = useState(null);
+  const [deleteError, setDeleteError] = useState(null);
 
   const handleActivate = async () => {
     setActivating(true);
     setActivationError(null);
-    
+
     try {
       const result = await onActivate(user._id);
       if (result.success) {
@@ -21,6 +23,23 @@ const UserDetailModal = ({ isOpen, onClose, user, onActivate }) => {
       setActivating(false);
     }
   };
+
+    const handleDelete = async () => {
+    setDeleting(true);
+    setDeleteError(null);
+    
+    try {
+      const result = await onDelete(user._id);
+      if (!result.success) {
+        setDeleteError(result.error);
+      }
+    } catch (error) {
+      setDeleteError("Error al rechazar el usuario");
+    } finally {
+      setDeleting(false);
+    }
+  };
+
 
   if (!isOpen || !user) return null;
 
@@ -77,9 +96,18 @@ const UserDetailModal = ({ isOpen, onClose, user, onActivate }) => {
             </div>
           </div>
 
-          {activationError && (
-            <div className="mt-4 p-3 bg-red-100 text-red-700 rounded-md">
-              {activationError}
+          {(activationError || deleteError) && (
+            <div className="mt-4 space-y-2">
+              {activationError && (
+                <div className="p-3 bg-red-100 text-red-700 rounded-md">
+                  {activationError}
+                </div>
+              )}
+              {deleteError && (
+                <div className="p-3 bg-red-100 text-red-700 rounded-md">
+                  {deleteError}
+                </div>
+              )}
             </div>
           )}
 
@@ -87,28 +115,47 @@ const UserDetailModal = ({ isOpen, onClose, user, onActivate }) => {
             <button
               onClick={onClose}
               className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition-colors"
-              disabled={activating}
+              disabled={activating || deleting}
             >
               Cerrar
             </button>
             {user.statusAccount === 'Pending' && (
-              <button
-                onClick={handleActivate}
-                className={`px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors ${
-                  activating ? 'opacity-50 cursor-not-allowed' : ''
-                }`}
-                disabled={activating}
-              >
-                {activating ? (
-                  <>
-                    <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    Activando...
-                  </>
-                ) : 'Activar Usuario'}
-              </button>
+              <>
+                <button
+                  onClick={handleDelete}
+                  className={`px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors ${
+                    deleting ? 'opacity-50 cursor-not-allowed' : ''
+                  }`}
+                  disabled={deleting}
+                >
+                  {deleting ? (
+                    <>
+                      <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Rechazando...
+                    </>
+                  ) : 'Rechazar Usuario'}
+                </button>
+                <button
+                  onClick={handleActivate}
+                  className={`px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors ${
+                    activating ? 'opacity-50 cursor-not-allowed' : ''
+                  }`}
+                  disabled={activating}
+                >
+                  {activating ? (
+                    <>
+                      <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Activando...
+                    </>
+                  ) : 'Activar Usuario'}
+                </button>
+              </>
             )}
           </div>
         </div>
