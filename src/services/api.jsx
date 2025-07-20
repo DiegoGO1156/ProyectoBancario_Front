@@ -72,7 +72,7 @@ export const register = async (data) => {
 
 export const updateUser = async (data) => {
   try {
-    const response = await apiClient.put('/User/updateData', data); // <-- PUT
+    const response = await apiClient.put('/User/updateData', data);
     return response.data;
   } catch (e) {
     return {
@@ -100,8 +100,10 @@ export const getUserProfile = async () => {
 
 export const changePassword = async (data) => {
     try {
-        return await apiClient.patch('/User/updatePassword', data)
+        const response = await apiClient.put('/User/updatePassword', data)
+        return response.data;
     } catch (e) {
+      console.log(e)
         return {
             error: true,
             e

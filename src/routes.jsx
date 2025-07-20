@@ -4,7 +4,6 @@ import {DashboardPageAdmin} from '../src/pages/Dashboards/DashboardPageAdmin';
 import {MyAccountPage} from '../src/pages/ProfilePage';
 import {AboutValmeriaPage} from '../src/pages/Contact';
 import { Register } from './components/Register';
-import { User } from '../src/pages/User'
 import { Transfer } from "../src/components/transfer/Transfer"
 import { AddFavoriteUser } from './components/transfer/addFavoriteUser';
 import { TransferForm } from './components/transfer/TransferForm';
@@ -17,6 +16,7 @@ import { UpdateProfile } from './components/settings/UpdateProfile';
 import { PrivateAdminDashboard } from './components/PrivatePages';
 import { ServiceList } from './components/service/serviceList';
 import { Productos } from "./components/product/ProductList"
+import { UpdatePassword } from './components/settings/UpdatePassword';
 
 const routes = [
     {path: '/auth', element: <Auth />},
@@ -25,7 +25,6 @@ const routes = [
     {path: '/profile' , element: <MyAccountPage />},
     {path: '/contact', element: <AboutValmeriaPage />},
     {path: '/register', element: <Register />},
-    {path: '/User', element: <User />},
     {path: '/Transfers', element: <Transfer />},
     {path: '/Addfavorite', element: <AddFavoriteUser />},
     {path: '/TransferForm', element: <TransferForm />},
@@ -37,6 +36,7 @@ const routes = [
     {path: '/updateProfile', element: <UpdateProfile />},
     {path: '/Productos', element: <Productos />},
     {path: '/Service', element: <ServiceList />},
+    {path: '/updatePassword', element: <UpdatePassword />},
 ]
 
 export default routes

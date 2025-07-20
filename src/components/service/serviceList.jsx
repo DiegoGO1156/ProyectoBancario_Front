@@ -37,6 +37,7 @@ export const ServiceList = () => {
     <div className="flex h-screen">
       <SidebarAdmin />
       <div className="flex-1 flex flex-col min-h-screen bg-gray-100">
+        {/* Contenido principal */}
         <div className="p-6 flex-1 ml-65">
           <h1 className="text-3xl font-bold mb-6">Servicios disponibles</h1>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -55,6 +56,8 @@ export const ServiceList = () => {
             ))}
           </div>
         </div>
+
+        {/* Footer fijo al fondo */}
         <Footer />
       </div>
     </div>

@@ -13,6 +13,7 @@ export const TransferForm = ({ switchTransferHandler }) => {
   const [motive, setMotive] = useState("");
   const [message, setMessage] = useState("");
 
+  // Obtener favoritos al cargar el componente
   useEffect(() => {
   const fetchFavorites = async () => {
     const res = await getFavorites();
@@ -88,6 +89,8 @@ export const TransferForm = ({ switchTransferHandler }) => {
               <p className="text-sm text-red-500">No tienes usuarios favoritos disponibles.</p>
             )}
           </LabelInputContainer>
+
+          {/* Monto */}
           <LabelInputContainer>
             <Label htmlFor="amount">Monto</Label>
             <MotionInput
@@ -99,6 +102,8 @@ export const TransferForm = ({ switchTransferHandler }) => {
               step="0.01"
             />
           </LabelInputContainer>
+
+          {/* Motivo */}
           <LabelInputContainer>
             <Label htmlFor="motive">Motivo</Label>
             <MotionInput
@@ -109,6 +114,8 @@ export const TransferForm = ({ switchTransferHandler }) => {
               type="text"
             />
           </LabelInputContainer>
+
+          {/* Botón */}
           <button
             className="group/btn relative block h-10 w-full rounded-md bg-gradient-to-br from-black to-neutral-600 font-medium text-white shadow-md dark:bg-zinc-800"
             type="submit"
