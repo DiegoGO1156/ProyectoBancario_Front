@@ -72,7 +72,7 @@ export const register = async (data) => {
 
 export const updateUser = async (data) => {
   try {
-    const response = await apiClient.put('/User/updateData', data); // <-- PUT
+    const response = await apiClient.put('/User/updateData', data);
     return response.data;
   } catch (e) {
     return {
@@ -100,8 +100,10 @@ export const getUserProfile = async () => {
 
 export const changePassword = async (data) => {
     try {
-        return await apiClient.patch('/User/updatePassword', data)
+        const response = await apiClient.put('/User/updatePassword', data)
+        return response.data;
     } catch (e) {
+      console.log(e)
         return {
             error: true,
             e
@@ -163,6 +165,7 @@ export const addTransfer = async (data) => {
     const response = await apiClient.post("/transfers/make-transfer", data);
     return response.data;
   } catch (e) {
+    console.log(e)
     return {
       error: true,
       message: e.response?.data?.error || e.message,
@@ -331,11 +334,15 @@ export const deleteRegisterUser = async (id) => {
   }
 };
 
-export const makeAUserFavorite = async (number, data) => {
+export const makeAUserFavorite = async (number, alias) => {
   try {
-    const response = await apiClient.put(`/transfers/favorite/${number}`, data);
+    const response = await apiClient.put('/transfers/favorite', {
+      number,
+      alias
+    });
     return response.data;
   } catch (e) {
+    console.log(e)
     return {
       error: true,
       message: e.response?.data?.error || e.message,
@@ -353,6 +360,18 @@ export const editUserBalance = async (id, balanceData) => {
       message: e.response?.data?.error || e.message,
     };
   }
+};
+
+export const getFavorites = async () => {
+    try {
+        const response = await apiClient.get('/transfers/favorites');
+        return response.data;
+    } catch (e) {
+        return{
+            error: true,
+            e: e.response?.data?.error || e.message
+        };
+    }
 };
 
 export const getProducts = async (limite = 10, desde = 0) => {
