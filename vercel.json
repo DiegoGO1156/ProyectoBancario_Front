@@ -1,0 +1,76 @@
+{
+    "routes":[
+        {
+            "src":"/",
+            "dist": "/"
+        },
+        {
+            "src":"/auth",
+            "dist": "/"
+        },
+        {
+            "src":"/admin",
+            "dist": "/"
+        },
+        {
+            "src":"/profile",
+            "dist": "/"
+        },
+        {
+            "src":"/contact",
+            "dist": "/"
+        },
+        {
+            "src":"/register",
+            "dist": "/"
+        },
+        {
+            "src":"/Transfers",
+            "dist": "/"
+        },
+        {
+            "src":"/Addfavorite",
+            "dist": "/"
+        },
+        {
+            "src":"/TransferForm",
+            "dist": "/"
+        },
+        {
+            "src":"/TransferList",
+            "dist": "/"
+        },
+        {
+            "src":"/userPending",
+            "dist": "/"
+        },
+        {
+            "src":"/userActive",
+            "dist": "/"
+        },
+        {
+            "src":"/historyUser",
+            "dist": "/"
+        },
+        {
+            "src":"/brands",
+            "dist": "/"
+        },
+        {
+            "src":"/updateProfile",
+            "dist": "/"
+        },
+        {
+            "src":"/Productos",
+            "dist": "/"
+        },
+        {
+            "src":"/Service",
+            "dist": "/"
+        },
+        {
+            "src":"/updatePassword",
+            "dist": "/"
+        }
+    ]
+}
