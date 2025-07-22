@@ -17,6 +17,7 @@ import { ServiceList } from './components/service/serviceList';
 import { Productos } from "./components/product/ProductList"
 import { UpdatePassword } from './components/settings/UpdatePassword';
 import PendingUsersPage from "./pages/ListUserPendingPage"
+import ServicesPage from './pages/ServicesPage/ServicesPage';
 
 const routes = [
     {path: '/auth', element: <Auth />},
