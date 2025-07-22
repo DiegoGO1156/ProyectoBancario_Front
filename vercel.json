@@ -2,75 +2,75 @@
     "routes":[
         {
             "src":"/",
-            "dist": "/"
+            "dest": "/"
         },
         {
             "src":"/auth",
-            "dist": "/"
+            "dest": "/"
         },
         {
             "src":"/admin",
-            "dist": "/"
+            "dest": "/"
         },
         {
             "src":"/profile",
-            "dist": "/"
+            "dest": "/"
         },
         {
             "src":"/contact",
-            "dist": "/"
+            "dest": "/"
         },
         {
             "src":"/register",
-            "dist": "/"
+            "dest": "/"
         },
         {
             "src":"/Transfers",
-            "dist": "/"
+            "dest": "/"
         },
         {
             "src":"/Addfavorite",
-            "dist": "/"
+            "dest": "/"
         },
         {
             "src":"/TransferForm",
-            "dist": "/"
+            "dest": "/"
         },
         {
             "src":"/TransferList",
-            "dist": "/"
+            "dest": "/"
         },
         {
             "src":"/userPending",
-            "dist": "/"
+            "dest": "/"
         },
         {
             "src":"/userActive",
-            "dist": "/"
+            "dest": "/"
         },
         {
             "src":"/historyUser",
-            "dist": "/"
+            "dest": "/"
         },
         {
             "src":"/brands",
-            "dist": "/"
+            "dest": "/"
         },
         {
             "src":"/updateProfile",
-            "dist": "/"
+            "dest": "/"
         },
         {
             "src":"/Productos",
-            "dist": "/"
+            "dest": "/"
         },
         {
             "src":"/Service",
-            "dist": "/"
+            "dest": "/"
         },
         {
             "src":"/updatePassword",
-            "dist": "/"
+            "dest": "/"
         }
     ]
 }
