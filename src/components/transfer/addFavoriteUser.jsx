@@ -31,7 +31,7 @@ export const AddFavoriteUser = () => {
 };
 
   return (
-    <div className="">
+    <div className="flex h-full">
       <SidebarAdmin />
       <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded shadow">
         <h2 className="text-xl font-bold mb-4">Agregar Usuario Favorito</h2>

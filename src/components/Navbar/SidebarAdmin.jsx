@@ -107,7 +107,7 @@ export const SidebarAdmin = () => {
       ],
     },
     {
-      title: "Tarjetas",
+      title: "Funciones del Usuario",
       icon: (
         <svg
           className="w-6 h-6"
@@ -123,7 +123,7 @@ export const SidebarAdmin = () => {
           />
         </svg>
       ),
-      path: "/tarjetas",
+      path: "/DashboardUser",
     },
     {
       title: "Marcas",

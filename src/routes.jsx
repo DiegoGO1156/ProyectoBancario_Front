@@ -17,6 +17,7 @@ import { PrivateAdminDashboard } from './components/PrivatePages';
 import { ServiceList } from './components/service/serviceList';
 import { Productos } from "./components/product/ProductList"
 import { UpdatePassword } from './components/settings/UpdatePassword';
+import { DashboardUser } from "./components/DashboardUser"
 
 const routes = [
     {path: '/auth', element: <Auth />},
@@ -37,6 +38,7 @@ const routes = [
     {path: '/Productos', element: <Productos />},
     {path: '/Service', element: <ServiceList />},
     {path: '/updatePassword', element: <UpdatePassword />},
+    {path: '/DashboardUser', element: <DashboardUser />},
 ]
 
 export default routes
