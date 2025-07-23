@@ -363,7 +363,7 @@ export const SidebarAdmin = () => {
 
       <div className="p-4 border-t border-blue-800">
         <button
-          onClick={() => navigate("/logout")}
+          onClick={() => navigate("/auth")}
           className="mt-4 flex items-center w-full p-2 rounded-lg hover:bg-blue-800 transition"
         >
           <svg
