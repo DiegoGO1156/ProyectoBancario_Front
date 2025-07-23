@@ -266,6 +266,7 @@ export const deleteService = async (id) => {
     const response = await apiClient.get('/User/pending');
     return response.data;
   } catch (e) {
+    console.error(e)
     return {
       error: true,
       message: e.response?.data?.error || e.message,
