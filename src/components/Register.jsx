@@ -147,7 +147,7 @@ export function Register({ switchAuthHandler }) {
   return (
     <div className="relative bg-[#162456] min-h-screen flex items-center justify-center overflow-hidden">
 
-      <div className="relative mx-auto my-10 flex h-screen w-full max-w-7xl flex-col items-center justify-center overflow-hidden rounded-3xl">
+      <div className="relative mx-auto my-10 flex min-h-[70vh] w-full max-w-5xl flex-col items-center justify-center overflow-hidden rounded-3xl">
         <h2 className="relative z-20 mx-auto max-w-4xl text-center text-2xl font-bold text-balance text-white md:text-4xl lg:text-6xl">
           ¡Donde los sueños se hacen{" "}
           <span className="relative z-20 inline-block rounded-xl bg-blue-500/40 px-4 py-1 text-white underline decoration-sky-500 decoration-[6px] underline-offset-[16px] backdrop-blur-sm">

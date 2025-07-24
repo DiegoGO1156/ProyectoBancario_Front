@@ -62,6 +62,7 @@ export const register = async (data) => {
             message: response.data.msg || "Registro exitoso"
         };
     } catch (e) {
+      console.log(e)
         return {
             error: true,
             message: e.response?.data?.error || e.message || "Error desconocido",

@@ -18,6 +18,7 @@ import { ServiceList } from './components/service/serviceList';
 import { Productos } from "./components/product/ProductList"
 import { UpdatePassword } from './components/settings/UpdatePassword';
 import { DashboardUser } from "./components/DashboardUser"
+import { FavoriteUser } from './components/transfer/FavoriteUser';
 
 const routes = [
     {path: '/auth', element: <Auth />},
@@ -39,6 +40,7 @@ const routes = [
     {path: '/Service', element: <ServiceList />},
     {path: '/updatePassword', element: <UpdatePassword />},
     {path: '/DashboardUser', element: <DashboardUser />},
+    {path: '/FavoriteUser', element: <FavoriteUser />},
 ]
 
 export default routes
