@@ -5,116 +5,192 @@ const UserDetailModal = ({
   isOpen, 
   onClose, 
   user,
-  onUpdateIncome 
+  onUpdateIncome,
+  onChangeStatus
 }) => {
   const [isEditIncomeOpen, setIsEditIncomeOpen] = useState(false);
+  const [statusLoading, setStatusLoading] = useState(false);
+  const [statusError, setStatusError] = useState(null);
+
+  const handleChangeStatus = async () => {
+    if (!user) return;
+    
+    setStatusLoading(true);
+    setStatusError(null);
+    
+    try {
+      const result = await onChangeStatus(user._id);
+      if (result.success) {
+        onClose();
+      } else {
+        setStatusError(result.error);
+      }
+    } catch (error) {
+      setStatusError('Error al cambiar el estado');
+    } finally {
+      setStatusLoading(false);
+    }
+  };
 
   if (!isOpen || !user) return null;
 
   return (
     <>
       {/* Modal principal */}
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-        <div className="bg-white rounded-lg shadow-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+      <div className="fixed inset-0 z-50 flex items-center justify-center">
+        {/* Fondo transparente con blur ligero */}
+        <div 
+          className="absolute inset-0 bg-white/10 backdrop-blur-sm"
+          onClick={onClose}
+        />
+        
+        {/* Modal flotante */}
+        <div className="relative bg-white rounded-xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto mx-4 border border-gray-200">
           <div className="p-6">
             {/* Encabezado */}
             <div className="flex justify-between items-start mb-4">
-              <h2 className="text-xl font-bold">Detalles del Usuario</h2>
-              <button 
-                onClick={onClose} 
-                className="text-gray-500 hover:text-gray-700"
+              <h2 className="text-2xl font-bold text-gray-800">Detalles del Usuario</h2>
+              <button
+                onClick={onClose}
+                className="text-gray-500 hover:text-gray-700 transition-colors"
               >
-                ✕
+                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
               </button>
             </div>
 
-            {/* Contenido de dos columnas */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Columna Izquierda - Información Personal */}
-              <div className="space-y-4">
-                <div className="border-b pb-4">
-                  <h3 className="font-semibold text-lg">Información Personal</h3>
-                  <div className="mt-2 space-y-2">
-                    <p><span className="font-medium">Nombre:</span> {user.name}</p>
-                    <p><span className="font-medium">Usuario:</span> {user.username}</p>
-                    <p><span className="font-medium">Email:</span> {user.email}</p>
-                    <p><span className="font-medium">Teléfono:</span> {user.phone}</p>
-                    <p><span className="font-medium">DPI:</span> {user.dpi}</p>
+            {/* Contenido */}
+            <div className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Columna izquierda - Información personal */}
+                <div className="bg-gray-50 p-4 rounded-lg">
+                  <h3 className="font-semibold text-lg text-gray-700 mb-3 border-b pb-2">Información Personal</h3>
+                  <div className="space-y-3">
+                    <div>
+                      <p className="text-sm text-gray-500">Nombre completo</p>
+                      <p className="font-medium">{user.name || 'N/A'}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-500">Nombre de usuario</p>
+                      <p className="font-medium">{user.username || 'N/A'}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-500">Documento (DPI)</p>
+                      <p className="font-medium">{user.dpi || 'N/A'}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-500">Teléfono</p>
+                      <p className="font-medium">{user.phone || 'N/A'}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-500">Correo electrónico</p>
+                      <p className="font-medium break-all">{user.email || 'N/A'}</p>
+                    </div>
                   </div>
                 </div>
 
-                <div>
-                  <h3 className="font-semibold text-lg">Dirección</h3>
-                  <p className="mt-2">{user.address}</p>
-                </div>
-              </div>
-
-              {/* Columna Derecha - Información Financiera */}
-              <div className="space-y-4">
-                <div className="border-b pb-4">
-                  <h3 className="font-semibold text-lg">Información Financiera</h3>
-                  <div className="mt-2 space-y-2">
-                    <p><span className="font-medium">N° Cuenta:</span> {user.accountNumber}</p>
-                    <p><span className="font-medium">Empresa:</span> {user.companyName}</p>
-                    
-                    {/* Sección de Ingresos con botón de edición */}
-                    <div className="flex items-center">
-                      <p><span className="font-medium">Ingresos:</span> Q{user.income}</p>
+                {/* Columna derecha - Información financiera */}
+                <div className="bg-gray-50 p-4 rounded-lg">
+                  <h3 className="font-semibold text-lg text-gray-700 mb-3 border-b pb-2">Información Financiera</h3>
+                  <div className="space-y-3">
+                    <div>
+                      <p className="text-sm text-gray-500">Número de cuenta</p>
+                      <p className="font-medium">{user.accountNumber || 'N/A'}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-500">Empresa</p>
+                      <p className="font-medium">{user.companyName || 'N/A'}</p>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-sm text-gray-500">Ingresos mensuales</p>
+                        <p className="font-medium">{user.income ? `Q${user.income}` : 'N/A'}</p>
+                      </div>
                       <button
                         onClick={() => setIsEditIncomeOpen(true)}
-                        className="ml-2 text-blue-600 hover:text-blue-800 text-sm font-medium"
+                        className="text-blue-600 hover:text-blue-800 text-sm font-medium"
                       >
-                        (Editar)
+                        Editar
                       </button>
                     </div>
-
-                    <p><span className="font-medium">Divisas:</span> {user.divisas}</p>
-                    <p>
-                      <span className="font-medium">Estado:</span> 
-                      <span className={`ml-2 px-2 py-1 text-xs rounded-full ${
-                        user.statusAccount === 'Active' 
-                          ? 'bg-green-100 text-green-800' 
-                          : 'bg-yellow-100 text-yellow-800'
+                    <div>
+                      <p className="text-sm text-gray-500">Divisas</p>
+                      <p className="font-medium">{user.divisas || 'GTQ'}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-500">Estado de cuenta</p>
+                      <span className={`px-2 py-1 text-xs font-medium rounded-full ${
+                        user.statusAccount === 'Active' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
                       }`}>
                         {user.statusAccount === 'Active' ? 'Activo' : 'Pendiente'}
                       </span>
-                    </p>
+                    </div>
                   </div>
                 </div>
+              </div>
 
-                <div>
-                  <h3 className="font-semibold text-lg">Otros Datos</h3>
-                  <div className="mt-2 space-y-2">
-                    <p><span className="font-medium">Rol:</span> {user.role}</p>
-                    <p>
-                      <span className="font-medium">Verificación:</span> 
-                      <span className={`ml-2 px-2 py-1 text-xs rounded-full ${
-                        user.verification 
-                          ? 'bg-green-100 text-green-800' 
-                          : 'bg-red-100 text-red-800'
-                      }`}>
-                        {user.verification ? 'Verificado' : 'No verificado'}
-                      </span>
-                    </p>
-                  </div>
+              {/* Dirección */}
+              <div className="bg-gray-50 p-4 rounded-lg">
+                <h3 className="font-semibold text-lg text-gray-700 mb-3 border-b pb-2">Dirección</h3>
+                <p className="font-medium">{user.address || 'No especificada'}</p>
+              </div>
+
+              {/* Verificación */}
+              <div className="bg-gray-50 p-4 rounded-lg">
+                <h3 className="font-semibold text-lg text-gray-700 mb-3 border-b pb-2">Verificación</h3>
+                <div className="flex items-center">
+                  <span className={`px-2 py-1 text-xs font-medium rounded-full ${
+                    user.verification ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                  }`}>
+                    {user.verification ? 'Verificado' : 'No verificado'}
+                  </span>
                 </div>
               </div>
             </div>
 
+            {/* Mensaje de error */}
+            {statusError && (
+              <div className="mt-6 p-3 bg-red-50 border border-red-200 text-red-700 rounded-md">
+                {statusError}
+              </div>
+            )}
+
             {/* Botones de acción */}
-            <div className="mt-6 flex justify-end">
+            <div className="mt-8 flex flex-col sm:flex-row justify-end space-y-3 sm:space-y-0 sm:space-x-3">
               <button
                 onClick={onClose}
-                className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600"
+                className="px-5 py-2.5 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-lg transition-colors"
+                disabled={statusLoading}
               >
                 Cerrar
               </button>
+              
+              {user.statusAccount === 'Active' && (
+                <button
+                  onClick={handleChangeStatus}
+                  className={`px-5 py-2.5 bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg transition-colors flex items-center justify-center ${
+                    statusLoading ? 'opacity-50 cursor-not-allowed' : ''
+                  }`}
+                  disabled={statusLoading}
+                >
+                  {statusLoading ? (
+                    <>
+                      <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Procesando...
+                    </>
+                  ) : 'Deshabilitar Cuenta'}
+                </button>
+              )}
             </div>
           </div>
         </div>
       </div>
 
-      {/* Modal de Edición de Income (aparece cuando se clickea "Editar") */}
+      {/* Modal de Edición de Income */}
       <EditIncomeModal
         isOpen={isEditIncomeOpen}
         onClose={() => setIsEditIncomeOpen(false)}

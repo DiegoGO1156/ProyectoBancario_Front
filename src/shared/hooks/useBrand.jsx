@@ -1,18 +1,18 @@
-import { useState, useEffect } from "react";
-import { getBrands, createBrand, updateBrand, searchBrandById, deleteBrand} from '../../services';
+import { useState, useEffect, useCallback } from "react";
+import { getBrands, createBrand, updateBrand, searchBrandById, deleteBrand } from '../../services';
 
 export const useBrands = () => {
     const [brands, setBrands] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [searchResult, setSearchResult] = useState(null);
 
-    //Listar
-    const fetchBrands = async () => {
+    const fetchBrands = useCallback(async () => {
         try {
             setLoading(true);
             const response = await getBrands();
 
-            if (response.error){
+            if (response.error) {
                 throw new Error(response.e);
             }
 
@@ -21,55 +21,61 @@ export const useBrands = () => {
         } catch (err) {
             setError(err.message || "Error al cargar las marcas");
             setBrands([]);
-        } finally{
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
+    const addBrand = async (brandData) => {
+    setLoading(true);
+    try {
+        const response = await createBrand(brandData);
+        
+        if (response.error) {
+            throw new Error(response.message);
+        }
+
+        // Opción 1: Agregar la nueva marca al principio del array
+        setBrands(prev => [response.brand, ...prev]);
+        
+        // Opción 2: Recargar todas las marcas (más seguro)
+        // await fetchBrands();
+        
+        return { success: true, data: response.brand };
+    } catch (err) {
+        setError(err.message);
+        return { success: false, error: err.message };
+    } finally {
+        setLoading(false);
+    }
+};
+
+    const updateBrandHandler = async (id, brandData) => {
+        try {
+            setLoading(true);
+            const response = await updateBrand(id, brandData);
+            
+            if (response.error) {
+                throw new Error(response.message);
+            }
+            
+            setBrands(prev => prev.map(brand => 
+                brand._id === id ? { ...brand, ...brandData } : brand
+            ));
+            
+            return response;
+        } catch (err) {
+            setError(err.message || 'Error al actualizar la marca');
+            throw err;
+        } finally {
             setLoading(false);
         }
     };
 
-    //Agregar
-    const addBrand = async (brandData) => {
-    setLoading(true);
-    try {
-      const newBrand = await createBrand(brandData); 
-      setBrands(prevBrands => [newBrand, ...prevBrands]);
-      return { success: true, data: newBrand };
-    } catch (err) {
-      setError(err.message);
-      return { success: false, error: err.message };
-    } finally {
-      setLoading(false);
-    }
-  };
-
-    //editar
-  const updateBrandHandler = async (id, brandData) => {
-    try {
-      setLoading(true);
-      setError(null);
-      
-      const response = await updateBrand(id, brandData);
-      
-      // Maneja la respuesta de tu servicio
-      if (response.error) {
-        throw new Error(response.message);
-      }
-      
-     
-      return response; // Devuelve los datos actualizados
-    } catch (err) {
-      setError(err.message || 'Error al actualizar la marca');
-      throw err; // Re-lanza el error para manejo adicional
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  //buscar por id
-  const searchBrand = async (id) => {
+    const searchBrand = async (id) => {
         try {
             setLoading(true);
             setError(null);
-            setSearchResult(null);
             
             const response = await searchBrandById(id);
             
@@ -81,51 +87,48 @@ export const useBrands = () => {
             return { success: true, data: response.brand };
         } catch (err) {
             setError(err.message || "Error al buscar la marca");
-            setSearchResult(null);
             return { success: false, error: err.message };
         } finally {
             setLoading(false);
         }
     };
 
-    //Eliminar 
     const handleDeleteBrand = async (id) => {
-    try {
-      setLoading(true);
-      const result = await deleteBrand(id);
-      
-      if (result.error) {
-        throw new Error(result.message);
-      }
+        try {
+            setLoading(true);
+            const result = await deleteBrand(id);
+            
+            if (result.error) {
+                throw new Error(result.message);
+            }
 
-      setBrands(prev => prev.filter(brand => brand._id !== id));
-      return { success: true };
-    } catch (err) {
-      setError(err.message);
-      return { success: false, error: err.message };
-    } finally {
-      setLoading(false);
-    }
-  };
+            setBrands(prev => prev.filter(brand => brand._id !== id));
+            return { success: true };
+        } catch (err) {
+            setError(err.message);
+            return { success: false, error: err.message };
+        } finally {
+            setLoading(false);
+        }
+    };
 
-    
-    
     useEffect(() => {
         fetchBrands();
-    }, []);
+    }, [fetchBrands]);
 
-    return{
+    return {
         brands,
         loading,
         error,
-        searchBrand,
-        refresh: fetchBrands,
+        searchResult,
+        fetchBrands,
         addBrand,
         deleteBrand: handleDeleteBrand,
         updateBrand: updateBrandHandler,
+        searchBrand,
         resetState: () => {
             setError(null);
-          
+            setSearchResult(null);
         }
     };
 };

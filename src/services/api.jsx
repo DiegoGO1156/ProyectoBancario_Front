@@ -2,7 +2,7 @@ import axios from "axios";
 import { logout } from "../shared/hooks";
 
 const apiClient = axios.create({
-    baseURL: 'https://proyectobancario-back.onrender.com/Valmeria_App/V1',
+    baseURL: 'http://127.0.0.1:3000/Valmeria_App/V1',
     timeout: 5000
 })
 
@@ -201,15 +201,21 @@ export const getTransferByUser = async (id) => {
 
 //SERVICEs
 export const getServices = async () => {
-    try {
-        const response = await apiClient.get('/Services/allServices');
-        return response.data;
-    } catch (e) {
-        return {
-            error: true,
-            e: e.response?.data?.error || e.message
-        };
-    }
+  try {
+    const response = await apiClient.get('/Services/allServices');
+    
+    // Asegura que siempre retornes un objeto con services
+    return {
+      services: response.data?.services || [], // Si no viene services, usa array vacío
+      ...response.data
+    };
+  } catch (e) {
+    return {
+      error: true,
+      e: e.response?.data?.error || e.message,
+      services: [] // Añade esto para seguridad
+    };
+  }
 };
 
 export const createService = async (serviceData) => {
@@ -326,6 +332,18 @@ export const listUserTransfered = async () => {
 export const deleteRegisterUser = async (id) => {
   try {
     const response = await apiClient.delete(`/User/${id}/delete`)
+    return response.data;
+  } catch (e) {
+    return {
+      error: true,
+      message: e.response?.data?.error || e.message,
+    };
+  }
+};
+
+export const editUserStatus = async (id) => {
+  try {
+    const response = await apiClient.put(`/User/changeStatusUser/${id}`)
     return response.data;
   } catch (e) {
     return {

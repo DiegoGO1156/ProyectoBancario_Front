@@ -8,16 +8,14 @@ import { Transfer } from "../src/components/transfer/Transfer"
 import { AddFavoriteUser } from './components/transfer/addFavoriteUser';
 import { TransferForm } from './components/transfer/TransferForm';
 import { TransferList } from './components/transfer/TransferList'
-import  ActiveUsersPage from './pages/ActiveUserPage';
 import { UserHistoryPage } from './pages/UserHistoryPage';
 import BrandsPage from './pages/BrandsPage/BrandPage';
 import { UpdateProfile } from './components/settings/UpdateProfile';
-import { PrivateAdminDashboard } from './components/PrivatePages';
+import { PrivateAdminBrands, PrivateAdminDashboard, PrivateAdminServices, PrivateAdminUserPending } from './components/PrivatePages';
+import { PrivateAdminActiveUser } from './components/PrivatePages';
 import { ServiceList } from './components/service/serviceList';
 import { Productos } from "./components/product/ProductList"
 import { UpdatePassword } from './components/settings/UpdatePassword';
-import PendingUsersPage from "./pages/ListUserPendingPage"
-import ServicesPage from './pages/ServicesPage/ServicesPage';
 
 const routes = [
     {path: '/auth', element: <Auth />},
@@ -30,11 +28,11 @@ const routes = [
     {path: '/Addfavorite', element: <AddFavoriteUser />},
     {path: '/TransferForm', element: <TransferForm />},
     {path: '/TransferList', element: <TransferList />},
-    {path: '/userPending', element: <PendingUsersPage />},
-    {path: '/userActive', element: <ActiveUsersPage />},
+    {path: '/userPending', element: <PrivateAdminUserPending />},
+    {path: '/userActive', element: <PrivateAdminActiveUser />},
     {path: '/historyUser', element: <UserHistoryPage/>},
-    {path: '/brands', element: <BrandsPage/>},
-    {path: '/services', element: <ServicesPage/>},
+    {path: '/brands', element: <PrivateAdminBrands/>},
+    {path: '/services', element: <PrivateAdminServices/>},
     {path: '/updateProfile', element: <UpdateProfile />},
     {path: '/Productos', element: <Productos />},
     {path: '/Service', element: <ServiceList />},

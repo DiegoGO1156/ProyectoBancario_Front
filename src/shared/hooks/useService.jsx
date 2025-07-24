@@ -1,113 +1,136 @@
-import { useState, useEffect } from "react";
-import { getServices, createService, updateService} from "../../services"; 
+import { useState, useEffect, useCallback } from "react";
+import { useBrands } from "../../shared/hooks/useBrand";
+import { getServices, createService, updateService, deleteService } from "../../services";
 
 export const useServices = () => {
-    const [services, setServices] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const [success, setSuccess] = useState(false);
+    const [state, setState] = useState({
+        services: [],
+        loading: true,
+        error: null,
+        success: false
+    });
+    const { brands, loading: loadingBrands } = useBrands();
 
-    // Listar servicios
-    const fetchServices = async () => {
-        try {
-            setLoading(true);
-            const response = await getServices();
-
-            if (response.error) {
-                throw new Error(response.e || response.message);
-            }
-
-            // Mapear los datos si es necesario para incluir la marca relacionada
-            const servicesWithBrand = response.services.map(service => ({
+    // Función para enriquecer servicios con info de marcas
+    const enhanceWithBrands = useCallback((services) => {
+        return services.map(service => {
+            const brandFound = brands.find(b => 
+                b._id.toString() === service.brand?.toString() ||
+                b._id.toString() === service.brand?._id?.toString()
+            );
+            return {
                 ...service,
-                brandName: service.brand?.nameBrand || 'Sin marca'
-            }));
+                brandName: brandFound?.nameBrand || 'Sin marca',
+                brandObject: brandFound || null
+            };
+        });
+    }, [brands]); // ¡Importante! Dependencia de brands
 
-            setServices(servicesWithBrand || []);
-            setError(null);
+    const fetchServices = useCallback(async () => {
+        setState(prev => ({ ...prev, loading: true, error: null }));
+        try {
+            const response = await getServices();
+            if (response.error) throw new Error(response.e || response.message);
+            
+            const enhancedServices = enhanceWithBrands(response.servicesResult || []);
+            
+            setState(prev => ({ 
+                ...prev, 
+                services: enhancedServices, 
+                loading: false 
+            }));
         } catch (err) {
-            setError(err.message || "Error al cargar los servicios");
-            setServices([]);
-        } finally {
-            setLoading(false);
+            setState(prev => ({ 
+                ...prev, 
+                error: err.message || "Error al cargar los servicios",
+                loading: false 
+            }));
+        }
+    }, [enhanceWithBrands]); // Depende de enhanceWithBrands
+
+    const addService = async (serviceData) => {
+        setState(prev => ({ ...prev, loading: true, error: null }));
+        try {
+            const response = await createService(serviceData);
+            if (response.error) throw new Error(response.message);
+            
+            await fetchServices(); // Recarga completa para consistencia
+            return { success: true, data: response.service };
+        } catch (err) {
+            const errorMsg = err.response?.data?.message || err.message || 'Error al crear servicio';
+            setState(prev => ({ ...prev, error: errorMsg, loading: false }));
+            return { success: false, error: errorMsg };
         }
     };
 
-    //agregar 
-    const addService = async (serviceData) => {
-    setLoading(true);
-    setError(null);
-    
-    try {
-      const response = await createService(serviceData);
-      
-      if (response.error) {
-        throw new Error(response.message || 'Error al crear servicio');
-      }
+    const updateServiceItem = async (id, serviceData) => {
+        setState(prev => ({ ...prev, loading: true, error: null, success: false }));
+        try {
+            const response = await updateService(id, serviceData);
+            if (response.error) throw new Error(response.message);
+            
+            // Actualización optimista con marca
+            setState(prev => {
+                const updatedServices = prev.services.map(service => {
+                    if (service._id === id) {
+                        const brandFound = brands.find(b => 
+                            b._id.toString() === response.service.brand?.toString() ||
+                            b._id.toString() === response.service.brand?._id?.toString()
+                        );
+                        return {
+                            ...response.service,
+                            brandName: brandFound?.nameBrand || 'Sin marca',
+                            brandObject: brandFound || null
+                        };
+                    }
+                    return service;
+                });
+                
+                return {
+                    ...prev,
+                    services: updatedServices,
+                    loading: false,
+                    success: true
+                };
+            });
+            
+            return response;
+        } catch (err) {
+            setState(prev => ({ ...prev, error: err.message, loading: false }));
+            throw err;
+        }
+    };
 
-      return { success: true, data: response.service };
-      
-
-    } catch (err) {
-      const errorMsg = err.response?.data?.message || 
-                     err.message || 
-                     'Error al crear servicio';
-      setError(errorMsg);
-      return { success: false, error: errorMsg };
-    } finally {
-      setLoading(false);
-    }
-  };
-
-   //editar 
-   const update = async (id, serviceData) => {
-  setLoading(true);
-  setError(null);
-  setSuccess(false);
-  
-  try {
-    const response = await updateService(id, serviceData);
-    
-    if (response.error) {
-      throw new Error(response.message);
-    }
-
-    // Actualiza el estado local con el servicio modificado
-    setServices(prev => prev.map(service => 
-      service._id === id ? {
-        ...response.service,
-        brandName: response.service.brand?.nameBrand || 'Sin marca'
-      } : service
-    ));
-
-    setSuccess(true);
-    return response;
-
-  } catch (err) {
-    // ... (mantén el mismo código de error)
-  } finally {
-    setLoading(false);
-  }
-};
-
-    const resetState = () => {
-    setError(null);
-    setSuccess(false);
-  };
-
+    const deleteServiceItem = async (id) => {
+        setState(prev => ({ ...prev, loading: true, error: null }));
+        try {
+            const response = await deleteService(id);
+            if (response.error) throw new Error(response.message);
+            
+            // Eliminación optimista
+            setState(prev => ({
+                ...prev,
+                services: prev.services.filter(service => service._id !== id),
+                loading: false
+            }));
+            
+            return { success: true };
+        } catch (err) {
+            setState(prev => ({ ...prev, error: err.message, loading: false }));
+            return { success: false, error: err.message };
+        }
+    };
 
     useEffect(() => {
         fetchServices();
-    }, []);
+    }, [fetchServices]);
 
     return {
-        services,
-        loading,
-        error,
-        success,
-        addService, 
-        updateService: update,
+        ...state,
+        addService,
+        updateService: updateServiceItem,
+        deleteService: deleteServiceItem,
         refresh: fetchServices,
-        resetState
+        resetState: () => setState(prev => ({ ...prev, error: null, success: false }))
     };
 };
