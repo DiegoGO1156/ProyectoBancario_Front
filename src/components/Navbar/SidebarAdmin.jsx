@@ -50,6 +50,19 @@ export const SidebarAdmin = () => {
       path: "/",
     },
     {
+      title: "Usuarios",
+      icon: (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z" stroke="currentColor" stroke-width="2"/>
+  <path d="M20.5901 22C20.5901 18.13 16.7402 15 12.0002 15C7.26015 15 3.41016 18.13 3.41016 22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+</svg>
+      ),
+      submenu: [
+        { title: "Usuarios Pendientes", path: "/userPending" },
+        { title: "Usuarios Activos", path: "/userActive" },
+      ],
+    },
+    {
       title: "Servicios",
       icon: (
         <svg
@@ -128,26 +141,6 @@ export const SidebarAdmin = () => {
           />
         </svg>
       ),
-      path: "/FavoriteUser",
-    },
-    {
-      title: "Funciones del Usuario",
-      icon: (
-        <svg
-          className="w-6 h-6"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
-          />
-        </svg>
-      ),
-      path: "/DashboardUser",
     },
     {
       title: "Marcas",
@@ -166,7 +159,7 @@ export const SidebarAdmin = () => {
           />
         </svg>
       ),
-      submenu: [{ title: "Todas las Marcas", path: "/brands" }],
+      path: "/brands",
     },
   ];
 

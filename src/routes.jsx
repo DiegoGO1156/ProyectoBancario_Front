@@ -7,9 +7,8 @@ import { Register } from './components/Register';
 import { Transfer } from "../src/components/transfer/Transfer"
 import { AddFavoriteUser } from './components/transfer/addFavoriteUser';
 import { TransferForm } from './components/transfer/TransferForm';
-import { TransferList } from './components/transfer/TransferList';
-import { PendingUsersPage } from './pages/LIstUserPendingPage';
-import { ActiveUsersPage } from './pages/ActiveUserPage';
+import { TransferList } from './components/transfer/TransferList'
+import  ActiveUsersPage from './pages/ActiveUserPage';
 import { UserHistoryPage } from './pages/UserHistoryPage';
 import BrandsPage from './pages/BrandsPage/BrandPage';
 import { UpdateProfile } from './components/settings/UpdateProfile';
@@ -19,6 +18,8 @@ import { Productos } from "./components/product/ProductList"
 import { UpdatePassword } from './components/settings/UpdatePassword';
 import { DashboardUser } from "./components/DashboardUser"
 import { FavoriteUser } from './components/transfer/FavoriteUser';
+import PendingUsersPage from "./pages/ListUserPendingPage"
+import ServicesPage from './pages/ServicesPage/ServicesPage';
 
 const routes = [
     {path: '/auth', element: <Auth />},
@@ -35,6 +36,7 @@ const routes = [
     {path: '/userActive', element: <ActiveUsersPage />},
     {path: '/historyUser', element: <UserHistoryPage/>},
     {path: '/brands', element: <BrandsPage/>},
+    {path: '/services', element: <ServicesPage/>},
     {path: '/updateProfile', element: <UpdateProfile />},
     {path: '/Productos', element: <Productos />},
     {path: '/Service', element: <ServiceList />},

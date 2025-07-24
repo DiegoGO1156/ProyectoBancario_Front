@@ -2,7 +2,7 @@ import axios from "axios";
 import { logout } from "../shared/hooks";
 
 const apiClient = axios.create({
-    baseURL: 'http://127.0.0.1:3000/Valmeria_App/V1',
+    baseURL: 'https://proyectobancario-back.onrender.com/Valmeria_App/V1',
     timeout: 5000
 })
 
@@ -112,6 +112,7 @@ export const changePassword = async (data) => {
     }
 };
 
+ //brand
 export const getBrands = async () => {
     try {
         const response = await apiClient.get('/Brands/allBrands');
@@ -148,6 +149,18 @@ export const updateBrand = async (id, brandData) => {
     } 
 }
 
+export const searchBrandById = async (id) => {
+  try {
+    const response = await apiClient.get(`/Brands/findBrand/${id}`);
+    return response.data
+  } catch (e) {
+    return {
+      error: true,
+      message: e.response?.data?.error || e.message,
+    };
+  }
+}; 
+
 export const addTransfer = async (data) => {
   try {
     const response = await apiClient.post("/transfers/make-transfer", data);
@@ -156,8 +169,19 @@ export const addTransfer = async (data) => {
     console.log(e)
     return {
       error: true,
-      message: e.response?.data?.message || "No se pudo hacer la transferencia",
-      e,
+      message: e.response?.data?.error || e.message,
+    };
+  }
+}
+
+export const deleteBrand = async (id) => {
+  try {
+    const response = await apiClient.delete(`/Brands/deleteBrand/${id}`);
+    return response.data;
+  } catch (e) {
+    return {
+      error: true,
+      message: e.response?.data?.error || e.message,
     };
   }
 };
@@ -176,6 +200,92 @@ export const getTransferByUser = async (id) => {
   }
 };
 
+//SERVICEs
+export const getServices = async () => {
+    try {
+        const response = await apiClient.get('/Services/allServices');
+        return response.data;
+    } catch (e) {
+        return {
+            error: true,
+            e: e.response?.data?.error || e.message
+        };
+    }
+};
+
+export const createService = async (serviceData) => {
+    try {
+        const response = await apiClient.post('/Services/createService', serviceData);
+        return response.data;
+    } catch (e) {
+        return {
+            error: true,
+            message: e.response?.data?.error || e.message,
+        };
+    }
+};
+
+export const updateService = async (id, serviceData) => {
+    try {
+       const response = await apiClient.put(`/Services/updateService/${id}`, serviceData);
+       return response.data;
+    } catch (e) {
+        return {
+            error: true,
+            message: e.response?.data?.error || e.message,
+        };
+    } 
+};
+
+export const searchServiceById = async (id) => {
+    try {
+        const response = await apiClient.get(`/Services/findService/${id}`);
+        return response.data;
+    } catch (e) {
+        return {
+            error: true,
+            message: e.response?.data?.error || e.message,
+        };
+    }
+};
+
+export const deleteService = async (id) => {
+    try {
+        const response = await apiClient.delete(`/Services/deleteService/${id}`);
+        return response.data;
+    } catch (e) {
+        return {
+            error: true,
+            message: e.response?.data?.error || e.message,
+        };
+    }
+};
+
+ // user
+  export const listUsersPending = async () => {
+  try {
+    const response = await apiClient.get('/User/pending');
+    return response.data;
+  } catch (e) {
+    console.error(e)
+    return {
+      error: true,
+      message: e.response?.data?.error || e.message,
+    };
+  }
+};
+
+export const listUsersActive = async () => {
+  try {
+    const response = await apiClient.get('/User/active');
+    return response.data;
+  } catch (e) {
+    return {
+      error: true,
+      message: e.response?.data?.error || e.message,
+    };
+  }
+};
 
 export const getAllTransfers = async () => {
   try {
@@ -188,6 +298,18 @@ export const getAllTransfers = async () => {
       e,
     };
   }
+}
+
+export const activeUser = async (id) => {
+  try {
+    const response = await apiClient.post(`/User/${id}/activate`);
+    return response
+  }catch(e){
+    return{
+      error: true,
+      message: e.response?.data.error || e.message
+    }
+  }
 };
 
 export const listUserTransfered = async () => {
@@ -197,8 +319,19 @@ export const listUserTransfered = async () => {
   } catch (e) {
     return {
       error: true,
-      message: e.response?.data?.message || "No se pudo obtener la lista de usuarios transferidos",
-      e,
+      message: e.response?.data?.error || e.message,
+    };
+  }
+}
+
+export const deleteRegisterUser = async (id) => {
+  try {
+    const response = await apiClient.delete(`/User/${id}/delete`)
+    return response.data;
+  } catch (e) {
+    return {
+      error: true,
+      message: e.response?.data?.error || e.message,
     };
   }
 };
@@ -214,8 +347,19 @@ export const makeAUserFavorite = async (number, alias) => {
     console.log(e)
     return {
       error: true,
-      message: e.response?.data?.message || "No se pudo agregar a favoritos",
-      e,
+      message: e.response?.data?.error || e.message,
+    };
+  }
+}
+
+export const editUserBalance = async (id, balanceData) => {
+  try {
+    const response = await apiClient.put(`/User/${id}/edit-balance`, balanceData);
+    return response.data;
+  } catch (e) {
+    return {
+      error: true,
+      message: e.response?.data?.error || e.message,
     };
   }
 };
@@ -259,20 +403,6 @@ export const productBuy = async (productId) => {
     };
   }
 };
-
-export const getServices = async () => {
-  try {
-    const response = await apiClient.get("/Services/allServices");
-    return response.data;
-  } catch (e) {
-    console.error("Error en getServices:", e);
-    return {
-      error: true,
-      message: e.response?.data?.msg || "No se pudieron obtener los servicios",
-      e,
-    };
-  }
-};  
 
 export const payService = async (serviceId, amount = 0) => {
   try {

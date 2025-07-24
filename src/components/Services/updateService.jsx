@@ -1,23 +1,26 @@
 import { useState, useEffect } from 'react';
-import { useBrands } from '../../shared/hooks/useBrand';
+import { useBrands } from '../../shared/hooks/useBrand'; // Asegúrate de que la ruta sea correcta
+import { useServices } from '../../shared/hooks/useService'; // Asegúrate de que la ruta sea correcta
 
-export const EditBrandModal = ({ 
+export const EditServiceModal = ({ 
   isOpen, 
   onClose, 
-  brandToEdit,
-  onUpdateSuccess // Callback para éxito
+  serviceToEdit,
+  onUpdateSuccess 
 }) => {
+  const { brands, loading: loadingBrands } = useBrands();
   const { 
-    updateBrand, 
+    updateService, 
     loading, 
     error, 
     success,
     resetState 
-  } = useBrands();
+  } = useServices();
   
   const [formData, setFormData] = useState({
-    nameBrand: '',
+    nameService: '',
     image: '',
+    brand: '', // Almacenará el nameBrand (como espera el backend)
     status: true
   });
   
@@ -30,16 +33,17 @@ export const EditBrandModal = ({
     }
   }, [isOpen, resetState]);
 
-  // Rellenar formulario con datos
+  // Rellenar formulario con datos del servicio a editar
   useEffect(() => {
-    if (brandToEdit) {
+    if (serviceToEdit) {
       setFormData({
-        nameBrand: brandToEdit.nameBrand,
-        image: brandToEdit.image || '',
-        status: brandToEdit.status ?? true
+        nameService: serviceToEdit.nameService,
+        image: serviceToEdit.image || '',
+        brand: serviceToEdit.brand?.nameBrand || serviceToEdit.brandName || '', // Usa nameBrand
+        status: serviceToEdit.status ?? true
       });
     }
-  }, [brandToEdit]);
+  }, [serviceToEdit]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -52,66 +56,71 @@ export const EditBrandModal = ({
 
   const validateForm = () => {
     const newErrors = {};
-    if (!formData.nameBrand.trim()) newErrors.nameBrand = 'Nombre requerido';
+    if (!formData.nameService.trim()) newErrors.nameService = 'Nombre requerido';
+    if (!formData.brand) newErrors.brand = 'Marca requerida';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!validateForm() || !brandToEdit?._id) return;
+    if (!validateForm() || !serviceToEdit?._id) return;
 
     try {
-      const updatedBrand = await updateBrand(brandToEdit._id, formData);
+      // Preparamos los datos en el formato que espera el backend
+      const updateData = {
+        nameService: formData.nameService,
+        image: formData.image,
+        brand: formData.brand, // Enviamos el nameBrand
+        status: formData.status
+      };
+
+      const updatedService = await updateService(serviceToEdit._id, updateData);
       
       if (onUpdateSuccess) {
-        onUpdateSuccess(updatedBrand); // Notificar éxito al padre
+        onUpdateSuccess(updatedService);
       }
       
-      onClose(); // Cerrar modal después de éxito
+      onClose();
     } catch (error) {
-      // El error ya está manejado en el hook
-      console.error("Error completo:", error);
+      console.error("Error al actualizar servicio:", error);
     }
   };
 
-  if (!isOpen || !brandToEdit) return null;
+  if (!isOpen || !serviceToEdit) return null;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-xl font-bold mb-4">Editar Marca</h2>
+        <h2 className="text-xl font-bold mb-4">Editar Servicio</h2>
         
-        {/* Mostrar error si existe */}
         {error && (
           <div className="mb-4 p-2 bg-red-100 text-red-700 rounded">
             {error}
           </div>
         )}
         
-        {/* Mostrar éxito si corresponde */}
         {success && (
           <div className="mb-4 p-2 bg-green-100 text-green-700 rounded">
-            ¡Marca actualizada con éxito!
+            ¡Servicio actualizado con éxito!
           </div>
         )}
         
         <form onSubmit={handleSubmit}>
-          {/* Campos del formulario (igual que antes) */}
           <div className="mb-4">
-            <label className="block text-gray-700 mb-1">Nombre *</label>
+            <label className="block text-gray-700 mb-1">Nombre del Servicio *</label>
             <input
               type="text"
-              name="nameBrand"
-              value={formData.nameBrand}
+              name="nameService"
+              value={formData.nameService}
               onChange={handleChange}
               className={`w-full px-3 py-2 border rounded-md ${
-                errors.nameBrand ? 'border-red-500' : 'border-gray-300'
+                errors.nameService ? 'border-red-500' : 'border-gray-300'
               }`}
               disabled={loading}
             />
-            {errors.nameBrand && (
-              <p className="text-red-500 text-sm mt-1">{errors.nameBrand}</p>
+            {errors.nameService && (
+              <p className="text-red-500 text-sm mt-1">{errors.nameService}</p>
             )}
           </div>
 
@@ -125,6 +134,33 @@ export const EditBrandModal = ({
               className="w-full px-3 py-2 border border-gray-300 rounded-md"
               disabled={loading}
             />
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-gray-700 mb-1">Seleccione la nueva marca o la misma</label>
+            {loadingBrands ? (
+              <div className="animate-pulse h-10 bg-gray-200 rounded"></div>
+            ) : (
+              <select
+                name="brand"
+                value={formData.brand}
+                onChange={handleChange}
+                className={`w-full px-3 py-2 border rounded-md ${
+                  errors.brand ? 'border-red-500' : 'border-gray-300'
+                }`}
+                disabled={loading}
+              >
+                <option value="">Seleccione una marca</option>
+                {brands.map(brand => (
+                  <option key={brand._id} value={brand.nameBrand}>
+                    {brand.nameBrand}
+                  </option>
+                ))}
+              </select>
+            )}
+            {errors.brand && (
+              <p className="text-red-500 text-sm mt-1">{errors.brand}</p>
+            )}
           </div>
 
           <div className="mb-4 flex items-center">

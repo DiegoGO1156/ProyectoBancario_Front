@@ -2,11 +2,35 @@ import { useState } from "react";
 import { useBrands } from "../../shared/hooks/useBrand";
 import { AddBrandModal } from "./addBrands";
 import { EditBrandModal } from "./updateBrand";
+import DeleteConfirmationModal from "./deleteBrand";
 
-const BrandsGrid = () => {
-    const { brands, loading, error, refresh } = useBrands();
+
+const BrandsGrid = ({ onEditBrand }) => {
+    const { brands, loading, error, refresh, deleteBrand} = useBrands();
     const [searchTerm, setSearchTerm] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [brandToDelete, setBrandToDelete] = useState(null);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+   
+
+      const handleEditClick = (brand) => {
+    if (typeof onEditBrand === 'function') {
+      onEditBrand(brand);  // Llama 
+    }
+  };
+
+    //delete 
+     const handleDelete = async () => {
+    if (!brandToDelete) return;
+    
+    const result = await deleteBrand(brandToDelete._id);
+    if (result.success) {
+      refresh(); // Opcional: recargar datos
+    }
+    setShowDeleteModal(false);
+  };
+
     
   
     const filteredBrands = brands.filter(brand => 
@@ -89,51 +113,60 @@ const BrandsGrid = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {filteredBrands.map((brand) => (
               <div 
-                key={brand._id} 
-                className="bg-white rounded-lg shadow overflow-hidden hover:shadow-md transition-shadow duration-200 border border-gray-100"
-              >
-                <div className="aspect-w-16 aspect-h-9 bg-gray-100 overflow-hidden">
-                  <img
-                    src={brand.image === " " ? brand.image : brand.image}
-                    alt={brand.nameBrand}
-                    className="object-cover w-full h-48"
-                    onError={(e) => {
-                      e.target.src = 'https://via.placeholder.com/300';
-                    }}
-                  />
-                </div>
-                <div className="p-4">
-                  <div className="flex justify-between items-start">
-                    <h3 className="text-lg font-medium text-gray-900 truncate">
-                      {brand.nameBrand}
-                    </h3>
-                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                      brand.status ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-                    }`}>
-                      {brand.status ? 'Activo' : 'Inactivo'}
-                    </span>
-                  </div>
-                  
-                  <div className="mt-4 flex justify-end space-x-2">
-                    <button
-                      type="button"
-                      className="text-gray-400 hover:text-blue-500 transition-colors duration-200"
-                      onClick={() => onEditBrand(brand)}
-                    >
-                      <span className="text-sm font-medium">Editar</span>
-                    </button>
-                    <button
-                      type="button"
-                      className="text-gray-400 hover:text-gray-600 transition-colors duration-200"
-                    >
-                      <span className="text-sm font-medium">...</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
+                            key={brand._id} 
+                            className="bg-white rounded-lg shadow overflow-hidden hover:shadow-md transition-shadow duration-200 border border-gray-100 relative"
+                        >
+                            {/* Botón de eliminar */}
+                            <button
+            onClick={() => {
+              setBrandToDelete(brand);
+              setShowDeleteModal(true);
+            }}
+            className="absolute top-2 right-2 p-1 text-red-500 hover:text-red-700"
+            aria-label="Eliminar marca"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+            </svg>
+          </button>
+
+                            <div className="aspect-w-16 aspect-h-9 bg-gray-100 overflow-hidden">
+                                <img
+                                    src={brand.image || 'https://via.placeholder.com/300'}
+                                    alt={brand.nameBrand}
+                                    className="object-cover w-full h-48"
+                                    onError={(e) => {
+                                        e.target.src = 'https://via.placeholder.com/300';
+                                    }}
+                                />
+                            </div>
+                            <div className="p-4">
+                                <div className="flex justify-between items-start">
+                                    <h3 className="text-lg font-medium text-gray-900 truncate">
+                                        {brand.nameBrand}
+                                    </h3>
+                                </div>
+                                
+                                <div className="mt-4 flex justify-end space-x-2">
+                                    <button
+                                        type="button"
+                                        className="text-gray-400 hover:text-blue-500 transition-colors duration-200"
+                                        onClick={() => handleEditClick(brand)}
+                                    >
+                                        <span className="text-sm font-medium">Editar</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
             ))}
           </div>
         )}
+        <DeleteConfirmationModal
+        isOpen={showDeleteModal}
+        onClose={() => setShowDeleteModal(false)}
+        onConfirm={handleDelete}
+        brandName={brandToDelete?.nameBrand || ''}
+      />
       </div>
     );
   };
