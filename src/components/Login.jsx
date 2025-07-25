@@ -80,32 +80,32 @@ export const Login = ({ switchAuthHandler }) => {
         "https://assets.aceternity.com/animated-modal.png",
         "https://assets.aceternity.com/animated-testimonials.webp",
         "https://assets.aceternity.com/cloudinary_bkp/Tooltip_luwy44.png",
-        "https://assets.aceternity.com/github-globe.png",
-        "https://assets.aceternity.com/glare-card.png",
-        "https://assets.aceternity.com/layout-grid.png",
-        "https://assets.aceternity.com/flip-text.png",
+        "https://s1.elespanol.com/2025/07/11/actualidad/1003743843949_257211307_1024x576.jpg",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdaHQ5VLJgzCGPVYbVAM-tJtOWfjdB_EguWw&s",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZjoZVh5lSz1_vtj0EwUpeT9trps0khGp_uw&s",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcToRgPI99vGiB3TIEmJQmttV83kvCoblQOgrA&s",
         "https://assets.aceternity.com/hero-highlight.png",
         "https://assets.aceternity.com/carousel.webp",
         "https://assets.aceternity.com/placeholders-and-vanish-input.png",
-        "https://assets.aceternity.com/shooting-stars-and-stars-background.png",
-        "https://assets.aceternity.com/signup-form.png",
-        "https://assets.aceternity.com/cloudinary_bkp/stars_sxle3d.png",
-        "https://assets.aceternity.com/spotlight-new.webp",
-        "https://assets.aceternity.com/cloudinary_bkp/Spotlight_ar5jpr.png",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAhgpU-NgcmE9_EY-uwPkG7j8nNgXdAKkBsQ&s",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcN0VEbOws9ONVXlybtldjDzFAX3GHR_a_zA&s",
+        "https://cdn-blog.superprof.com/blog_uy/wp-content/uploads/2024/08/la-bolsa.jpg",
+        "https://incae.edu/wp-content/uploads/2023/10/economia_mundial.jpg",
+        "https://ekosnegocios.com/image/posts/September2023/KvsM7ymSSMvKYXPpNnA5.png",
         "https://assets.aceternity.com/cloudinary_bkp/Parallax_Scroll_pzlatw_anfkh7.png",
         "https://assets.aceternity.com/tabs.png",
         "https://assets.aceternity.com/cloudinary_bkp/Tracing_Beam_npujte.png",
-        "https://assets.aceternity.com/cloudinary_bkp/typewriter-effect.png",
-        "https://assets.aceternity.com/glowing-effect.webp",
-        "https://assets.aceternity.com/hover-border-gradient.png",
-        "https://assets.aceternity.com/cloudinary_bkp/Infinite_Moving_Cards_evhzur.png",
-        "https://assets.aceternity.com/cloudinary_bkp/Lamp_hlq3ln.png",
+        "https://www.bbva.com/wp-content/uploads/2020/08/BBVA-Argentina-TorreBBVA-04_opt.jpg",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4LVKbMRDDAYQkLBWww_CFUb4C5Gq91ovTxA&s",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTppq3DW8iBP1MdsUJLVy9zstdvgyr4Lm35KQ&s",
+        "https://archello.com/thumbs/images/2022/01/28/ghafari-associates-northpointe-bank-operations-center-banks-archello.1643390901.9952.jpg?fit=crop&w=407&h=267&auto=compress",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSdbChdNN7auO_a6ndOwQvUAj6q4p9NzlQJzs4tUZ4L-u_lhmJwbM9NXPQAJJV4Eh5aRc&usqp=CAU",
         "https://assets.aceternity.com/macbook-scroll.png",
         "https://assets.aceternity.com/cloudinary_bkp/Meteors_fye3ys.png",
         "https://assets.aceternity.com/cloudinary_bkp/Moving_Border_yn78lv.png",
         "https://assets.aceternity.com/multi-step-loader.png",
-        "https://assets.aceternity.com/vortex.png",
-        "https://assets.aceternity.com/wobble-card.png",
+        "https://concepto.de/wp-content/uploads/2018/02/economia-min-800x438.jpeg",
+        "https://www.bbva.com.ar/content/dam/public-web/argentina/images/Empresas_novedad_3.im1749565674333im.jpg?imwidth=1600",
         "https://assets.aceternity.com/world-map.webp",
     ];
 
@@ -114,19 +114,19 @@ export const Login = ({ switchAuthHandler }) => {
     return (
         <div className="relative bg-[#162456] min-h-screen flex items-center justify-center overflow-hidden">
 
-            <div className="relative mx-auto my-10 flex h-screen w-full max-w-7xl flex-col items-center justify-center overflow-hidden rounded-3xl">
+            <div className="relative mx-auto my-10 flex min-h-[70vh] w-full max-w-5xl flex-col items-center justify-center overflow-hidden rounded-3xl">
                 <h2 className="relative z-20 mx-auto max-w-4xl text-center text-2xl font-bold text-balance text-white md:text-4xl lg:text-6xl">
-                    This is your life and it&apos;s ending one{" "}
+                    ¡Donde los sueños se hacen{" "}
                     <span className="relative z-20 inline-block rounded-xl bg-blue-500/40 px-4 py-1 text-white underline decoration-sky-500 decoration-[6px] underline-offset-[16px] backdrop-blur-sm">
-                        moment
-                    
+                        realidad
+
                     </span>{" "}
-                    at a time.
+                    Sin límites!.
                 </h2>
                 <p className="relative z-20 mx-auto max-w-2xl py-8 text-center text-sm text-neutral-200 md:text-base">
-                    You are not your job, you&apos;re not how much money you have in the
-                    bank. You are not the car you drive. You&apos;re not the contents of
-                    your wallet.
+                    Este banco esta enfocado en hacer la diferencia,
+                    somos la mejor manera de realizar operaciones bancarias.
+                    Estamos centrados en hacer realidad los sueños.
                 </p>
 
                 <div className="absolute inset-0 z-10 h-full w-full bg-black/80 dark:bg-black/40" />

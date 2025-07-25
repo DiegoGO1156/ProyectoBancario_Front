@@ -23,6 +23,11 @@ export const SidebarAdmin = () => {
     />
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/auth");
+  };
+
   // Menú principal
   const menuItems = [
     {
@@ -130,7 +135,7 @@ export const SidebarAdmin = () => {
       ],
     },
     {
-      title: "Servicios",
+      title: "Usuarios favoritos",
       icon: (
         <svg
           className="w-6 h-6"
@@ -146,7 +151,6 @@ export const SidebarAdmin = () => {
           />
         </svg>
       ),
-      path: "/services",
     },
     {
       title: "Marcas",
@@ -373,7 +377,7 @@ export const SidebarAdmin = () => {
 
       <div className="p-4 border-t border-blue-800">
         <button
-          onClick={() => navigate("/auth")}
+          onClick={handleLogout}
           className="mt-4 flex items-center w-full p-2 rounded-lg hover:bg-blue-800 transition"
         >
           <svg

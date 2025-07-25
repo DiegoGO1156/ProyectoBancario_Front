@@ -11,25 +11,38 @@ export const useRegister = () => {
 
     const register = async (name, username, dpi, phone, companyName, income, email, address, password) => {
 
-        setIsLoading(true)
+    setIsLoading(true);
 
-        const response = await registerRequest({ name, username, dpi, phone, companyName, income, email, address, password })
+    try {
+        const response = await registerRequest({ name, username, dpi, phone, companyName, income, email, address, password });
 
-        console.log(response)
-        setIsLoading(false)
+        console.log(response);
 
-        if(response.error){
-            return toast.error(response.error?.response?.data || 'Ocurrio un error al registrar, intenta de nuevo')
+        if (response.error) {
+            toast.error(response.error?.response?.data || 'Ocurrió un error al registrar, intenta de nuevo');
+            return;
         }
 
-        const { userDetails } = response.data
+        const { userDetails } = response.data;
 
         localStorage.setItem('user', JSON.stringify(userDetails));
 
         toast.success('Usuario registrado exitosamente');
 
-        navigate('/')
+        navigate('/');
+
+    } catch (error) {
+
+        console.error('Error en register:', error);
+
+        toast.error('Error inesperado al registrar. Intenta nuevamente.');
+
+    } finally {
+
+        setIsLoading(false);
+
     }
+};
 
     return { 
         register,

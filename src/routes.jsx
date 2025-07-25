@@ -16,6 +16,13 @@ import { PrivateAdminActiveUser } from './components/PrivatePages';
 import { ServiceList } from './components/service/serviceList';
 import { Productos } from "./components/product/ProductList"
 import { UpdatePassword } from './components/settings/UpdatePassword';
+<<<<<<< HEAD
+=======
+import { DashboardUser } from "./components/DashboardUser"
+import { FavoriteUser } from './components/transfer/FavoriteUser';
+import PendingUsersPage from "./pages/ListUserPendingPage"
+import ServicesPage from './pages/ServicesPage/ServicesPage';
+>>>>>>> 90e6a3f0ffcc60df47cf8a75e324158f35a0ccb2
 
 const routes = [
     {path: '/auth', element: <Auth />},
@@ -37,6 +44,8 @@ const routes = [
     {path: '/Productos', element: <Productos />},
     {path: '/Service', element: <ServiceList />},
     {path: '/updatePassword', element: <UpdatePassword />},
+    {path: '/DashboardUser', element: <DashboardUser />},
+    {path: '/FavoriteUser', element: <FavoriteUser />},
 ]
 
 export default routes

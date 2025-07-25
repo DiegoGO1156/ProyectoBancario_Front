@@ -19,8 +19,6 @@ export const TransferList = () => {
       const transferencesUser = Array.isArray(res.transferencesUser)
         ? res.transferencesUser
         : [];
-
-      // Filtrar y ordenar por fecha (descendente)
       const confirmedTransfers = transferencesUser
         .filter((t) => t.verification === true)
         .sort((a, b) => new Date(b.date) - new Date(a.date));

@@ -22,94 +22,52 @@ panicked breaths. Suddenly you become euphoric, docile. You accept your fate. It
     `;
     return (
         <div className="flex h-screen">
-            <SidebarAdmin />
-            <div className="flex-1 overflow-auto bg-gray-100 p-6">
-                <div className="text-black font-bold text-center">
-                    <h1 className="text-4xl font-bold text-black mb-6">Transferencias</h1>
-                    <div className="">
-                        <TextGenerateEffect
-                        words={words}
-                        className="text-black text-sm text-center"
-                        />
-                    </div>
+    <SidebarAdmin />
+    <div className="flex-1 overflow-auto bg-gradient-to-br from-gray-50 to-blue-50 p-6 flex flex-col items-center">
+        <div className="text-black font-bold text-center mb-16 mt-8">
+            <h1 className="text-6xl font-extrabold text-blue-800 mb-6 tracking-tight drop-shadow-lg">Transferencias</h1>
+            <TextGenerateEffect
+                words={words}
+                className="text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed"
+            />
+        </div>
+        <div className="relative w-full max-w-3xl bg-white rounded-3xl shadow-2xl p-8 md:p-12 border border-blue-100 transform transition-all duration-300 hover:scale-[1.01] hover:shadow-3xl">
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-indigo-100 rounded-3xl opacity-60"></div>
+
+            <div className="relative z-10 flex flex-col items-center text-center">
+                <div className="absolute right-1 text-base font-semibold text-blue-600 bg-blue-50 px-4 rounded-full shadow-md z-10">
+                    No. cuenta: <span className="font-bold">{usuario.accountNumber}</span>
                 </div>
-                <CardContainer className="inter-var">
-                    <CardBody className="relative bg-[#0d2b9c] group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] border-white/[0.2] w-full sm:w-[48rem] h-auto rounded-xl p-6 border">
+                <h2 className="text-4xl font-bold text-gray-900 mb-3 mt-4 text-center pr-28 mt-15">
+                    Perfil de <span className="text-blue-700">{usuario.name}</span>
+                </h2>
+                <p className="text-lg text-gray-600 max-w-xl mx-auto mb-8">
+                    Esta es el saldo que tienes actualmente en tu cuenta. Gestiona tus finanzas con facilidad.
+                </p>
 
-                        <CardItem
-                            translateZ={20}
-                            className="absolute top-4 right-6 text-sm font-semibold text-neutral-700 dark:text-neutral-200"
-                        >
-                            No. cuenta: {usuario.accountNumber}
-                        </CardItem>
-
-                        <CardItem
-                            translateZ="50"
-                            className="text-xl font-bold text-neutral-600 dark:text-white"
-                        >
-                            Perfil de {usuario.name}
-                        </CardItem>
-
-                        <CardItem
-                            as="p"
-                            translateZ="60"
-                            className="text-neutral-500 text-sm max-w-sm mt-2 dark:text-neutral-300"
-                        >
-                            Hover over this card to unleash the power of CSS perspective
-                        </CardItem>
-
-                        <CardItem translateZ="100" className="w-full mt-10 flex items-center">
-                            <div className="flex items-center gap-6">
-                                <img
-                                    src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2560&auto=format&fit=crop"
-                                    height="500"
-                                    width="500"
-                                    className="h-40 w-auto object-cover rounded-xl group-hover/card:shadow-xl"
-                                    alt="thumbnail"
-                                />
-                            </div>
-                            <div className="text-white text-4xl font-bold ml-25">
-                                Saldo: ${usuario.income}
-                            </div>
-                        </CardItem>
-
-                        <div className="flex justify-between items-center mt-20">
-                            <CardItem
-                                translateZ={20}
-                                as="a"
-                                href="https://twitter.com/mannupaaji"
-                                target="__blank"
-                                className="px-4 py-2 rounded-xl text-xs font-normal dark:text-white"
-                            ></CardItem>
-                            <CardItem></CardItem>
-                        </div>
-
-                        <div className="flex justify-between items-center ">
-                            <CardItem
-                                translateZ={20}
-                                as="a"
-                                href="https://twitter.com/mannupaaji"
-                                target="__blank"
-                                className="px-4 py-2 rounded-xl text-xs font-normal dark:text-white"
-                            >
-                                <button onClick={switchTransferHandler}>
-                                    Transferencia
-                                </button>
-                            </CardItem>
-                            <CardItem
-                                translateZ={20}
-                                as="button"
-                                className="px-4 py-2 rounded-xl bg-black dark:bg-white dark:text-black text-white text-xs font-bold"
-                            >
-                                Agregar usuario
-                            </CardItem>
-                        </div>
-                    </CardBody>
-                </CardContainer>
-                <div className="mt-30">
-                    <Footer />
+                <div className="relative bg-blue-700 text-white rounded-2xl p-6 md:p-8 shadow-lg w-full max-w-md mx-auto transform transition-transform duration-300 hover:scale-[1.02] hover:shadow-xl">
+                    <p className="text-md font-medium mb-2 opacity-80">Saldo Disponible</p>
+                    <div className="flex items-center justify-center">
+                        <span className="text-5xl font-extrabold tracking-tight">${usuario.income}</span>
+                        <span className="text-xl ml-2 font-semibold">USD</span>
+                    </div>
+                    <div className="absolute bottom-3 right-4 text-xs opacity-70">Actualizado al instante</div>
+                </div>
+                <div className="mt-12 flex justify-center gap-6">
+                    <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1">
+                        Realizar Transferencia
+                    </button>
+                    <button className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-3 px-8 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1">
+                        Ver Historial
+                    </button>
                 </div>
             </div>
         </div>
+
+        <div className="mt-auto pt-10">
+            <Footer />
+        </div>
+    </div>
+</div>
     );
 }
