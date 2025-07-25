@@ -1,6 +1,6 @@
 import React from 'react';
 import { FaExchangeAlt, FaHeart, FaHistory, FaShoppingCart, FaConciergeBell, FaUserEdit, FaLock } from 'react-icons/fa';
-import { SidebarUsers } from './Navbar/SidebarAdmin';
+import { SidebarUsers } from './Navbar/SidebarUser';
 import Footer from "./Homepage/Footer";
 
 export const DashboardUser = () => {
