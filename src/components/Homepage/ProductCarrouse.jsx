@@ -84,7 +84,7 @@ const ProductCarousel = () => {
         >
           {duplicatedProducts.map((product, index) => (
             <div key={`${product.id}-${index}`} className="flex-shrink-0 w-1/4 px-2">
-              <a href="" className="group block bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 h-full flex flex-col">
+              <a  className="group block bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 h-full flex flex-col">
                 <div className={`h-48 bg-gradient-to-r ${product.gradient} flex items-center justify-center overflow-hidden`}>
                   <img 
                     src={product.image} 
