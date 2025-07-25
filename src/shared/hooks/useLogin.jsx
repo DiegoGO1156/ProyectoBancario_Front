@@ -44,7 +44,16 @@ export const useLogin = () => {
 
         toast.success('Sesion iniciada correctamente')
 
-        navigate('/')
+        const role = localStorage.getItem("roleUser")
+
+        if(role === "ADMIN"){
+            navigate('/admin')
+        }else if(role === "USER"){
+            navigate('/DashboardUser')
+        }else{
+            navigate('/')
+        }
+
     }
 
     return {
