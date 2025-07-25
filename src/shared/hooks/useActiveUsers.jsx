@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { listUsersActive, editUserBalance } from '../../services/api';
+import { listUsersActive, editUserBalance, editUserStatus } from '../../services/api';
 
 export const useActiveUsers = () => {
   const [users, setUsers] = useState([]);
@@ -38,7 +38,28 @@ export const useActiveUsers = () => {
     }
   };
 
-
+   const changeUserStatus = async (userId) => {
+    try {
+      setLoading(true);
+      const response = await editUserStatus(userId);
+      if (response.error) throw new Error(response.message);
+      
+      // Actualización optimista
+      setUsers(prevUsers => prevUsers.map(user => 
+        user._id === userId ? { 
+          ...user, 
+          statusAccount: 'Pending',
+          verification: false 
+        } : user
+      ));
+      
+      return { success: true, message: response.msg };
+    } catch (err) {
+      return { success: false, error: err.message };
+    } finally {
+      setLoading(false);
+    }
+  };
 
 
   useEffect(() => {
@@ -47,5 +68,5 @@ export const useActiveUsers = () => {
 
   const refresh = () => setRefreshFlag(prev => !prev);
 
-  return { users, loading, error, refresh, updateUserIncome };
+  return { users, loading, error, refresh, updateUserIncome, changeUserStatus };
 };

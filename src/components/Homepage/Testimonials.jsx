@@ -84,9 +84,7 @@ const Testimonials = () => {
         </div>
 
         <div className="mt-16 text-center">
-          <button className="bg-amber-500 hover:bg-amber-600 text-white font-semibold py-3 px-8 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
-            Abre tu cuenta hoy mismo
-          </button>
+          
         </div>
       </div>
     </section>

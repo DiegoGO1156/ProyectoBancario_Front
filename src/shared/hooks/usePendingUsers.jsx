@@ -2,70 +2,68 @@ import { useState, useEffect } from 'react';
 import { listUsersPending, activeUser, deleteRegisterUser } from '../../services/api';
 
 export const usePendingUsers = () => {
-  const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [refreshFlag, setRefreshFlag] = useState(false);
+  const [state, setState] = useState({
+    users: [],
+    loading: true,
+    error: null,
+    refreshCount: 0
+  });
 
   const fetchPendingUsers = async () => {
-    setLoading(true);
     try {
+      setState(prev => ({ ...prev, loading: true, error: null }));
       const response = await listUsersPending();
+      
       if (response.error) throw new Error(response.message);
       
-      setUsers(response.users || []);
-      setError(null);
+      setState(prev => ({ 
+        ...prev, 
+        users: response.users || [], 
+        loading: false 
+      }));
     } catch (err) {
-      setError(err.message);
+      setState(prev => ({ 
+        ...prev, 
+        error: err.message, 
+        loading: false 
+      }));
       console.error("Error fetching users:", err);
-    } finally {
-      setLoading(false);
     }
   };
 
-  const activateUser = async (userId) => {
+  const executeUserAction = async (action, userId) => {
     try {
-      setLoading(true);
-      const response = await activeUser(userId);
+      setState(prev => ({ ...prev, loading: true }));
+      const response = await action(userId);
+      
       if (response.error) throw new Error(response.message);
       
-      // Actualización optimista + recarga completa
-      setUsers(prev => prev.filter(u => u._id !== userId));
-      setRefreshFlag(prev => !prev); // Dispara nueva carga
+      // Actualización optimista + recarga
+      setState(prev => ({
+        ...prev,
+        users: prev.users.filter(u => u._id !== userId),
+        refreshCount: prev.refreshCount + 1
+      }));
       
       return { success: true };
     } catch (err) {
-      setError(err.message);
+      setState(prev => ({ ...prev, error: err.message }));
       return { success: false, error: err.message };
     } finally {
-      setLoading(false);
+      setState(prev => ({ ...prev, loading: false }));
     }
   };
-
-  const deleteUser = async (userId) => {
-    try {
-      setLoading(true);
-      const response = await deleteRegisterUser(userId);
-      if (response.error) throw new Error(response.message);
-      
-      // Actualización optimista + recarga completa
-      setUsers(prev => prev.filter(u => u._id !== userId));
-      setRefreshFlag(prev => !prev);
-      
-      return { success: true };
-    } catch (err) {
-      setError(err.message);
-      return { success: false, error: err.message };
-    } finally {
-      setLoading(false);
-    }
-  };
-
-
 
   useEffect(() => {
     fetchPendingUsers();
-  }, [refreshFlag]);
+  }, [state.refreshCount]);
 
-  return { users, loading, error, activateUser, deleteUser };
+  return {
+    users: state.users,
+    loading: state.loading,
+    error: state.error,
+    activateUser: (userId) => executeUserAction(activeUser, userId),
+    deleteUser: (userId) => executeUserAction(deleteRegisterUser, userId),
+    refresh: () => setState(prev => ({ ...prev, refreshCount: prev.refreshCount + 1 }))
+  };
 };

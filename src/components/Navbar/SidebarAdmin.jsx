@@ -31,7 +31,7 @@ export const SidebarAdmin = () => {
   // Menú principal
   const menuItems = [
     {
-      title: "Inicio",
+      title: "HOME PAGE",
       icon: (
         <svg
           className="w-6 h-6"
@@ -48,6 +48,16 @@ export const SidebarAdmin = () => {
         </svg>
       ),
       path: "/",
+    },
+     {
+      title: "Admin",
+      icon: (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 6V3M12 21V18M18 12H21M3 12H6M16.5 7.5L19 5M5 19L7.5 16.5M7.5 7.5L5 5M19 19L16.5 16.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+          <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="2"/>
+        </svg>
+      ),
+      path: "/admin",
     },
     {
       title: "Usuarios",

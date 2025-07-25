@@ -205,11 +205,11 @@ export const getServices = async () => {
     return response.data;
   } catch (e) {
     return {
-      error: true,
-      e: e.response?.data?.error || e.message
+      services: response.data?.services || [],
+      ...response.data
     };
-  }
-};
+  };
+}
 
 export const createService = async (serviceData) => {
   try {
@@ -324,6 +324,18 @@ export const listUserTransfered = async () => {
 export const deleteRegisterUser = async (id) => {
   try {
     const response = await apiClient.delete(`/User/${id}/delete`)
+    return response.data;
+  } catch (e) {
+    return {
+      error: true,
+      message: e.response?.data?.error || e.message,
+    };
+  }
+};
+
+export const editUserStatus = async (id) => {
+  try {
+    const response = await apiClient.put(`/User/changeStatusUser/${id}`)
     return response.data;
   } catch (e) {
     return {

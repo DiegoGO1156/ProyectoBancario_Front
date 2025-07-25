@@ -1,154 +1,101 @@
 import { useState, useEffect } from 'react';
-import { useBrands } from '../../shared/hooks/useBrand'; // Asegúrate de que la ruta sea correcta
-import { useServices } from '../../shared/hooks/useService'; // Asegúrate de que la ruta sea correcta
+import { useBrands } from '../../shared/hooks/useBrand';
 
 export const EditServiceModal = ({ 
   isOpen, 
   onClose, 
   serviceToEdit,
-  onUpdateSuccess 
+  onSuccess,
+  updateService
 }) => {
-  const { brands, loading: loadingBrands } = useBrands();
-  const { 
-    updateService, 
-    loading, 
-    error, 
-    success,
-    resetState 
-  } = useServices();
-  
+  const { brands } = useBrands();
   const [formData, setFormData] = useState({
     nameService: '',
     image: '',
-    brand: '', // Almacenará el nameBrand (como espera el backend)
+    brand: '',
     status: true
   });
-  
-  const [errors, setErrors] = useState({});
 
-  // Resetear estado al abrir/cerrar
-  useEffect(() => {
-    if (isOpen) {
-      resetState();
-    }
-  }, [isOpen, resetState]);
-
-  // Rellenar formulario con datos del servicio a editar
   useEffect(() => {
     if (serviceToEdit) {
       setFormData({
         nameService: serviceToEdit.nameService,
         image: serviceToEdit.image || '',
-        brand: serviceToEdit.brand?.nameBrand || serviceToEdit.brandName || '', // Usa nameBrand
+        brand: serviceToEdit.brandName || '',
         status: serviceToEdit.status ?? true
       });
     }
   }, [serviceToEdit]);
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value
-    }));
-    if (errors[name]) setErrors(prev => ({ ...prev, [name]: '' }));
-  };
-
-  const validateForm = () => {
-    const newErrors = {};
-    if (!formData.nameService.trim()) newErrors.nameService = 'Nombre requerido';
-    if (!formData.brand) newErrors.brand = 'Marca requerida';
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!validateForm() || !serviceToEdit?._id) return;
-
     try {
-      // Preparamos los datos en el formato que espera el backend
-      const updateData = {
-        nameService: formData.nameService,
-        image: formData.image,
-        brand: formData.brand, // Enviamos el nameBrand
-        status: formData.status
-      };
-
-      const updatedService = await updateService(serviceToEdit._id, updateData);
-      
-      if (onUpdateSuccess) {
-        onUpdateSuccess(updatedService);
-      }
-      
-      onClose();
-    } catch (error) {
-      console.error("Error al actualizar servicio:", error);
+      await updateService(serviceToEdit._id, formData);
+      onSuccess();
+    } catch (err) {
+      console.error("Error al actualizar servicio:", err);
     }
   };
 
   if (!isOpen || !serviceToEdit) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-xl font-bold mb-4">Editar Servicio</h2>
-        
-        {error && (
-          <div className="mb-4 p-2 bg-red-100 text-red-700 rounded">
-            {error}
-          </div>
-        )}
-        
-        {success && (
-          <div className="mb-4 p-2 bg-green-100 text-green-700 rounded">
-            ¡Servicio actualizado con éxito!
-          </div>
-        )}
-        
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label className="block text-gray-700 mb-1">Nombre del Servicio *</label>
-            <input
-              type="text"
-              name="nameService"
-              value={formData.nameService}
-              onChange={handleChange}
-              className={`w-full px-3 py-2 border rounded-md ${
-                errors.nameService ? 'border-red-500' : 'border-gray-300'
-              }`}
-              disabled={loading}
-            />
-            {errors.nameService && (
-              <p className="text-red-500 text-sm mt-1">{errors.nameService}</p>
-            )}
+    <div className="fixed inset-0 z-50 flex items-center justify-center">
+      {/* Fondo transparente con blur ligero */}
+      <div 
+        className="absolute inset-0 bg-white/10 backdrop-blur-sm"
+        onClick={onClose}
+      />
+      
+      {/* Modal flotante */}
+      <div className="relative bg-white rounded-xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-y-auto mx-4 border border-gray-200">
+        <div className="p-6">
+          {/* Encabezado */}
+          <div className="flex justify-between items-start mb-6">
+            <h2 className="text-2xl font-bold text-gray-800">Editar Servicio</h2>
+            <button
+              onClick={onClose}
+              className="text-gray-500 hover:text-gray-700 transition-colors"
+            >
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
           </div>
 
-          <div className="mb-4">
-            <label className="block text-gray-700 mb-1">Imagen (URL)</label>
-            <input
-              type="text"
-              name="image"
-              value={formData.image}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md"
-              disabled={loading}
-            />
-          </div>
+          {/* Formulario */}
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Campo Nombre del Servicio */}
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">Nombre del Servicio *</label>
+              <input
+                type="text"
+                value={formData.nameService}
+                onChange={(e) => setFormData({...formData, nameService: e.target.value})}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-200 focus:outline-none"
+                required
+              />
+            </div>
 
-          <div className="mb-4">
-            <label className="block text-gray-700 mb-1">Seleccione la nueva marca o la misma</label>
-            {loadingBrands ? (
-              <div className="animate-pulse h-10 bg-gray-200 rounded"></div>
-            ) : (
+            {/* Campo URL de la Imagen */}
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">URL de la Imagen</label>
+              <input
+                type="text"
+                value={formData.image}
+                onChange={(e) => setFormData({...formData, image: e.target.value})}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-200 focus:outline-none"
+              />
+            </div>
+
+            {/* Campo Marca */}
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">Marca *</label>
               <select
-                name="brand"
                 value={formData.brand}
-                onChange={handleChange}
-                className={`w-full px-3 py-2 border rounded-md ${
-                  errors.brand ? 'border-red-500' : 'border-gray-300'
-                }`}
-                disabled={loading}
+                onChange={(e) => setFormData({...formData, brand: e.target.value})}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-200 focus:outline-none"
+                required
               >
                 <option value="">Seleccione una marca</option>
                 {brands.map(brand => (
@@ -157,44 +104,27 @@ export const EditServiceModal = ({
                   </option>
                 ))}
               </select>
-            )}
-            {errors.brand && (
-              <p className="text-red-500 text-sm mt-1">{errors.brand}</p>
-            )}
-          </div>
+            </div>
+          
 
-          <div className="mb-4 flex items-center">
-            <input
-              type="checkbox"
-              name="status"
-              checked={formData.status}
-              onChange={handleChange}
-              className="h-4 w-4 text-blue-600 rounded"
-              disabled={loading}
-            />
-            <label className="ml-2 text-gray-700">Activo</label>
-          </div>
-
-          <div className="flex justify-end gap-2">
-            <button
-              type="button"
-              onClick={onClose}
-              className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600"
-              disabled={loading}
-            >
-              Cancelar
-            </button>
-            <button
-              type="submit"
-              className={`px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 ${
-                loading ? 'opacity-50 cursor-not-allowed' : ''
-              }`}
-              disabled={loading}
-            >
-              {loading ? 'Guardando...' : 'Guardar Cambios'}
-            </button>
-          </div>
-        </form>
+            {/* Botones de acción */}
+            <div className="flex flex-col sm:flex-row justify-end space-y-3 sm:space-y-0 sm:space-x-3">
+              <button
+                type="button"
+                onClick={onClose}
+                className="px-5 py-2.5 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-lg transition-colors"
+              >
+                Cancelar
+              </button>
+              <button
+                type="submit"
+                className="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+              >
+                Guardar Cambios
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );
