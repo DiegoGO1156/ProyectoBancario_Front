@@ -15,7 +15,7 @@ export const SidebarAdmin = () => {
 
   const profileLink = {
     href: "/profile",
-    label: "Perfil",
+    label: "Perfil de Usuario",
     icon: <img
       src="https://assets.aceternity.com/manu.png"
       alt="Avatar"
@@ -24,7 +24,8 @@ export const SidebarAdmin = () => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    localStorage.removeItem("roleUser");
     navigate("/auth");
   };
 

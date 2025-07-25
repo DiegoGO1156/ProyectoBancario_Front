@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useUpdatePassword } from '../../shared/hooks/useUpdatePassword';
 import { useNavigate } from 'react-router-dom';
 import Footer from "../Homepage/Footer";
+import { SidebarUsers } from "../Navbar/SidebarUser";
 
 export const UpdatePassword = () => {
     const [form, setForm] = useState({
@@ -39,9 +40,13 @@ export const UpdatePassword = () => {
         }
     };
 
+    const role = localStorage.getItem("roleUser")
+
     return (
         <div className="flex h-screen">
-            <SidebarAdmin />
+            {
+                role === "ADMIN" ? <SidebarAdmin /> : <SidebarUsers/>
+            }
             <div className="bg-blue-50 w-full min-h-screen">
                 <div className="p-6">
                     <div className="bg-white rounded-xl shadow-md p-6 mb-6">

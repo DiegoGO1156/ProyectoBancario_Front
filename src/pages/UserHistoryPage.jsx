@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {SidebarAdmin} from '../../src/components/Navbar/SidebarAdmin';
+import { SidebarUsers } from '../components/Navbar/SidebarUser';
 
 export const UserHistoryPage = () => {
   const navigate = useNavigate();
@@ -86,12 +87,17 @@ export const UserHistoryPage = () => {
     pending: filteredHistory.filter(r => r.status === 'pending').length
   };
 
+  const role = localStorage.getItem("roleUser")
+
   return (
     <>
       <div className='my-'>
       </div>
       <div className="flex min-h-screen bg-blue-50">
-        <SidebarAdmin />
+
+        {
+          role === "ADMIN" ? <SidebarAdmin /> : <SidebarUsers/>
+        }
         
         {/* Contenido principal */}
         <div className="flex-1 ml-15 p-8">

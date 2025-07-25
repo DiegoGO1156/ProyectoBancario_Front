@@ -4,6 +4,7 @@ import { SidebarAdmin } from "../Navbar/SidebarAdmin";
 import Footer from "../Homepage/Footer";
 import { useUserProfile } from "../../shared/hooks";
 import { productBuy } from "../../services/api";
+import { SidebarUsers } from "../Navbar/SidebarUser";
 
 export const Productos = () => {
   const [products, setProducts] = useState([]);
@@ -31,9 +32,13 @@ export const Productos = () => {
   if (loading) return <p className="p-6">Cargando usuario...</p>;
   if (error) return <p className="p-6">Error al cargar perfil: {error}</p>;
 
+  const role = localStorage.getItem("roleUser")
+
   return (
     <div className="flex min-h-screen">
-      <SidebarAdmin />
+      {
+        role === "ADMIN" ? <SidebarAdmin /> : <SidebarUsers/>
+      }
       <div className="flex-1 flex-col ml-70">
         <div className="p-6 bg-gray-100 min-h-[100vh]">
           <div className="flex justify-between items-center mb-6">

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { updateUser } from '../../services';
 import { SidebarAdmin } from '../Navbar/SidebarAdmin';
 import  Footer  from "../Homepage/Footer";
+import { SidebarUsers } from '../Navbar/SidebarUser';
 
 export const UpdateProfile = ({ userData }) => {
   const [formData, setFormData] = useState({
@@ -45,9 +46,13 @@ export const UpdateProfile = ({ userData }) => {
     }
   };
 
+  const role = localStorage.getItem("roleUser")
+
   return (
     <div className='flex h-screen'>
-      <SidebarAdmin />
+      {
+        role === "ADMIN" ? <SidebarAdmin /> : <SidebarUsers/>
+      }
       <div className=" bg-blue-50 w-full min-h-screen">
         <div className="">
           <div className="">
