@@ -31,60 +31,60 @@ export const AddFavoriteUser = () => {
 };
 
   return (
-    <div className="flex h-full">
+    <div className="flex h-screen">
       <SidebarAdmin />
-      <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded shadow">
-        <h2 className="text-xl font-bold mb-4">Agregar Usuario Favorito</h2>
+      <div className="flex flex-col flex-grow">
+        <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded shadow flex-grow">
+          <h2 className="text-xl font-bold mb-15 ml-40">Agregar Usuario Favorito</h2>
 
-        <div className="shadow-input mx-auto w-full max-w-md bg-white p-4 md:rounded-2xl md:p-8 dark:bg-black ml-20">
-                <h2 className="text-xl font-bold text-neutral-800 dark:text-neutral-200">
-                  Agregar usuario Favoritos
-                </h2>
-                <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-300">
-                  Ingresa el numero de cuenta y el alias que desees.
-                </p>
-        
-                <form onSubmit={handleSubmit} className="my-8 space-y-4">
-                  <LabelInputContainer>
-                    <Label htmlFor="countNumber">Numero de cuenta</Label>
-                    <MotionInput
-                      id="countNumber"
-                      placeholder="Ej: 42153529720"
-                      value={number}
-                      onChange={(e) => setNumber(e.target.value)}
-                      type="text"
-                      step="0.01"
-                    />
-                  </LabelInputContainer>
-                  <LabelInputContainer>
-                    <Label htmlFor="alias">Alias</Label>
-                    <MotionInput
-                      id="alias"
-                      placeholder="Ej: carlos"
-                      value={alias}
-                      onChange={(e) => setAlias(e.target.value)}
-                      type="text"
-                    />
-                  </LabelInputContainer>
-                  <button
-                    className="group/btn relative block h-10 w-full rounded-md bg-gradient-to-br from-black to-neutral-600 font-medium text-white shadow-md dark:bg-zinc-800"
-                    type="submit"
-                  >
-                    Agregar usuario favorito &rarr;
-                    <BottomGradient />
-                  </button>
-                </form>
-        
-                {message && (
-                  <p className="text-sm text-center text-red-600 dark:text-red-400 mt-2">
-                    {message}
-                  </p>
-                )}
-              </div>
+          <div className="shadow-input mx-auto w-full max-w-md bg-white p-4 md:rounded-2xl md:p-8 dark:bg-black ml-20">
+            <h2 className="text-xl font-bold text-neutral-800 dark:text-neutral-200">
+              Agregar usuario Favoritos
+            </h2>
+            <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-300">
+              Ingresa el numero de cuenta y el alias que desees.
+            </p>
 
-        {message && <p className="mt-4 text-sm text-center text-green-700">{message}</p>}
-      </div>
-      <div className="mt-40">
+            <form onSubmit={handleSubmit} className="my-8 space-y-4">
+              <LabelInputContainer>
+                <Label htmlFor="countNumber">Numero de cuenta</Label>
+                <MotionInput
+                  id="countNumber"
+                  placeholder="Ej: 42153529720"
+                  value={number}
+                  onChange={(e) => setNumber(e.target.value)}
+                  type="text"
+                  step="0.01"
+                />
+              </LabelInputContainer>
+              <LabelInputContainer>
+                <Label htmlFor="alias">Alias</Label>
+                <MotionInput
+                  id="alias"
+                  placeholder="Ej: carlos"
+                  value={alias}
+                  onChange={(e) => setAlias(e.target.value)}
+                  type="text"
+                />
+              </LabelInputContainer>
+              <button
+                className="group/btn relative block h-10 w-full rounded-md bg-gradient-to-br from-black to-neutral-600 font-medium text-white shadow-md dark:bg-zinc-800"
+                type="submit"
+              >
+                Agregar usuario favorito &rarr;
+                <BottomGradient />
+              </button>
+            </form>
+
+            {message && (
+              <p className="text-sm text-center text-red-600 dark:text-red-400 mt-2">
+                {message}
+              </p>
+            )}
+          </div>
+
+          {message && <p className="mt-4 text-sm text-center text-green-700">{message}</p>}
+        </div>
         <Footer />
       </div>
     </div>

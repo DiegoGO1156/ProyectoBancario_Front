@@ -5,6 +5,7 @@ import { cn } from "../ui/lib/utils";
 import { SidebarAdmin } from '../Navbar/SidebarAdmin';
 import { addTransfer, getFavorites } from '../../services';
 import Footer from "../Homepage/Footer";
+import { denyTransfer } from "../../services/api";
 
 export const TransferForm = ({ switchTransferHandler }) => {
   const [favorites, setFavorites] = useState([]);
@@ -12,18 +13,20 @@ export const TransferForm = ({ switchTransferHandler }) => {
   const [amount, setAmount] = useState("");
   const [motive, setMotive] = useState("");
   const [message, setMessage] = useState("");
+  const [showCancel, setShowCancel] = useState(false);
+  const [cancelToken, setCancelToken] = useState("");
 
   useEffect(() => {
-  const fetchFavorites = async () => {
-    const res = await getFavorites();
-    console.log('Respuesta getFavorites:', res);
-    const favs = Array.isArray(res) ? res
-               : Array.isArray(res?.favorites) ? res.favorites
-               : [];
-    setFavorites(favs);
-  };
-  fetchFavorites();
-}, []);
+    const fetchFavorites = async () => {
+      const res = await getFavorites();
+      console.log('Respuesta getFavorites:', res);
+      const favs = Array.isArray(res) ? res
+        : Array.isArray(res?.favorites) ? res.favorites
+          : [];
+      setFavorites(favs);
+    };
+    fetchFavorites();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,11 +45,18 @@ export const TransferForm = ({ switchTransferHandler }) => {
 
       if (res.success) {
         setMessage("Transferencia iniciada. Revisa tu correo.");
+
+        setCancelToken(res.tokenEmail);
+        setShowCancel(true);
+
+        setTimeout(() => {
+          setShowCancel(false);
+          window.location.reload();
+        }, 90000);
+
         setAccountNumber("");
         setAmount("");
         setMotive("");
-      } else {
-        setMessage("Error al transferir.");
       }
     } catch (error) {
       setMessage(error?.response?.data?.message || "Error desconocido");
@@ -75,7 +85,7 @@ export const TransferForm = ({ switchTransferHandler }) => {
               <select
                 value={accountNumber}
                 onChange={(e) => setAccountNumber(e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded-md"
+                className="w-full p-2 border border-gray-300 rounded-md text-white"
               >
                 <option value="">Selecciona un destinatario favorito</option>
                 {favorites.map((fav) => (
@@ -116,6 +126,23 @@ export const TransferForm = ({ switchTransferHandler }) => {
             Transferir &rarr;
             <BottomGradient />
           </button>
+          {showCancel && (
+            <button
+              onClick={async () => {
+                const result = await denyTransfer(cancelToken);
+                if (!result.error) {
+                  alert("Transferencia cancelada.");
+                  setShowCancel(false);
+                  window.location.reload();
+                } else {
+                  alert("Error al cancelar: " + result.e);
+                }
+              }}
+              className="mt-4 w-full rounded-md bg-red-600 text-white py-2 font-semibold hover:bg-red-700"
+            >
+              Cancelar transferencia
+            </button>
+          )}
         </form>
 
         {message && (
