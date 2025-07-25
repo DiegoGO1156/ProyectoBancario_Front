@@ -4,7 +4,7 @@ import { useNavigate, useLocation, Link } from "react-router-dom";
 import { motion } from "motion/react";
 import { cn } from "../ui/lib/utils";
 
-export const SidebarUsers = () => {
+export const SidebarAdmin = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(true);
