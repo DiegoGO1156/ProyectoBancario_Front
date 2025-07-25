@@ -3,4 +3,4 @@ export const validateIncome = (income) => {
     return regex.test(income);
 }
 
-export const validateIncomeMessage = 'El ingreso debe tener entre 100 y 8000 caracteres y no debe contener espacios';
+export const validateIncomeMessage = 'El ingreso debe ser entre 100 y 8000, no debe contener espacios';

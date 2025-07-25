@@ -65,12 +65,20 @@
             "dest": "/"
         },
         {
-            "src":"/Services",
+            "src":"/services",
+            "dest": "/"
+        },
+        {
+            "src":"/service",
             "dest": "/"
         },
         {
             "src":"/updatePassword",
             "dest": "/"
+        },
+        {
+            "src": "/DashboardUser",
+            "dest":"/"
         }
     ]
 }

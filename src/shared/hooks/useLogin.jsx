@@ -13,20 +13,20 @@ export const useLogin = () => {
 
         setIsLoading(true);
 
-        console.log("login() - datos enviados:", { email, password });
+        //console.log("login() - datos enviados:", { email, password });
 
         const response = await loginRequest({ email, password });
 
-        console.log("login() - respuesta recibida:", response);
+        //console.log("login() - respuesta recibida:", response);
 
         setIsLoading(false);
 
-        console.log(response)
+        //console.log(response)
 
         if (response.error) {
             const status = response.e?.response?.status;
 
-            if (status === 401 && response.message === 'Falta validar la cuenta.') {
+            if (status === 401 || response.message === 'Falta validar la cuenta.') {
                 return toast.error('Tu cuenta aún no ha sido validada. Revisa tu correo o contacta al administrador.');
             }
 
@@ -34,6 +34,7 @@ export const useLogin = () => {
                 response.message ||
                 response.e?.response?.data?.msg ||
                 response.e?.response?.data?.error ||
+                'Tu cuenta aún no ha sido validada. Revisa tu correo o contacta al administrador.' ||
                 'Ocurrió un error al iniciar sesión'
             );
         }

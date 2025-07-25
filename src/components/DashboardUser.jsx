@@ -1,6 +1,6 @@
 import React from 'react';
 import { FaExchangeAlt, FaHeart, FaHistory, FaShoppingCart, FaConciergeBell, FaUserEdit, FaLock } from 'react-icons/fa';
-import { SidebarAdmin } from './Navbar/SidebarAdmin';
+import { SidebarUsers } from './Navbar/SidebarAdmin';
 import Footer from "./Homepage/Footer";
 
 export const DashboardUser = () => {
@@ -51,7 +51,7 @@ export const DashboardUser = () => {
 
   return (
     <div className='flex h-full'>
-        <SidebarAdmin />
+        <SidebarUsers />
         <div className="min-h-screen bg-white text-gray-900 flex flex-col items-center justify-center p-6 ml-120">
         <h2 className="relative z-20 mx-auto max-w-4xl text-center text-2xl font-bold text-balance text-gray-900 md:text-4xl lg:text-6xl mb-12">
             ¡Bienvenido a tu panel de control{" "}
