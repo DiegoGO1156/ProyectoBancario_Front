@@ -139,11 +139,40 @@ export const SidebarUsers = () => {
     setActiveSubmenu(activeSubmenu === index ? null : index);
   };
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+      // En móvil, forzar el cierre del sidebar si no está hover
+      if (window.innerWidth < 768 && !isHovered) {
+        setIsOpen(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [isHovered]);
+
+  // Efecto para cerrar el sidebar después de un tiempo sin hover (solo en desktop)
+  useEffect(() => {
+    let timer;
+    if (!isMobile && isOpen && !isHovered) {
+      timer = setTimeout(() => {
+        setIsOpen(false);
+      }, 1000); // 1 segundo después de salir del sidebar
+    }
+    return () => clearTimeout(timer);
+  }, [isHovered, isOpen, isMobile]);
+
   return (
     <div
       className={`bg-blue-900 text-white h-screen fixed flex flex-col z-50 shadow-xl transition-all duration-300 ease-in-out ${
         isOpen ? "w-64" : "w-20"
       }`}
+      onMouseEnter={() => {
+        setIsHovered(true);
+        if (!isMobile) setIsOpen(true);
+      }}
+      onMouseLeave={() => setIsHovered(false)}
     >
       {/* Logo y botón de toggle */}
       <div className="p-4 flex items-center justify-between border-b border-blue-800">
