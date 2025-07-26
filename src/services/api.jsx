@@ -191,6 +191,21 @@ export const getTransferByUser = async (id) => {
     const response = await apiClient.get(`/transfers/get-user/${id}`);
     return response.data;
   } catch (e) {
+    console.log(e)
+    return {
+      error: true,
+      message: e.response?.data?.message || "No se pudieron obtener las transferencias del usuario",
+      e,
+    };
+  }
+};
+
+export const getTransfer = async (id) => {
+  try {
+    const response = await apiClient.get(`/transfers/get/`);
+    return response.data;
+  } catch (e) {
+    console.log(e)
     return {
       error: true,
       message: e.response?.data?.message || "No se pudieron obtener las transferencias del usuario",

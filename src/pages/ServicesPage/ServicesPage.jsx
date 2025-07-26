@@ -13,3 +13,5 @@ export const ServicesPage = () => (
     </main>
   </div>
 );
+
+export default ServicesPage;
