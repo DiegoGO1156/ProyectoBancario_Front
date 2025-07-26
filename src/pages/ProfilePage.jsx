@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useUserProfile } from '../shared/hooks';
 import { SidebarAdmin } from '../components/Navbar/SidebarAdmin';
+import { SidebarUsers } from '../components/Navbar/SidebarUser';
 
 
 export const MyAccountPage = (props) => {
@@ -13,11 +14,14 @@ export const MyAccountPage = (props) => {
   if (error) return <p>Error: {error}</p>;
   if (!usuario) return <p>No se encontró el usuario</p>;
 
+  const role = localStorage.getItem("roleUser")
 
   return (
     <>
       <div>
-        <SidebarAdmin />
+        {
+          role === "ADMIN" ? <SidebarAdmin /> : <SidebarUsers/>
+        }
         <div className="min-h-screen bg-blue-50">
           {/* Header */}
           <div className="bg-gradient-to-r from-blue-900 to-blue-800 text-white py-12 px-6">

@@ -5,6 +5,7 @@ import { MotionInput } from "../ui/input";
 import { cn } from "../ui/lib/utils";
 import { SidebarAdmin } from '../Navbar/SidebarAdmin';
 import Footer from "../Homepage/Footer";
+import { SidebarUsers } from "../Navbar/SidebarUser";
 
 export const AddFavoriteUser = () => {
   const [number, setNumber] = useState("");
@@ -30,9 +31,13 @@ export const AddFavoriteUser = () => {
   }
 };
 
+const role = localStorage.getItem("roleUser")
+
   return (
     <div className="flex h-screen">
-      <SidebarAdmin />
+      {
+        role === "ADMIN" ? <SidebarAdmin /> : <SidebarUsers/>
+      }
       <div className="flex flex-col flex-grow">
         <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded shadow flex-grow">
           <h2 className="text-xl font-bold mb-15 ml-40">Agregar Usuario Favorito</h2>

@@ -7,7 +7,7 @@ export const useChangePassword = () => {
         const responseData = await changePasswordRequest({password, newPassword});
         if(responseData.error){
             return toast.error(
-                responseData.e?.response?.data || 'No fue posible actulizar la contraseña'
+                responseData.e?.response?.data || 'No fue posible actulizar la contraseña, revise bien la contraseña ingresada'
             );
         }
         toast.success('contraseña actualizada correctamente')

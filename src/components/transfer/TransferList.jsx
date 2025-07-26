@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getTransfer } from "../../services";
 import { SidebarAdmin } from "../Navbar/SidebarAdmin";
 import { CardBody, CardContainer, CardItem } from "../ui/3d-card";
+import { SidebarUsers } from "../Navbar/SidebarUser";
 
 export const TransferList = () => {
   const [transfers, setTransfers] = useState([]);
@@ -52,9 +53,13 @@ export const TransferList = () => {
     fetchTransfers();
   }, []);
 
+  const role = localStorage.getItem("roleUser")
+
   return (
     <div className="flex min-h-screen">
-      <SidebarAdmin />
+      {
+        role === "ADMIN" ? <SidebarAdmin /> : <SidebarUsers/>
+      }
 
       <div className="flex-1 p-6 overflow-y-auto bg-white">
         <h2 className="text-4xl font-extrabold mb-8 text-center text-black">

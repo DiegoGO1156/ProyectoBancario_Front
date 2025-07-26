@@ -4,6 +4,7 @@ import { CardBody, CardContainer, CardItem } from "../ui/3d-card"
 import { TextGenerateEffect } from "../ui/text-generate-effect";
 import { SidebarAdmin } from '../Navbar/SidebarAdmin';
 import  Footer  from "../Homepage/Footer";
+import { SidebarUsers } from "../Navbar/SidebarUser";
 
 export const Transfer = () => {
     const { usuario, loading, error } = useUserProfile();
@@ -15,6 +16,8 @@ export const Transfer = () => {
 
 }
 
+const role = localStorage.getItem("roleUser")
+
 const Dashboard = ({ usuario, switchTransferHandler }) => {
     const words = `Oxygen gets you high. In a catastrophic emergency, we're taking giant, 
 panicked breaths. Suddenly you become euphoric, docile. You accept your fate. It's all 
@@ -22,7 +25,9 @@ panicked breaths. Suddenly you become euphoric, docile. You accept your fate. It
     `;
     return (
         <div className="flex h-screen">
-    <SidebarAdmin />
+            {
+                role === "ADMIN" ? <SidebarAdmin /> : <SidebarUsers/>
+            }
     <div className="flex-1 overflow-auto bg-gradient-to-br from-gray-50 to-blue-50 p-6 flex flex-col items-center">
         <div className="text-black font-bold text-center mb-16 mt-8">
             <h1 className="text-6xl font-extrabold text-blue-800 mb-6 tracking-tight drop-shadow-lg">Transferencias</h1>

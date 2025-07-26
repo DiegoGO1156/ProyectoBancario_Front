@@ -4,7 +4,7 @@ import { useNavigate, useLocation, Link } from "react-router-dom";
 import { motion } from "motion/react";
 import { cn } from "../ui/lib/utils";
 
-export const SidebarAdmin = () => {
+export const SidebarUsers = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(true);
@@ -14,10 +14,9 @@ export const SidebarAdmin = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
-
   const profileLink = {
     href: "/profile",
-    label: "Perfil de Usuario",
+    label: "Perfil",
     icon: <img
       src="https://assets.aceternity.com/manu.png"
       alt="Avatar"
@@ -53,27 +52,14 @@ export const SidebarAdmin = () => {
       path: "/",
     },
      {
-      title: "Admin",
+      title: "USUARIO",
       icon: (
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M12 6V3M12 21V18M18 12H21M3 12H6M16.5 7.5L19 5M5 19L7.5 16.5M7.5 7.5L5 5M19 19L16.5 16.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
           <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="2"/>
         </svg>
       ),
-      path: "/admin",
-    },
-    {
-      title: "Usuarios",
-      icon: (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z" stroke="currentColor" stroke-width="2"/>
-  <path d="M20.5901 22C20.5901 18.13 16.7402 15 12.0002 15C7.26015 15 3.41016 18.13 3.41016 22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-</svg>
-      ),
-      submenu: [
-        { title: "Usuarios Pendientes", path: "/userPending" },
-        { title: "Usuarios Activos", path: "/userActive" },
-      ],
+      path: "/DashboardUser",
     },
     {
       title: "Servicios",
@@ -92,7 +78,7 @@ export const SidebarAdmin = () => {
           />
         </svg>
       ),
-      path: "/services",
+      path: "/service",
     },
     {
       title: "Productos",
@@ -111,7 +97,7 @@ export const SidebarAdmin = () => {
           />
         </svg>
       ),
-      path: "/productsA",
+      path: "/Productos",
     },
     {
       title: "Transferencias",
@@ -136,26 +122,7 @@ export const SidebarAdmin = () => {
         { title: "Transferencia", path: "/TransferForm" },
         { title: "Cartera", path: "/Transfers" },
       ],
-    },
-    {
-      title: "Marcas",
-      icon: (
-        <svg
-          className="w-6 h-6"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M7 7h.01M7 3h5a1.99 1.99 0 011.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.99 1.99 0 013 12V7a4 4 0 014-4z"
-          />
-        </svg>
-      ),
-      path: "/brands",
-    },
+    }
   ];
 
   // Efecto para cerrar submenús al cambiar de ruta

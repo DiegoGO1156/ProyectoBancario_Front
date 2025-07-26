@@ -9,5 +9,5 @@ export const PrivateRoutes = ({element}) => {
  export const PrivateRoutesRole = ({element}) => {
     const token = localStorage.getItem('user');
     const role = localStorage.getItem('roleUser');
-    return token && role === 'ADMIN' ? element : <Navigate to="/auth" />;
+    return token && role === 'ADMIN' ? element : <Navigate to="/DashboardUser" />;
 }

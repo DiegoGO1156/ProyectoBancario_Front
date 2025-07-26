@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { SidebarAdmin } from '../Navbar/SidebarAdmin'; 
 import Footer from "../Homepage/Footer"; 
+import { SidebarUsers } from '../Navbar/SidebarUser';
 export const FavoriteUser = () => {
     const [users, setUsers] = useState([
         {
@@ -45,9 +46,13 @@ export const FavoriteUser = () => {
         );
     };
 
+    const role = localStorage.getItem("roleuser")
+
     return (
         <div className="flex h-screen font-inter"> 
-            <SidebarAdmin />
+            {
+                role === "ADMIN" ? <SidebarAdmin />: <SidebarUsers/>
+            }
             <div className="bg-blue-50 w-full min-h-screen overflow-auto">
                 <div className="p-6">
                     <div className="bg-white rounded-xl shadow-md p-6">

@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react';
 import { Label } from "../ui/label";
 import { MotionInput } from "../ui/input";
 import { cn } from "../ui/lib/utils";
-import { SidebarAdmin } from '../Navbar/SidebarAdmin';
 import { addTransfer, getFavorites } from '../../services';
 import Footer from "../Homepage/Footer";
 import { denyTransfer } from "../../services/api";
+import { SidebarUsers } from '../Navbar/SidebarUser';
+import { SidebarAdmin } from '../Navbar/SidebarAdmin';
 
 export const TransferForm = ({ switchTransferHandler }) => {
   const [favorites, setFavorites] = useState([]);
@@ -63,9 +64,13 @@ export const TransferForm = ({ switchTransferHandler }) => {
     }
   };
 
+  const role = localStorage.getItem("roleUser")
+
   return (
     <div>
-      <SidebarAdmin />
+      {
+        role === "ADMIN" ? <SidebarAdmin/> :<SidebarUsers/>
+      }
       <div className='text-black font-bold text-center'>
         <h1 className='text-4xl font-bold text-black mb-10'>Formulario de transferencias</h1>
       </div>

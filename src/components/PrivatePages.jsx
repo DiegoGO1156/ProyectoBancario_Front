@@ -4,6 +4,7 @@ import {ActiveUsersPage}  from "../pages/ActiveUserPage"
 import  ListUserPendingPage  from "../pages/ListUserPendingPage"
 import BrandsPage from "../pages/BrandsPage/BrandPage"
 import {ServicesPage} from "../pages/ServicesPage/ServicesPage"
+import ProductsPage from "../pages/ProductAdminPage"
 
 
 export const PrivateAdminDashboard = () => {
@@ -56,4 +57,15 @@ export const PrivateAdminServices = () => {
     </>
   )
 }
+
+export const PrivateAdminProducts = () => {
+    console.log(localStorage.getItem("user"));
+    console.log(localStorage.getItem("roleUser"));
+  return (
+    <>
+        <PrivateRoutesRole element={<ProductsPage />}/>
+    </>
+  )
+}
+
 

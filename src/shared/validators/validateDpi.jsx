@@ -3,4 +3,4 @@ export const validateDpi = (dpi) => {
     return regex.test(dpi);
 }
 
-export const validateDpiMessage = 'El dpi debe tener 12 caracteres y no debe contener espacios';
+export const validateDpiMessage = 'El dpi debe tener 13 caracteres y no debe contener espacios';

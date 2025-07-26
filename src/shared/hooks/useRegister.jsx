@@ -28,8 +28,9 @@ export const useRegister = () => {
         localStorage.setItem('user', JSON.stringify(userDetails));
 
         toast.success('Usuario registrado exitosamente');
+        toast.success('Tu cuenta aún no ha sido validada. Revisa tu correo o contacta al administrador.');
 
-        navigate('/');
+        navigate('/auth');
 
     } catch (error) {
 

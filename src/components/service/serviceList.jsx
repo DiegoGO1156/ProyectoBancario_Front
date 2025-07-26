@@ -4,6 +4,7 @@ import { payService } from "../../services/api";
 import { useUserProfile } from "../../shared/hooks";
 import { SidebarAdmin } from "../Navbar/SidebarAdmin";
 import Footer from "../Homepage/Footer";
+import { SidebarUsers } from "../Navbar/SidebarUser";
 
 export const ServiceList = () => {
   const [services, setServices] = useState([]);
@@ -33,9 +34,13 @@ export const ServiceList = () => {
     }
   };
 
+  const role = localStorage.getItem("roleUser")
+
   return (
     <div className="flex h-screen">
-      <SidebarAdmin />
+      {
+        role === "ADMIN" ? <SidebarAdmin /> : <SidebarUsers/> 
+      }
       <div className="flex-1 flex flex-col min-h-screen bg-gray-100">
         <div className="p-6 flex-1 ml-65">
           <h1 className="text-3xl font-bold mb-6">Servicios disponibles</h1>
@@ -60,11 +65,21 @@ export const ServiceList = () => {
                 </p>
               </div>
             ) : (
-              services.map(({ _id, nameService, price, description, exclusive }) => (
+              services.map(({ _id, nameService, price, description, exclusive, image }) => (
                 <div
                   key={_id}
                   className="bg-white p-6 rounded-xl shadow-md border border-gray-200 hover:shadow-lg transition-shadow"
                 >
+                  {/* Aquí añadimos la imagen */}
+                  {image && (
+                    <div className="mb-4 h-40 overflow-hidden rounded-lg">
+                      <img 
+                        src={image} 
+                        alt={nameService}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  )}
                   <h2 className="text-2xl font-semibold text-blue-800 mb-2">
                     {nameService}
                   </h2>
