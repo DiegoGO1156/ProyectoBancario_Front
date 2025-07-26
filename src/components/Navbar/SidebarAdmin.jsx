@@ -10,8 +10,10 @@ export const SidebarAdmin = () => {
   const [isOpen, setIsOpen] = useState(true);
   const [activeSubmenu, setActiveSubmenu] = useState(null);
   const [hoveredItem, setHoveredItem] = useState(null);
-
+  const [isHovered, setIsHovered] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [isTransitioning, setIsTransitioning] = useState(false);
+
 
   const profileLink = {
     href: "/profile",
