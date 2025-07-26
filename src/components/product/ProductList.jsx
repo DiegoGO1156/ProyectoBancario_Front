@@ -5,6 +5,7 @@ import Footer from "../Homepage/Footer";
 import { useUserProfile } from "../../shared/hooks";
 import { productBuy } from "../../services/api";
 import { SidebarUsers } from "../Navbar/SidebarUser";
+import toast from "react-hot-toast"
 
 export const Productos = () => {
   const [products, setProducts] = useState([]);
@@ -26,6 +27,7 @@ export const Productos = () => {
 
     if (result.success) {
         refetch();
+        toast.success("Revise su correo para confirmar la compra 🤓")
       }
     };
 
