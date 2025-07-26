@@ -31,11 +31,11 @@ const ConversionResult = ({ result, loading, error }) => {
         </div>
         <div>
           <p className="text-sm text-[#4B5B6A]">Rate:</p>
-          <p className="font-medium text-[#1CAE88]">{result.conversionRate}</p>
+          <p className="font-medium text-[#1CAE88]">{result.conversionRate.toFixed(6)}</p>
         </div>
         <div>
           <p className="text-sm text-[#4B5B6A]">Amount:</p>
-          <p className="font-medium text-[#1CAE88]">{result.conversionAmount}</p>
+          <p className="font-medium text-[#1CAE88]">{result.conversionAmount.toFixed(2)}</p>
         </div>
       </div>
     </div>

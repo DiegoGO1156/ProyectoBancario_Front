@@ -6,10 +6,17 @@ const apiClient = axios.create({
   timeout: 5000
 })
 
+const apiDivisas = axios.create({
+  baseURL: 'https://v6.exchangerate-api.com/v6/',
+  timeout: 5000
+});
+
+
+
 apiClient.interceptors.request.use(
   (config) => {
     const useUserDetails = localStorage.getItem('user');
-
+    
     if (useUserDetails && useUserDetails !== "undefined") {
       try {
         const parsed = JSON.parse(useUserDetails);
@@ -20,7 +27,7 @@ apiClient.interceptors.request.use(
         console.error("Token inválido en localStorage:", error);
       }
     }
-
+    
     return config;
   },
   (e) => Promise.reject(e)
@@ -35,22 +42,21 @@ export const convertCurrency = async (from, to, amount) => {
   }
 };
 
+// Mock function since your backend doesn't have this endpoint yet
 export const getAvailableCurrencies = async () => {
-  try {
-    // This would need to be implemented in your backend
-    const response = await apiClient.get('/currencies');
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(['USD', 'GTQ', 'EUR', 'GBP', 'JPY', 'CAD']);
+    }, 500);
+  });
 };
 
 export const login = async (data) => {
   try {
     const response = await apiClient.post('/Auth/login', data);
-
+    
     const userDetails = response.data?.userDetails;
-
+    
     if (userDetails && userDetails.token) {
       localStorage.setItem("user", JSON.stringify(userDetails));
       localStorage.setItem("roleUser", userDetails.role);

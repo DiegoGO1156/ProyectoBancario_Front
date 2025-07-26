@@ -72,7 +72,7 @@ export const PrivateAdminProducts = () => {
 export const PrivateDivisas = () =>{
   return(
     <>
-      <PrivateRoutesRole element={<CurrencyConverterPage/>}/>
+      <PrivateRoutes element={<CurrencyConverterPage/>}/>
     </>
   )
 }

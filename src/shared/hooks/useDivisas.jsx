@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { convertCurrency, getAvailableCurrencies } from "../../services/api";
+import { convertCurrency, getAvailableCurrencies } from '../../services/api';
 
 export const useCurrencyConverter = () => {
   const [result, setResult] = useState(null);
@@ -13,7 +13,7 @@ export const useCurrencyConverter = () => {
       const data = await getAvailableCurrencies();
       setCurrencies(data);
     } catch (err) {
-      setError(err.message);
+      setError('Error loading available currencies');
     } finally {
       setLoading(false);
     }
