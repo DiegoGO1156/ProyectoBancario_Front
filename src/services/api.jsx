@@ -35,7 +35,7 @@ apiClient.interceptors.request.use(
 
 export const convertCurrency = async (from, to, amount) => {
   try {
-    const response = await apiClient.post('/', { from, to, amount });
+    const response = await apiDivisas.post('/', { from, to, amount });
     return response.data;
   } catch (error) {
     throw error;
