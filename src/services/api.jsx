@@ -26,6 +26,25 @@ apiClient.interceptors.request.use(
   (e) => Promise.reject(e)
 );
 
+export const convertCurrency = async (from, to, amount) => {
+  try {
+    const response = await apiClient.post('/', { from, to, amount });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getAvailableCurrencies = async () => {
+  try {
+    // This would need to be implemented in your backend
+    const response = await apiClient.get('/currencies');
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const login = async (data) => {
   try {
     const response = await apiClient.post('/Auth/login', data);
