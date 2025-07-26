@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getTransferByUser } from "../../services";
+import { getTransfer } from "../../services";
 import { SidebarAdmin } from "../Navbar/SidebarAdmin";
 import { CardBody, CardContainer, CardItem } from "../ui/3d-card";
 import { SidebarUsers } from "../Navbar/SidebarUser";
@@ -14,13 +14,29 @@ export const TransferList = () => {
     setErrorMsg("");
 
     try {
-      const res = await getTransferByUser({});
-      console.log("Respuesta del backend:", res);
+      const storedUser = localStorage.getItem("user");
+      if (!storedUser) {
+        setErrorMsg("Usuario no autenticado.");
+        setLoading(false);
+        return;
+      }
 
-      const transferencesUser = Array.isArray(res.transferencesUser)
+      const parsedUser = JSON.parse(localStorage.getItem("user"));
+      const userId = parsedUser?._id;
+
+      if (!userId) {
+        setErrorMsg("No se pudo obtener el ID del usuario.");
+        setLoading(false);
+        return;
+      }
+
+      const res = await getTransfer(userId);
+
+      const transferences = Array.isArray(res.transferencesUser)
         ? res.transferencesUser
         : [];
-      const confirmedTransfers = transferencesUser
+
+      const confirmedTransfers = transferences
         .filter((t) => t.verification === true)
         .sort((a, b) => new Date(b.date) - new Date(a.date));
 
@@ -45,60 +61,61 @@ export const TransferList = () => {
         role === "ADMIN" ? <SidebarAdmin /> : <SidebarUsers/>
       }
 
-      <div className="flex-1 p-6 overflow-y-auto">
-        <h2 className="text-3xl font-bold mb-6 text-center text-black dark:text-white">
+      <div className="flex-1 p-6 overflow-y-auto bg-white">
+        <h2 className="text-4xl font-extrabold mb-8 text-center text-black">
           Historial de Transferencias
         </h2>
-
-        <div className="mb-4 text-center">
-          <button
-            onClick={fetchTransfers}
-            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
-          >
-            Actualizar
-          </button>
-        </div>
-
         {loading && (
-          <p className="text-center text-gray-500">Cargando transferencias...</p>
+          <p className="text-center text-gray-700 text-lg">Cargando transferencias...</p>
         )}
 
-        {errorMsg && <p className="text-center text-red-500">{errorMsg}</p>}
+        {errorMsg && <p className="text-center text-red-600 text-lg">{errorMsg}</p>}
 
         {!loading && transfers.length === 0 && (
-          <p className="text-center text-gray-500">
+          <p className="text-center text-gray-700 text-lg">
             No hay transferencias confirmadas aún.
           </p>
         )}
-
-        <CardContainer className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr">
           {transfers.map((t) => (
-            <CardItem
+            <div
               key={t._id}
-              className="p-4 bg-white rounded shadow-md dark:bg-gray-800"
+              className="bg-gray-100 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out p-6 border border-gray-200 flex flex-col justify-between"
             >
-              <CardBody>
-                <p>
-                  <strong>Cuenta destino:</strong>{" "}
+              <div className="space-y-3 text-black">
+                <p className="text-lg">
+                  <strong className="font-semibold text-black">Cuenta destino:</strong>{" "}
                   {t.addresserName || t.addresserNumber || "Desconocido"}
                 </p>
-                <p>
-                  <strong>Monto:</strong> Q{Number(t.amount).toFixed(2)}
+                <p className="text-lg">
+                  <strong className="font-semibold text-black">Monto:</strong>{" "}
+                  <span className="text-green-700">Q{Number(t.amount).toFixed(2)}</span>
                 </p>
-                <p>
-                  <strong>Motivo:</strong> {t.motive || "Sin motivo"}
+                <p className="text-lg">
+                  <strong className="font-semibold text-black">Motivo:</strong>{" "}
+                  {t.motive || "Sin motivo"}
                 </p>
+              </div>
+              <div className="mt-4 pt-4 border-t border-gray-300 text-sm text-gray-600">
                 <p>
                   <strong>Fecha:</strong>{" "}
                   {new Date(t.date).toLocaleString("es-GT", {
-                    dateStyle: "short",
+                    dateStyle: "medium",
                     timeStyle: "short",
                   })}
                 </p>
-              </CardBody>
-            </CardItem>
+              </div>
+            </div>
           ))}
-        </CardContainer>
+        </div>
+        <div className="mb-8 text-center">
+          <button
+            onClick={fetchTransfers}
+            className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition-all duration-300 ease-in-out transform hover:scale-105 mt-25"
+          >
+            Actualizar Transferencias
+          </button>
+        </div>
       </div>
     </div>
   );
