@@ -12,7 +12,7 @@ export const Productos = () => {
   const { usuario, loading, error, refetch } = useUserProfile();
 
   useEffect(() => {
-    getProducts(10, 0) 
+    getProducts(10, 0)
       .then((res) => {
         const productsList = res.products || [];
         setProducts(productsList);
@@ -22,14 +22,19 @@ export const Productos = () => {
       });
   }, []);
 
-  const comprarProducto = async (productId) => {
-  const result = await productBuy(productId);
+  const comprarProducto = async (productId, price) => {
+    const userIncome = usuario?.income || 0;
 
+    if (price > userIncome) {
+      alert("No tienes suficiente dinero para comprar este producto.");
+      return;
+    }
+
+    const result = await productBuy(productId);
     if (result.success) {
-        refetch();
-        toast.success("Revise su correo para confirmar la compra 🤓")
-      }
-    };
+      refetch();
+    }
+  };
 
   if (loading) return <p className="p-6">Cargando usuario...</p>;
   if (error) return <p className="p-6">Error al cargar perfil: {error}</p>;
@@ -39,7 +44,7 @@ export const Productos = () => {
   return (
     <div className="flex min-h-screen">
       {
-        role === "ADMIN" ? <SidebarAdmin /> : <SidebarUsers/>
+        role === "ADMIN" ? <SidebarAdmin /> : <SidebarUsers />
       }
       <div className="flex-1 flex-col ml-70">
         <div className="p-6 bg-gray-100 min-h-[100vh]">
@@ -71,7 +76,7 @@ export const Productos = () => {
                   <p className="text-green-600 font-bold mb-2">${price}</p>
                   <p className="text-gray-700 mb-4">{description}</p>
                   <button
-                    onClick={() => comprarProducto(_id)}
+                    onClick={() => comprarProducto(_id, price)}
                     className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded"
                   >
                     Comprar

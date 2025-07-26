@@ -22,10 +22,23 @@ export const ServiceList = () => {
   }, []);
 
   const handlePayService = async (id, isExclusive, price) => {
-    const amount = isExclusive ? 0 : prompt("Ingrese monto a pagar:");
+    const userIncome = usuario?.income || 0;
+
+    if (!isExclusive && price > userIncome) {
+      alert("No tienes suficiente dinero para pagar este servicio.");
+      return;
+    }
+
+    let amount = isExclusive ? 0 : prompt("Ingrese monto a pagar:");
     const parsedAmount = Number(amount);
+
     if (!isExclusive && (isNaN(parsedAmount) || parsedAmount <= 0)) {
       alert("Monto inválido.");
+      return;
+    }
+
+    if (!isExclusive && parsedAmount > userIncome) {
+      alert("No tienes suficiente dinero para este monto.");
       return;
     }
 
@@ -41,7 +54,7 @@ export const ServiceList = () => {
   return (
     <div className="flex h-screen">
       {
-        role === "ADMIN" ? <SidebarAdmin /> : <SidebarUsers/> 
+        role === "ADMIN" ? <SidebarAdmin /> : <SidebarUsers />
       }
       <div className="flex-1 flex flex-col min-h-screen bg-gray-100">
         <div className="p-6 flex-1 ml-65">
@@ -72,11 +85,10 @@ export const ServiceList = () => {
                   key={_id}
                   className="bg-white p-6 rounded-xl shadow-md border border-gray-200 hover:shadow-lg transition-shadow"
                 >
-                  {/* Aquí añadimos la imagen */}
                   {image && (
                     <div className="mb-4 h-40 overflow-hidden rounded-lg">
-                      <img 
-                        src={image} 
+                      <img
+                        src={image}
                         alt={nameService}
                         className="w-full h-full object-cover"
                       />

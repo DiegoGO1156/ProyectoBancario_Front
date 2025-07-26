@@ -32,8 +32,20 @@ export const TransferForm = ({ switchTransferHandler }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const parsedAmount = parseFloat(amount);
+
     if (isNaN(parsedAmount)) {
       setMessage("Monto inválido");
+      return;
+    }
+
+    if (parsedAmount > 2000) {
+      alert("No puedes transferir más de $2000.");
+      return;
+    }
+
+    const income = 500;
+    if (parsedAmount > income) {
+      alert("No tienes suficiente dinero para realizar esta transferencia.");
       return;
     }
 
@@ -46,7 +58,6 @@ export const TransferForm = ({ switchTransferHandler }) => {
 
       if (res.success) {
         setMessage("Transferencia iniciada. Revisa tu correo.");
-
         setCancelToken(res.tokenEmail);
         setShowCancel(true);
 
@@ -69,7 +80,7 @@ export const TransferForm = ({ switchTransferHandler }) => {
   return (
     <div>
       {
-        role === "ADMIN" ? <SidebarAdmin/> :<SidebarUsers/>
+        role === "ADMIN" ? <SidebarAdmin /> : <SidebarUsers />
       }
       <div className='text-black font-bold text-center'>
         <h1 className='text-4xl font-bold text-black mb-10'>Formulario de transferencias</h1>
