@@ -83,6 +83,10 @@
         {
             "src": "/productsA",
             "dest":"/"
+        },
+        {
+            "src": "/Divisas",
+            "dest":"/"
         }
     ]
 }

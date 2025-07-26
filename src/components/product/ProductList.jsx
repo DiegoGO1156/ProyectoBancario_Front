@@ -5,6 +5,7 @@ import Footer from "../Homepage/Footer";
 import { useUserProfile } from "../../shared/hooks";
 import { productBuy } from "../../services/api";
 import { SidebarUsers } from "../Navbar/SidebarUser";
+import toast from "react-hot-toast"
 
 export const Productos = () => {
   const [products, setProducts] = useState([]);
@@ -56,11 +57,21 @@ export const Productos = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {products.length > 0 ? (
-              products.map(({ _id, nameProduct, price, description }) => (
+              products.map(({ _id, nameProduct, price, description, image }) => (
                 <div
                   key={_id}
                   className="bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow"
                 >
+                  {/* Aquí agregamos la imagen */}
+                  {image && (
+                    <div className="mb-4 h-40 overflow-hidden rounded-lg">
+                      <img 
+                        src={image} 
+                        alt={nameProduct}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  )}
                   <h2 className="text-xl font-semibold mb-2">{nameProduct}</h2>
                   <p className="text-green-600 font-bold mb-2">${price}</p>
                   <p className="text-gray-700 mb-4">{description}</p>

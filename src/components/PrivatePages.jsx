@@ -5,6 +5,7 @@ import  ListUserPendingPage  from "../pages/ListUserPendingPage"
 import BrandsPage from "../pages/BrandsPage/BrandPage"
 import {ServicesPage} from "../pages/ServicesPage/ServicesPage"
 import ProductsPage from "../pages/ProductAdminPage"
+import CurrencyConverterPage from "../pages/Divisas"
 
 
 export const PrivateAdminDashboard = () => {
@@ -64,6 +65,14 @@ export const PrivateAdminProducts = () => {
   return (
     <>
         <PrivateRoutesRole element={<ProductsPage />}/>
+    </>
+  )
+}
+
+export const PrivateDivisas = () =>{
+  return(
+    <>
+      <PrivateRoutesRole element={<CurrencyConverterPage/>}/>
     </>
   )
 }
