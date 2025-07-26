@@ -111,7 +111,7 @@ export const SidebarAdmin = () => {
           />
         </svg>
       ),
-      path: "/Productos",
+      path: "/productsA",
     },
     {
       title: "Transferencias",

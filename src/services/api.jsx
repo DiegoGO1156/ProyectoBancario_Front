@@ -2,7 +2,7 @@ import axios from "axios";
 import { logout } from "../shared/hooks";
 
 const apiClient = axios.create({
-  baseURL: 'https://proyectobancario-back.onrender.com/Valmeria_App/V1',
+  baseURL: 'http://127.0.0.1:3000/Valmeria_App/V1',
   timeout: 5000
 })
 
@@ -439,6 +439,57 @@ export const denyTransfer = async (tokenEmail) => {
     return {
       error: true,
       e: e.response?.data?.message || e.message,
+    };
+  }
+};
+
+
+// productos 
+export const getProductsA = async () => {
+  try {
+    const response = await apiClient.get('/Products/allProducts');
+    return response.data;
+  } catch (e) {
+    return {
+      error: true,
+      e: e.response?.data?.error || e.message
+    };
+  }
+};
+
+export const createProduct = async (productData) => {
+  try {
+    const response = await apiClient.post('/Products/createProduct', productData);
+    return response.data;
+  } catch (e) {
+    return {
+      error: true,
+      e: e.response?.data?.error || e.message
+    };
+  }
+};
+
+
+export const updateProduct = async (id, productData) => {
+  try {
+    const response = await apiClient.put(`/Products/updateProduct/${id}`, productData);
+    return response.data;
+  } catch (e) {
+    return {
+      error: true,
+      e: e.response?.data?.error || e.message
+    };
+  }
+};
+
+export const deleteProduct = async (id) => {
+  try {
+    const response = await apiClient.delete(`/Products/deleteProduct/${id}`);
+    return response.data;
+  } catch (e) {
+    return {
+      error: true,
+      e: e.response?.data?.error || e.message
     };
   }
 };
