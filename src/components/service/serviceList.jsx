@@ -65,11 +65,21 @@ export const ServiceList = () => {
                 </p>
               </div>
             ) : (
-              services.map(({ _id, nameService, price, description, exclusive }) => (
+              services.map(({ _id, nameService, price, description, exclusive, image }) => (
                 <div
                   key={_id}
                   className="bg-white p-6 rounded-xl shadow-md border border-gray-200 hover:shadow-lg transition-shadow"
                 >
+                  {/* Aquí añadimos la imagen */}
+                  {image && (
+                    <div className="mb-4 h-40 overflow-hidden rounded-lg">
+                      <img 
+                        src={image} 
+                        alt={nameService}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  )}
                   <h2 className="text-2xl font-semibold text-blue-800 mb-2">
                     {nameService}
                   </h2>
