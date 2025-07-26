@@ -79,6 +79,10 @@
         {
             "src": "/DashboardUser",
             "dest":"/"
+        },
+        {
+            "src": "/productsA",
+            "dest":"/"
         }
     ]
 }
