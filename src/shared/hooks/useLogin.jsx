@@ -1,64 +1,51 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { login as loginRequest } from '../../services'
-import toast from "react-hot-toast";
+import { useState, useEffect } from 'react';
+import { login as apiLogin, logout as apiLogout } from '../../services/api';
 
-export const useLogin = () => {
+export const useAuth = () => {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-    const [isLoading, setIsLoading] = useState(false);
-
-    const navigate = useNavigate();
-
-    const login = async (email, password) => {
-
-        setIsLoading(true);
-
-        //console.log("login() - datos enviados:", { email, password });
-
-        const response = await loginRequest({ email, password });
-
-        //console.log("login() - respuesta recibida:", response);
-
-        setIsLoading(false);
-
-        //console.log(response)
-
-        if (response.error) {
-            const status = response.e?.response?.status;
-
-            if (status === 401 || response.message === 'Falta validar la cuenta.') {
-                return toast.error('Tu cuenta aún no ha sido validada. Revisa tu correo o contacta al administrador.');
-            }
-
-            return toast.error(
-                response.message ||
-                response.e?.response?.data?.msg ||
-                response.e?.response?.data?.error ||
-                'Tu cuenta aún no ha sido validada. Revisa tu correo o contacta al administrador.' ||
-                'Ocurrió un error al iniciar sesión'
-            );
+  useEffect(() => {
+    const checkAuth = () => {
+      try {
+        const userData = localStorage.getItem('user');
+        if (userData) {
+          setUser(JSON.parse(userData));
         }
+      } catch (err) {
+        console.error("Error al verificar autenticación:", err);
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-        const { userDetails } = response.data
+    checkAuth();
+  }, []);
 
-        localStorage.setItem('user', JSON.stringify(userDetails));
-
-        toast.success('Sesion iniciada correctamente')
-
-        const role = localStorage.getItem("roleUser")
-
-        if(role === "ADMIN"){
-            navigate('/admin')
-        }else if(role === "USER"){
-            navigate('/DashboardUser')
-        }else{
-            navigate('/')
-        }
-
+  const login = async (email, password) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const result = await apiLogin({ email, password });
+      if (result.error) {
+        throw new Error(result.message);
+      }
+      setUser(result.data.userDetails);
+      return { success: true };
+    } catch (err) {
+      setError(err.message);
+      return { success: false, message: err.message };
+    } finally {
+      setLoading(false);
     }
+  };
 
-    return {
-        login,
-        isLoading,
-    }
-}
+  const logout = () => {
+    apiLogout();
+    setUser(null);
+  };
+
+  return { user, loading, error, login, logout };
+};
