@@ -6,6 +6,7 @@ import { AdminComplaintsPage } from "./pages/AdminComplaintsPage";
 import LoginPage from "./pages/LoginPage";
 import { DashAdmin, DashAthorities } from "./components/ProtectedPages";
 import { GraphicsPage } from "./pages/GraphicPage";
+import { DashboardUser } from "./components/DashboardUser"
 
 
 
@@ -19,5 +20,6 @@ const routes = [
     {path: '/active', element: <AdminComplaintsPage/>},
     {path: '/login', element: <LoginPage/>},
     {path: '/graficos', element: <GraphicsPage/>},
+    {path: '/user', element: <DashboardUser/>},
 ]
 export default routes

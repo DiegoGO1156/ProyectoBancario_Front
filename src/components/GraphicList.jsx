@@ -1,5 +1,4 @@
 import { GraphCard } from './Grafico';
-import Button from '@mui/material/Button';
 
 export const GraphicsList = ({ graphics, loading, error, onUpdate }) => {
   if (loading) return <div className="text-center py-8">Cargando gráficos...</div>;
@@ -10,13 +9,6 @@ export const GraphicsList = ({ graphics, loading, error, onUpdate }) => {
     <div>
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold">Visualización de Gráficos</h2>
-        <Button 
-          onClick={onUpdate} 
-          variant="contained"
-          color="primary"
-        >
-          Actualizar Gráficos
-        </Button>
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
