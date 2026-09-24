@@ -2,7 +2,8 @@ import axios from "axios";
 import { logout } from "../shared/hooks";
 
 const apiClient = axios.create({
-  baseURL: 'https ://proyectobancario-back.onrender.com/Valmeria_App/V1',
+  //https://proyectobancario-back.onrender.com
+  baseURL: 'https://proyectobancario-back.onrender.com/Valmeria_App/V1',
   timeout: 5000
 })
 
